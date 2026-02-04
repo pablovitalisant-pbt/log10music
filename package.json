@@ -17,15 +17,16 @@
     "test:slice": "node scripts/jest-lite.js --testPathPattern='slice-[0-9]+' --verbose"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.94.0",
     "next": "15.5.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
     "@types/jest": "^29.5.0",
     "@types/node": "^20.0.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "autoprefixer": "^10.4.20",
     "jest": "^29.5.0",
     "postcss": "^8.4.49",

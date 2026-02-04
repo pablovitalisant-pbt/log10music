@@ -1,7 +1,4 @@
-import { promises as fs } from 'fs';
-import path from 'path';
-
-const dbPath = path.join(process.cwd(), 'data', 'db.json');
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 type SiteConfig = { header_code: string; footer_code: string };
 type Lead = {
@@ -13,58 +10,72 @@ type Lead = {
   created_at: string;
 };
 
-type Db = { site_config: SiteConfig; leads: Lead[] };
+const defaultSiteConfig: SiteConfig = { header_code: '', footer_code: '' };
 
-const defaultDb: Db = { site_config: { header_code: '', footer_code: '' }, leads: [] };
-let dbCache: Db | null = null;
-let readInFlight: Promise<Db> | null = null;
-let writeQueue: Promise<void> = Promise.resolve();
+let clientCache: SupabaseClient | null = null;
+let envLogged = false;
 
-function cloneDb(db: Db): Db {
-  return JSON.parse(JSON.stringify(db)) as Db;
+function mask(value: string): string {
+  if (value.length <= 10) return `${value.slice(0, 3)}***`;
+  return `${value.slice(0, 6)}...${value.slice(-4)}`;
 }
 
-async function loadDbFromDisk(): Promise<Db> {
-  try {
-    const raw = await fs.readFile(dbPath, 'utf8');
-    return JSON.parse(raw) as Db;
-  } catch (error: unknown) {
-    const err = error as NodeJS.ErrnoException;
-    if (err.code !== 'ENOENT') throw error;
-    await fs.mkdir(path.dirname(dbPath), { recursive: true });
-    await fs.writeFile(dbPath, JSON.stringify(defaultDb, null, 2), 'utf8');
-    return cloneDb(defaultDb);
+function getSupabaseClient(): SupabaseClient {
+  if (clientCache) return clientCache;
+
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const token = supabaseServiceRoleKey || supabaseAnonKey;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error('Missing SUPABASE_URL or SUPABASE_ANON_KEY in environment.');
   }
-}
-
-async function readDb(): Promise<Db> {
-  if (dbCache) return cloneDb(dbCache);
-  if (!readInFlight) {
-    readInFlight = loadDbFromDisk().then((db) => {
-      dbCache = db;
-      return db;
-    });
+  if (!token) {
+    throw new Error('Missing Supabase auth token. Set SUPABASE_ANON_KEY (or SUPABASE_SERVICE_ROLE_KEY).');
   }
-  const db = await readInFlight;
-  readInFlight = null;
-  return cloneDb(db);
-}
 
-function enqueueWrite(nextDb: Db): Promise<void> {
-  dbCache = cloneDb(nextDb);
-  writeQueue = writeQueue.then(() => fs.writeFile(dbPath, JSON.stringify(nextDb, null, 2), 'utf8'));
-  return writeQueue;
+  if (process.env.NODE_ENV !== 'production' && !envLogged) {
+    console.log(
+      `[supabase] env loaded url=${mask(supabaseUrl)} anon=${mask(supabaseAnonKey)} serviceRole=${
+        supabaseServiceRoleKey ? 'present' : 'absent'
+      }`
+    );
+    envLogged = true;
+  }
+
+  clientCache = createClient(supabaseUrl, token, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+  return clientCache;
 }
 
 export async function getSiteConfig(): Promise<SiteConfig> {
-  const db = await readDb();
-  return db.site_config;
+  const supabase = getSupabaseClient();
+  const { data, error } = await supabase
+    .from('site_config')
+    .select('header_code, footer_code')
+    .eq('id', 1)
+    .maybeSingle();
+  if (error) throw new Error(`Supabase getSiteConfig failed: ${error.message}`);
+  if (!data) {
+    await updateSiteConfig(defaultSiteConfig);
+    return defaultSiteConfig;
+  }
+  return { header_code: data.header_code || '', footer_code: data.footer_code || '' };
 }
 
 export async function updateSiteConfig(config: SiteConfig): Promise<void> {
-  const db = await readDb();
-  db.site_config = config;
-  await enqueueWrite(db);
+  const supabase = getSupabaseClient();
+  const { error } = await supabase.from('site_config').upsert(
+    {
+      id: 1,
+      header_code: config.header_code || '',
+      footer_code: config.footer_code || '',
+    },
+    { onConflict: 'id' }
+  );
+  if (error) throw new Error(`Supabase updateSiteConfig failed: ${error.message}`);
 }
 
 export async function addLead(input: {
@@ -73,21 +84,27 @@ export async function addLead(input: {
   phone: string;
   source?: string;
 }): Promise<Lead> {
-  const db = await readDb();
-  const lead: Lead = {
-    id: crypto.randomUUID(),
-    full_name: input.full_name,
-    company: input.company,
-    phone: input.phone,
-    source: input.source || '/',
-    created_at: new Date().toISOString(),
-  };
-  db.leads.unshift(lead);
-  await enqueueWrite(db);
-  return lead;
+  const supabase = getSupabaseClient();
+  const { data, error } = await supabase
+    .from('leads')
+    .insert({
+      full_name: input.full_name,
+      company: input.company,
+      phone: input.phone,
+      source: input.source || '/',
+    })
+    .select('id, full_name, company, phone, source, created_at')
+    .single();
+  if (error) throw new Error(`Supabase addLead failed: ${error.message}`);
+  return data as Lead;
 }
 
 export async function listLeads(): Promise<Lead[]> {
-  const db = await readDb();
-  return db.leads;
+  const supabase = getSupabaseClient();
+  const { data, error } = await supabase
+    .from('leads')
+    .select('id, full_name, company, phone, source, created_at')
+    .order('created_at', { ascending: false });
+  if (error) throw new Error(`Supabase listLeads failed: ${error.message}`);
+  return (data || []) as Lead[];
 }
