@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 14,
+  "name": "OBSERVABILITY: 9.1 Logging",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.1 Logging (líneas 160-164).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.1 Logging",
+  "lineStart": 160,
+  "lineEnd": 164,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "3692cac7518857e48da524fe918cc17dd4e87b6f8e6d1b7a2f6a777e247595f1",
+  "estimatedLines": 10,
+  "priority": "high",
+  "contract": {
+    "testFile": "tests/contracts/slice-014.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.1 Logging\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:45:41.198Z"
+}

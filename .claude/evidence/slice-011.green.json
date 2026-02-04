@@ -1,0 +1,7 @@
+{
+  "sliceNumber": 11,
+  "type": "green",
+  "timestamp": "2026-02-04T02:42:06.666Z",
+  "testPassed": true,
+  "output": "\n> pbt-ultra-project@2.0.0 test\n> node scripts/jest-lite.js --testPathPattern=slice-011 --verbose\n\n"
+}

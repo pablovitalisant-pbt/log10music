@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 31,
+  "name": "OPERATIONS: 15.2 Mantenimiento",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 15. Consideraciones Operacionales > 15.2 Mantenimiento (líneas 244-247).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 15. Consideraciones Operacionales > 15.2 Mantenimiento",
+  "lineStart": 244,
+  "lineEnd": 247,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "dc2c947b049362e211e384b95bbd3a27f6e563fea9ef91bb16bf0de4f9cb900e",
+  "estimatedLines": 8,
+  "priority": "low",
+  "contract": {
+    "testFile": "tests/contracts/slice-031.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 15. Consideraciones Operacionales > 15.2 Mantenimiento\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T03:05:34.419Z"
+}

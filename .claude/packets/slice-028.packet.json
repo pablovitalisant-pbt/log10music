@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 28,
+  "name": "CICD: 11.5 Containerización",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.5 Containerización (líneas 217-220).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.5 Containerización",
+  "lineStart": 217,
+  "lineEnd": 220,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "7b0f0ad0a3e01a977e51754d05de2dad5b26858342df2752149459f1428d54c4",
+  "estimatedLines": 8,
+  "priority": "high",
+  "contract": {
+    "testFile": "tests/contracts/slice-028.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.5 Containerización\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T03:02:08.195Z"
+}

@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 12,
+  "name": "INTEGRATIONS: 5.3 Integraciones Externas",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.3 Integraciones Externas (líneas 97-102).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.3 Integraciones Externas",
+  "lineStart": 97,
+  "lineEnd": 102,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "33abbb19bf46d645c39704976d217cc5680593bdf6df62d785795553f2baa837",
+  "estimatedLines": 12,
+  "priority": "medium",
+  "contract": {
+    "testFile": "tests/contracts/slice-012.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.3 Integraciones Externas\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:42:44.971Z"
+}

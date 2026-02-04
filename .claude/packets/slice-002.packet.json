@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 2,
+  "name": "SETUP: 2. Requerimientos Funcionales y No Funcionales",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 2. Requerimientos Funcionales y No Funcionales (líneas 16-30).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 2. Requerimientos Funcionales y No Funcionales",
+  "lineStart": 16,
+  "lineEnd": 30,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "c254b56d38e9a6a37136c7c027550059c0a9e7db0932b3f59901eae4fb92d7c1",
+  "estimatedLines": 30,
+  "priority": "critical",
+  "contract": {
+    "testFile": "tests/contracts/slice-002.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 2. Requerimientos Funcionales y No Funcionales\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:26:46.578Z"
+}

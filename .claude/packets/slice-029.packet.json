@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 29,
+  "name": "CICD: 12. Gestión de Versiones y Código",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 12. Gestión de Versiones y Código (líneas 221-226).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 12. Gestión de Versiones y Código",
+  "lineStart": 221,
+  "lineEnd": 226,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "e0f92b399207b5fec61636a614d20256986777744cf1682ebccf708dff7dd14b",
+  "estimatedLines": 12,
+  "priority": "high",
+  "contract": {
+    "testFile": "tests/contracts/slice-029.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 12. Gestión de Versiones y Código\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T03:03:10.206Z"
+}

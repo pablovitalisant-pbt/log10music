@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 20,
+  "name": "FRONTEND: 8.2 UI/UX (Fidelidad 100% a Stitch)",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.2 UI/UX (Fidelidad 100% a Stitch) (líneas 142-151).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.2 UI/UX (Fidelidad 100% a Stitch)",
+  "lineStart": 142,
+  "lineEnd": 151,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "5df5353dbfdbc9c86219ba8f53fbc0d582fe10b88e52633eef195ee0be5e3104",
+  "estimatedLines": 20,
+  "priority": "medium",
+  "contract": {
+    "testFile": "tests/contracts/slice-020.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.2 UI/UX (Fidelidad 100% a Stitch)\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:52:32.586Z"
+}

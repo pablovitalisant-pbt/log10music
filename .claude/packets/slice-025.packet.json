@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 25,
+  "name": "CICD: 11.1 Pipeline CI/CD",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.1 Pipeline CI/CD (líneas 198-202).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.1 Pipeline CI/CD",
+  "lineStart": 198,
+  "lineEnd": 202,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "e763450534b8ca4ab1b2f468f709237ef2c2891c1784734f04800e9800bffcfa",
+  "estimatedLines": 10,
+  "priority": "high",
+  "contract": {
+    "testFile": "tests/contracts/slice-025.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.1 Pipeline CI/CD\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:58:32.222Z"
+}

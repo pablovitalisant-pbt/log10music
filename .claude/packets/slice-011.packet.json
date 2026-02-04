@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 11,
+  "name": "APIS: 5.2 Endpoints Detallados",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.2 Endpoints Detallados (líneas 90-96).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.2 Endpoints Detallados",
+  "lineStart": 90,
+  "lineEnd": 96,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "82245a9278134b94eb73d85b28b4e04a142eaa58d8450ed7c8256a09742d0515",
+  "estimatedLines": 14,
+  "priority": "high",
+  "contract": {
+    "testFile": "tests/contracts/slice-011.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.2 Endpoints Detallados\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:41:30.424Z"
+}

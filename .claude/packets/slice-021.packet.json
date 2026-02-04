@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 21,
+  "name": "FRONTEND: 8.3 Performance Frontend",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.3 Performance Frontend (líneas 152-157).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.3 Performance Frontend",
+  "lineStart": 152,
+  "lineEnd": 157,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "adf6116b0fa6290d3e219321c7d1e5784f3e28be5195dc86b3f70a4c9835b009",
+  "estimatedLines": 12,
+  "priority": "medium",
+  "contract": {
+    "testFile": "tests/contracts/slice-021.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.3 Performance Frontend\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:53:57.861Z"
+}

@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 7,
+  "name": "DATABASE: 4.2 Tipos de Almacenamiento",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.2 Tipos de Almacenamiento (líneas 67-75).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.2 Tipos de Almacenamiento",
+  "lineStart": 67,
+  "lineEnd": 75,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "269e8c824a55ff01ed33550266fa38e8cb5ac68d098385ef3c618709f7237476",
+  "estimatedLines": 18,
+  "priority": "critical",
+  "contract": {
+    "testFile": "tests/contracts/slice-007.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.2 Tipos de Almacenamiento\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:35:20.588Z"
+}

@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 19,
+  "name": "FRONTEND: 8.1 Arquitectura Frontend",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.1 Arquitectura Frontend (líneas 135-141).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.1 Arquitectura Frontend",
+  "lineStart": 135,
+  "lineEnd": 141,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "b02a9f428e5a8f957b837fbbf7d6ec0673476aa97d8ca4474b6a7849500b55b4",
+  "estimatedLines": 14,
+  "priority": "medium",
+  "contract": {
+    "testFile": "tests/contracts/slice-019.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.1 Arquitectura Frontend\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:51:24.580Z"
+}

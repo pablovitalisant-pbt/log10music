@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 33,
+  "name": "OTHER: 11.3 Infrastructure as Code",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.3 Infrastructure as Code (líneas 209-212).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.3 Infrastructure as Code",
+  "lineStart": 209,
+  "lineEnd": 212,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "f782dbd22179ffee167c52ca959d18f934e12f8382af6d5a0f73c963b1158dfb",
+  "estimatedLines": 8,
+  "priority": "medium",
+  "contract": {
+    "testFile": "tests/contracts/slice-033.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.3 Infrastructure as Code\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T03:07:52.260Z"
+}

@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 8,
+  "name": "DATABASE: 4.3 Estrategias de Datos",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.3 Estrategias de Datos (líneas 76-81).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.3 Estrategias de Datos",
+  "lineStart": 76,
+  "lineEnd": 81,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "b059761a8c3edb3aa16d7b917f017e9b2c906c196df17d66773f037984cfcd36",
+  "estimatedLines": 12,
+  "priority": "critical",
+  "contract": {
+    "testFile": "tests/contracts/slice-008.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.3 Estrategias de Datos\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:36:17.181Z"
+}

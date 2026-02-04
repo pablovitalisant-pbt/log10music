@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 15,
+  "name": "OBSERVABILITY: 9.2 Métricas",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.2 Métricas (líneas 165-169).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.2 Métricas",
+  "lineStart": 165,
+  "lineEnd": 169,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "8affae07bc2bb20ef15ecb14a41ad2e0d9e9c4db556493391296e5802ca20ffa",
+  "estimatedLines": 10,
+  "priority": "high",
+  "contract": {
+    "testFile": "tests/contracts/slice-015.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.2 Métricas\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:46:51.157Z"
+}

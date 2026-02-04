@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 32,
+  "name": "OTHER: 7.1 Secretos y Credenciales",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.1 Secretos y Credenciales (líneas 114-120).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.1 Secretos y Credenciales",
+  "lineStart": 114,
+  "lineEnd": 120,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "7b25b4d77124898462a014bf4b4ffcc89ed55cf3f3f090821b1233b49710be8b",
+  "estimatedLines": 14,
+  "priority": "medium",
+  "contract": {
+    "testFile": "tests/contracts/slice-032.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.1 Secretos y Credenciales\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T03:06:44.932Z"
+}

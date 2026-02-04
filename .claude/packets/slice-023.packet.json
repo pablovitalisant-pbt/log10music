@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 23,
+  "name": "TESTING: 10.2 Tipos de Tests",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.2 Tipos de Tests (líneas 186-191).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.2 Tipos de Tests",
+  "lineStart": 186,
+  "lineEnd": 191,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "75c44573d1c89c92759a40b30bce3a67479842bcabc7e8366a397cadaef166aa",
+  "estimatedLines": 12,
+  "priority": "high",
+  "contract": {
+    "testFile": "tests/contracts/slice-023.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.2 Tipos de Tests\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:56:14.080Z"
+}

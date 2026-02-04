@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 3,
+  "name": "SETUP: 3.1 Arquitectura General",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.1 Arquitectura General (líneas 33-39).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.1 Arquitectura General",
+  "lineStart": 33,
+  "lineEnd": 39,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "2aed0ddafe6321970689159cc05d4b6e259b9ee1da3e357cc257535e4b857bd8",
+  "estimatedLines": 14,
+  "priority": "critical",
+  "contract": {
+    "testFile": "tests/contracts/slice-003.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.1 Arquitectura General\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:29:14.854Z"
+}

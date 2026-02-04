@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Log10Music | Revolución del Audio Profesional</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Inter:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5F00", // Vibrant Orange
+                        "charcoal": "#0A0A0A", // Deep Black
+                        "industrial": "#1A1A1A",
+                    },
+                    fontFamily: {
+                        "display": ["Archivo Black", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">@layer base {
+    body {
+        @apply bg-charcoal text-white overflow-x-hidden;
+        } h1, h2, h3 {
+        @apply font-display uppercase tracking-tighter;
+        }
+    }
+.mesh-gradient {
+    background-image: radial-gradient(at 0% 0%, rgba(255, 95, 0, 0.15) 0, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 95, 0, 0.1) 0, transparent 50%)
+    }
+.slanted-divider {
+    clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 95%)
+    }
+.glitch-text {
+    text-shadow: 2px 0 #FF5F00, -2px 0 #0ff
+    }
+.industrial-pattern {
+    background-image: radial-gradient(#333 1px, transparent 1px);
+    background-size: 20px 20px
+    }
+.noise-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBKgZTiOkjqBoKXJBOk8KI4QjwgC_AIl201nGOHmPY1WjLVCKI8ZdcD_5t5HRgKMgXWN17J0t042qh1Jk8ZJsJn-kvk-t_KkIJzTenQDbiQxvT3glcgTjya9I-zfj-nIUJcca1lXL0L4DDjojAycLV7nThHcu4zstTl_pqFJCFn7xZPaFCfuoNIosm_hCyjyaET_l0evJECkYQisSAvcPviACPSI0o0Cf29K12ZcYMGEBhMCLATdQu3i_p1Kny70XRLPv3oAamvUDRl);
+    opacity: 0.05;
+    pointer-events: none
+    }
+.text-outline {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+    color: transparent
+    }</style>
+</head>
+<body class="font-sans">
+<div class="fixed inset-0 noise-overlay z-[100]"></div>
+<header class="fixed top-0 z-50 w-full bg-charcoal/90 backdrop-blur-xl border-b border-white/10">
+<div class="max-w-[1600px] mx-auto flex items-center justify-between px-8 py-5">
+<div class="flex items-center gap-4">
+<div class="size-10 bg-primary flex items-center justify-center transform -rotate-12">
+<span class="material-symbols-outlined text-charcoal font-black">graphic_eq</span>
+</div>
+<h2 class="text-2xl font-black tracking-tighter">LOG10<span class="text-primary">MUSIC</span></h2>
+</div>
+<nav class="hidden md:flex items-center gap-12">
+<a class="text-xs font-black tracking-widest uppercase hover:text-primary transition-colors" href="#problema">El Caos</a>
+<a class="text-xs font-black tracking-widest uppercase hover:text-primary transition-colors" href="#solucion">El Sistema</a>
+<a class="text-xs font-black tracking-widest uppercase hover:text-primary transition-colors" href="#sectores">Aliados</a>
+<button class="bg-primary hover:bg-white text-charcoal text-xs font-black tracking-widest px-8 py-3 transform skew-x-[-10deg] transition-all">
+                    CONTACTO DIRECTO
+                </button>
+</nav>
+</div>
+</header>
+<section class="relative min-h-screen flex items-center pt-20 overflow-hidden mesh-gradient">
+<div class="absolute -left-20 top-1/2 -translate-y-1/2 text-[20rem] font-black text-outline select-none leading-none opacity-10 whitespace-nowrap z-0">
+            LOG10 AUDIO LOG10 AUDIO
+        </div>
+<div class="container mx-auto px-8 relative z-10">
+<div class="grid lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-8">
+<div class="inline-block bg-primary text-charcoal px-4 py-1 font-black text-sm mb-8 transform -rotate-2">
+                        ALERTA DE MERCADO: BOLIVIA 2026
+                    </div>
+<h1 class="text-7xl md:text-[10rem] font-black leading-[0.85] mb-8 tracking-tighter uppercase">
+                        SI COMPRAS <br/>
+<span class="text-primary">COMO EN</span> <br/>
+<span class="relative">
+                            2020...
+                            <span class="absolute -bottom-2 left-0 w-full h-4 bg-primary/30"></span>
+</span>
+</h1>
+<div class="max-w-2xl mb-12">
+<p class="text-4xl md:text-6xl font-black glitch-text mb-6">EN 2026 VAS A <span class="bg-white text-charcoal px-4">PERDER DINERO</span></p>
+<p class="text-xl text-white/70 font-bold uppercase tracking-wide">La industria del audio profesional cambió. O evolucionas tu cadena de suministro hoy, o tu rentabilidad muere mañana.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-6">
+<button class="bg-primary text-charcoal hover:bg-white px-12 py-6 text-2xl font-black transform -skew-x-6 transition-all shadow-[8px_8px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-x-1 hover:translate-y-1">
+                            HABLAR CON UN EXPERTO
+                        </button>
+<button class="border-4 border-white/20 hover:border-primary text-white px-12 py-6 text-2xl font-black transform -skew-x-6 transition-all">
+                            VER STOCK IQUIQUE
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute right-[-10%] bottom-0 w-1/2 h-full z-0 opacity-40 lg:opacity-100 pointer-events-none">
+<div class="relative w-full h-full">
+<div class="absolute inset-0 bg-gradient-to-l from-charcoal via-transparent to-transparent z-10"></div>
+<div class="w-full h-full bg-cover bg-center grayscale contrast-125 transform skew-x-[-5deg] scale-110 shadow-2xl border-l-[20px] border-primary" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB4kEXH2QQJ8BKCHCpPhrj0Fcm604dCr6X3BOGPcWCIF0HET1bd9Ibp8kS7tYJMRk3KgrQiZxJFcwpDmhr_3q20EYUmbTv4mnlw4zQTQNxcxqu_CNxahyUNMX9bCkzAfQCEwg4a2fvQGnwpCsveMlQFy4GExxKudguVyjxMWafr_BUV9If6KB0TK1WJq8_xISlmdUTIrO9xeC4DfMFOe_jSCXxh7cgClODzrDYEymcDaeExQ3OsEf9N9M8bkTzLlcY55caq5OFIE9TH');"></div>
+</div>
+</div>
+</section>
+<section class="py-32 bg-white text-charcoal relative z-20 slanted-divider mt-[-5vw]" id="problema">
+<div class="container mx-auto px-8 py-20">
+<div class="flex flex-col lg:flex-row gap-20 items-start">
+<div class="lg:w-1/3 sticky top-32">
+<h2 class="text-6xl md:text-8xl font-black leading-none mb-8">EL CAOS <br/><span class="text-primary">REAL</span></h2>
+<p class="text-xl font-bold opacity-60 uppercase tracking-widest">Seamos brutales: esto está matando tu negocio.</p>
+</div>
+<div class="lg:w-2/3 grid gap-12">
+<div class="group border-b-4 border-charcoal pb-12">
+<div class="flex items-start gap-8">
+<span class="text-6xl font-black text-primary/20 group-hover:text-primary transition-colors">01</span>
+<div>
+<h3 class="text-4xl font-black mb-4 group-hover:translate-x-4 transition-transform">GIROS BANCARIOS MUERTOS</h3>
+<p class="text-xl font-bold opacity-70">Sistemas obsoletos, comisiones del 25% y esperas que hacen que pierdas el contrato antes de que el dinero llegue a destino.</p>
+</div>
+</div>
+</div>
+<div class="group border-b-4 border-charcoal pb-12">
+<div class="flex items-start gap-8">
+<span class="text-6xl font-black text-primary/20 group-hover:text-primary transition-colors">02</span>
+<div>
+<h3 class="text-4xl font-black mb-4 group-hover:translate-x-4 transition-transform">STOCK FANTASMA</h3>
+<p class="text-xl font-bold opacity-70">"Llega en 15 días" significa 3 meses en el mundo real. Tu reputación no puede depender de las mentiras de un intermediario.</p>
+</div>
+</div>
+</div>
+<div class="group border-b-4 border-charcoal pb-12">
+<div class="flex items-start gap-8">
+<span class="text-6xl font-black text-primary/20 group-hover:text-primary transition-colors">03</span>
+<div>
+<h3 class="text-4xl font-black mb-4 group-hover:translate-x-4 transition-transform">INFIERNO ADUANERO</h3>
+<p class="text-xl font-bold opacity-70">Equipos retenidos por falta de preparación técnica legal. Multas que devoran tu margen de ganancia.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-32 bg-charcoal overflow-hidden relative">
+<div class="industrial-pattern absolute inset-0 opacity-20"></div>
+<div class="container mx-auto px-8 relative z-10">
+<div class="text-center mb-24">
+<h2 class="text-5xl md:text-9xl font-black mb-6">EL PROBLEMA NO ES <br/><span class="bg-primary text-charcoal px-6">BOLIVIA</span></h2>
+<h3 class="text-3xl md:text-5xl font-black opacity-40">EL PROBLEMA ES TU LOGÍSTICA</h3>
+</div>
+<div class="grid md:grid-cols-2 gap-1 px-4 max-w-6xl mx-auto bg-white/10 p-2">
+<div class="bg-charcoal p-12 border border-white/10">
+<p class="text-primary font-black mb-8 tracking-[0.3em] uppercase">El Pasado</p>
+<ul class="space-y-6">
+<li class="flex gap-4 items-center text-white/40 font-bold"><span class="material-symbols-outlined text-red-600">cancel</span> BANCOS LENTOS Y CAROS</li>
+<li class="flex gap-4 items-center text-white/40 font-bold"><span class="material-symbols-outlined text-red-600">cancel</span> CERO STOCK REAL</li>
+<li class="flex gap-4 items-center text-white/40 font-bold"><span class="material-symbols-outlined text-red-600">cancel</span> LOGÍSTICA IMPROVISADA</li>
+</ul>
+</div>
+<div class="bg-primary p-12 text-charcoal transform scale-105 shadow-[0_0_100px_rgba(255,95,0,0.3)]">
+<p class="font-black mb-8 tracking-[0.3em] uppercase">LOG10 NEW ERA</p>
+<ul class="space-y-6">
+<li class="flex gap-4 items-center font-black text-2xl"><span class="material-symbols-outlined bg-charcoal text-primary p-1">check_circle</span> CRYPTO PAY (USDT)</li>
+<li class="flex gap-4 items-center font-black text-2xl"><span class="material-symbols-outlined bg-charcoal text-primary p-1">check_circle</span> STOCK FÍSICO IQUIQUE</li>
+<li class="flex gap-4 items-center font-black text-2xl"><span class="material-symbols-outlined bg-charcoal text-primary p-1">check_circle</span> DESPACHO TÉCNICO 0%</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="py-32 bg-industrial" id="solucion">
+<div class="container mx-auto px-8">
+<div class="grid lg:grid-cols-4 gap-0 border-4 border-white/5">
+<div class="p-12 border border-white/5 group hover:bg-primary transition-all duration-500">
+<span class="material-symbols-outlined text-6xl text-primary group-hover:text-charcoal mb-8 scale-125 block">inventory</span>
+<h4 class="text-3xl font-black mb-6 group-hover:text-charcoal uppercase">STOCK <br/>BRUTAL</h4>
+<p class="font-bold opacity-60 group-hover:text-charcoal group-hover:opacity-100">Bodegas en Iquique con equipo real, no catálogos vacíos. Lo ves, lo pagas, sale hoy.</p>
+</div>
+<div class="p-12 border border-white/5 group hover:bg-primary transition-all duration-500">
+<span class="material-symbols-outlined text-6xl text-primary group-hover:text-charcoal mb-8 scale-125 block">currency_bitcoin</span>
+<h4 class="text-3xl font-black mb-6 group-hover:text-charcoal uppercase">PAGOS <br/>CRYPTO</h4>
+<p class="font-bold opacity-60 group-hover:text-charcoal group-hover:opacity-100">USDT / USDC. Olvida las restricciones. Liquidez inmediata para operaciones globales.</p>
+</div>
+<div class="p-12 border border-white/5 group hover:bg-primary transition-all duration-500">
+<span class="material-symbols-outlined text-6xl text-primary group-hover:text-charcoal mb-8 scale-125 block">shield_with_heart</span>
+<h4 class="text-3xl font-black mb-6 group-hover:text-charcoal uppercase">SOPORTE <br/>ELITE</h4>
+<p class="font-bold opacity-60 group-hover:text-charcoal group-hover:opacity-100">No somos vendedores de cajas. Somos ingenieros configurando tu próximo gran evento.</p>
+</div>
+<div class="p-12 border border-white/5 group hover:bg-primary transition-all duration-500">
+<span class="material-symbols-outlined text-6xl text-primary group-hover:text-charcoal mb-8 scale-125 block">local_shipping</span>
+<h4 class="text-3xl font-black mb-6 group-hover:text-charcoal uppercase">CRUCE <br/>EXPERTO</h4>
+<p class="font-bold opacity-60 group-hover:text-charcoal group-hover:opacity-100">Conocimiento quirúrgico del código arancelario. Tu carga llega limpia a Bolivia.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-32 bg-charcoal" id="sectores">
+<div class="container mx-auto px-8">
+<h2 class="text-6xl md:text-9xl font-black text-center mb-24 opacity-20">MISIONES</h2>
+<div class="space-y-32">
+<div class="flex flex-col lg:flex-row gap-16 items-center">
+<div class="lg:w-1/2 relative">
+<div class="absolute -top-10 -left-10 text-[12rem] font-black text-outline z-0">01</div>
+<img alt="Rental" class="relative z-10 grayscale hover:grayscale-0 transition-all duration-700 w-full h-[500px] object-cover border-b-[30px] border-primary shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW5xbZR15NqQuIhxo7a1gLeDXVAzowsEMVUPl9U3uWYoeF2gS4k__auk_Al5Beyv9-Ka7i5fa5prvieTQwgDBvqRmRtNQNJYvRGo5YsZcSIkhliWl8rFhyZfkWQCoEBXNW3oPgwWjsGiecmN1SzzHz0u1lmsoCf5xeLWH7NHIrQYw0Kw7VI__oxF_ZuSAQcojfDJYuhkJjQZf5FD8IdD56qQTr8Ryvynx9WQHYi6xljJKCvYaAku3kg380z3M8mI4A0E6j42W5C80h"/>
+</div>
+<div class="lg:w-1/2">
+<h3 class="text-6xl font-black mb-6">EVENTOS &amp; <br/><span class="text-primary">RENTAL</span></h3>
+<p class="text-2xl font-bold italic mb-8 border-l-8 border-primary pl-6">"El rider no espera. Necesito la consola en el camión mañana."</p>
+<ul class="space-y-4 text-xl font-bold opacity-70">
+<li class="flex gap-4 items-center"><span class="size-2 bg-primary"></span> Reposición de componentes críticos 24h</li>
+<li class="flex gap-4 items-center"><span class="size-2 bg-primary"></span> Configuración y optimización de Line Arrays</li>
+</ul>
+</div>
+</div>
+<div class="flex flex-col lg:flex-row-reverse gap-16 items-center">
+<div class="lg:w-1/2 relative">
+<div class="absolute -top-10 -right-10 text-[12rem] font-black text-outline z-0 text-right">02</div>
+<img alt="Studio" class="relative z-10 grayscale hover:grayscale-0 transition-all duration-700 w-full h-[500px] object-cover border-t-[30px] border-primary shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArYRxQv7tDbV804_3cJly_jxCU29-ZnDmv35TO7mciuUdJYnNCbJ7saBofcXulQxaxw_0hnv5ZXD00ulMwepqSsnxmCvmzyeN3yAjlTkBVR_kQ_98RyV0ghAStq73XR_oLVxCNV6Fdnt3H8G0JbnAFPtFaiE-U1dJ6cF6hV1Lm6yzrm793FwcfdcVCZKBWxm2IiWSRg7Qm8SiZcUHsKOdIwY_LRGq2-_OaJKZVFwmVmpRYXd4SFCneHRNLNuccn4ZtcaCqfS5BgwMs"/>
+</div>
+<div class="lg:w-1/2 text-right">
+<h3 class="text-6xl font-black mb-6">ESTUDIOS &amp; <br/><span class="text-primary">PRODUCCIÓN</span></h3>
+<p class="text-2xl font-bold italic mb-8 border-r-8 border-primary pr-6">"Pagaría el doble si no tuviera que esperar meses por un previo."</p>
+<ul class="space-y-4 text-xl font-bold opacity-70 flex flex-col items-end">
+<li class="flex gap-4 items-center">Monitoreo de gama alta en stock <span class="size-2 bg-primary"></span></li>
+<li class="flex gap-4 items-center">Tratamiento acústico profesional <span class="size-2 bg-primary"></span></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-32 bg-primary text-charcoal relative overflow-hidden">
+<div class="container mx-auto px-8 relative z-10">
+<div class="flex flex-col md:flex-row justify-between items-center gap-12">
+<div class="text-[12rem] md:text-[20rem] font-black leading-none tracking-tighter transform -rotate-12">2026</div>
+<div class="max-w-2xl">
+<h2 class="text-5xl font-black mb-8 leading-tight">LA VENTANA DEL 0% SE ESTÁ CERRANDO.</h2>
+<p class="text-2xl font-bold mb-10">Los beneficios fiscales actuales no son para siempre. Quien no modernice su infraestructura hoy, no podrá competir en dos años. Somos tu consultora de guerra tecnológica.</p>
+<button class="bg-charcoal text-white px-12 py-6 text-2xl font-black hover:bg-white hover:text-charcoal transition-all">CONSULTAR BENEFICIOS</button>
+</div>
+</div>
+</div>
+</section>
+<section class="py-32 bg-charcoal border-t border-white/10">
+<div class="container mx-auto px-8 max-w-4xl">
+<h2 class="text-5xl font-black mb-16 text-center">PROTOCOLOS <span class="text-primary">FAQ</span></h2>
+<div class="space-y-4">
+<details class="group bg-industrial border border-white/5 p-8 cursor-pointer hover:border-primary transition-all">
+<summary class="flex justify-between items-center list-none font-black text-2xl uppercase">
+                        ¿PAGO EN USDT ES SEGURO?
+                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">keyboard_arrow_down</span>
+</summary>
+<p class="mt-8 text-lg font-bold opacity-60 leading-relaxed uppercase tracking-wide">Es el estándar global para importaciones de alta velocidad. Transparencia total, confirmación en minutos, sin burocracia bancaria boliviana.</p>
+</details>
+<details class="group bg-industrial border border-white/5 p-8 cursor-pointer hover:border-primary transition-all">
+<summary class="flex justify-between items-center list-none font-black text-2xl uppercase">
+                        ¿SOPORTE EN BOLIVIA?
+                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">keyboard_arrow_down</span>
+</summary>
+<p class="mt-8 text-lg font-bold opacity-60 leading-relaxed uppercase tracking-wide">Nuestro equipo técnico cruza la frontera constantemente para puestas en marcha y mantenimiento preventivo. No estás solo con una caja.</p>
+</details>
+</div>
+</div>
+</section>
+<section class="py-48 bg-charcoal relative overflow-hidden">
+<div class="absolute inset-0 opacity-10 bg-[url('https://lh3.googleusercontent.com/aida-public/AB6AXuCXXsn4HWvhuHwMbNaH8NFUEa2rithjZ5nmuTPtBrv4le06EIcYOxN3i6JCt7aXz8_P7lgRu-lpHeBGBBBCO50lhUpcG29hR77ntRGhURnEQoT9sGQGS3coC4LtJ4U5VopqjZ7t0ldClO3OiEoCOjVAUt9fKFRjjK6v5Jg27Z0NnkVuSOxN558t-c7xbFvL0wQgec3fnuLRbkzBkJb95_UXMtrYp0CRpubTza-Z8Xv25zV6ePkOAzpQd_anSkrkALtRZGKI7fruJHW7')] bg-cover bg-center scale-110 grayscale"></div>
+<div class="container mx-auto px-8 relative z-10 text-center">
+<h2 class="text-6xl md:text-[10rem] font-black leading-none mb-12 uppercase tracking-tighter">
+                ÚNETE A LA <br/><span class="text-primary">REVOLUCIÓN</span>
+</h2>
+<p class="text-3xl font-bold mb-16 max-w-3xl mx-auto opacity-70">No somos una tienda. Somos el motor que impulsará el audio profesional en Bolivia hacia la próxima década.</p>
+<button class="bg-primary text-charcoal px-20 py-8 text-4xl font-black hover:scale-105 transition-all shadow-[0_0_80px_rgba(255,95,0,0.5)]">
+                SOLICITAR DIAGNÓSTICO GRATUITO
+            </button>
+<div class="mt-12 flex items-center justify-center gap-4 text-primary font-black uppercase tracking-[0.2em]">
+<span class="material-symbols-outlined">bolt</span>
+                SÓLO PARA VERDADEROS PROFESIONALES
+                <span class="material-symbols-outlined">bolt</span>
+</div>
+</div>
+</section>
+<footer class="bg-charcoal py-20 border-t border-white/10">
+<div class="container mx-auto px-8">
+<div class="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
+<div>
+<h2 class="text-4xl font-black mb-6">LOG10<span class="text-primary">MUSIC</span></h2>
+<p class="text-white/40 font-bold uppercase tracking-widest">Iquique, Chile • Santa Cruz, Bolivia</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-16">
+<div>
+<h4 class="font-black text-primary mb-6 uppercase">OPERACIONES</h4>
+<ul class="space-y-2 text-sm font-bold opacity-40">
+<li>STOCK REAL</li>
+<li>LOGÍSTICA</li>
+<li>ADUANAS</li>
+</ul>
+</div>
+<div>
+<h4 class="font-black text-primary mb-6 uppercase">LEGAL</h4>
+<ul class="space-y-2 text-sm font-bold opacity-40">
+<li>TÉRMINOS</li>
+<li>PRIVACIDAD</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between text-[10px] font-black tracking-[0.3em] opacity-30 uppercase">
+<p>© 2024 LOG10MUSIC. EL AUDIO PROFESIONAL CAMBIÓ PARA SIEMPRE.</p>
+<p>DESIGNED FOR THE BOLD</p>
+</div>
+</div>
+</footer>
+
+</body></html>

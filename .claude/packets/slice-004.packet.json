@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 4,
+  "name": "SETUP: 3.3 Infraestructura",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.3 Infraestructura (líneas 47-53).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.3 Infraestructura",
+  "lineStart": 47,
+  "lineEnd": 53,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "555850070a73094338c3251abceb2805d23ae2cb7ebd4cb87f185e1041afbb9d",
+  "estimatedLines": 14,
+  "priority": "critical",
+  "contract": {
+    "testFile": "tests/contracts/slice-004.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.3 Infraestructura\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:30:22.401Z"
+}

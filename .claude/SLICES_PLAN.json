@@ -1,0 +1,1237 @@
+{
+  "projectName": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System",
+  "generatedAt": "2026-02-04T02:06:58.197Z",
+  "totalSections": 46,
+  "totalSlices": 33,
+  "sections": [
+    {
+      "id": "SEC-001",
+      "level": 1,
+      "title": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System",
+      "startLine": 1,
+      "endLine": 2,
+      "implementable": false,
+      "category": "setup"
+    },
+    {
+      "id": "SEC-002",
+      "level": 2,
+      "title": "1. Definición del Proyecto y Negocio",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 1. Definición del Proyecto y Negocio",
+      "startLine": 3,
+      "endLine": 15,
+      "implementable": true,
+      "category": "setup"
+    },
+    {
+      "id": "SEC-003",
+      "level": 2,
+      "title": "2. Requerimientos Funcionales y No Funcionales",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 2. Requerimientos Funcionales y No Funcionales",
+      "startLine": 16,
+      "endLine": 30,
+      "implementable": true,
+      "category": "setup"
+    },
+    {
+      "id": "SEC-004",
+      "level": 2,
+      "title": "3. Arquitectura del Sistema",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema",
+      "startLine": 31,
+      "endLine": 32,
+      "implementable": false,
+      "category": "setup"
+    },
+    {
+      "id": "SEC-005",
+      "level": 3,
+      "title": "3.1 Arquitectura General",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.1 Arquitectura General",
+      "startLine": 33,
+      "endLine": 39,
+      "implementable": true,
+      "category": "setup"
+    },
+    {
+      "id": "SEC-006",
+      "level": 3,
+      "title": "3.2 Componentes y Módulos",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.2 Componentes y Módulos",
+      "startLine": 40,
+      "endLine": 46,
+      "implementable": true,
+      "category": "frontend"
+    },
+    {
+      "id": "SEC-007",
+      "level": 3,
+      "title": "3.3 Infraestructura",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.3 Infraestructura",
+      "startLine": 47,
+      "endLine": 53,
+      "implementable": true,
+      "category": "setup"
+    },
+    {
+      "id": "SEC-008",
+      "level": 2,
+      "title": "4. Bases de Datos y Almacenamiento",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento",
+      "startLine": 54,
+      "endLine": 55,
+      "implementable": false,
+      "category": "database"
+    },
+    {
+      "id": "SEC-009",
+      "level": 3,
+      "title": "4.1 Diseño de Datos",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.1 Diseño de Datos",
+      "startLine": 56,
+      "endLine": 66,
+      "implementable": true,
+      "category": "database"
+    },
+    {
+      "id": "SEC-010",
+      "level": 3,
+      "title": "4.2 Tipos de Almacenamiento",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.2 Tipos de Almacenamiento",
+      "startLine": 67,
+      "endLine": 75,
+      "implementable": true,
+      "category": "database"
+    },
+    {
+      "id": "SEC-011",
+      "level": 3,
+      "title": "4.3 Estrategias de Datos",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.3 Estrategias de Datos",
+      "startLine": 76,
+      "endLine": 81,
+      "implementable": true,
+      "category": "database"
+    },
+    {
+      "id": "SEC-012",
+      "level": 2,
+      "title": "5. APIs y Contratos de Interfaz",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz",
+      "startLine": 82,
+      "endLine": 83,
+      "implementable": false,
+      "category": "apis"
+    },
+    {
+      "id": "SEC-013",
+      "level": 3,
+      "title": "5.1 API Design",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.1 API Design",
+      "startLine": 84,
+      "endLine": 89,
+      "implementable": true,
+      "category": "apis"
+    },
+    {
+      "id": "SEC-014",
+      "level": 3,
+      "title": "5.2 Endpoints Detallados",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.2 Endpoints Detallados",
+      "startLine": 90,
+      "endLine": 96,
+      "implementable": true,
+      "category": "apis"
+    },
+    {
+      "id": "SEC-015",
+      "level": 3,
+      "title": "5.3 Integraciones Externas",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.3 Integraciones Externas",
+      "startLine": 97,
+      "endLine": 102,
+      "implementable": true,
+      "category": "integrations"
+    },
+    {
+      "id": "SEC-016",
+      "level": 2,
+      "title": "6. Autenticación y Autorización",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 6. Autenticación y Autorización",
+      "startLine": 103,
+      "endLine": 111,
+      "implementable": true,
+      "category": "auth"
+    },
+    {
+      "id": "SEC-017",
+      "level": 2,
+      "title": "7. Seguridad",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad",
+      "startLine": 112,
+      "endLine": 113,
+      "implementable": false,
+      "category": "security"
+    },
+    {
+      "id": "SEC-018",
+      "level": 3,
+      "title": "7.1 Secretos y Credenciales",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.1 Secretos y Credenciales",
+      "startLine": 114,
+      "endLine": 120,
+      "implementable": true,
+      "category": "other"
+    },
+    {
+      "id": "SEC-019",
+      "level": 3,
+      "title": "7.2 Seguridad de Aplicación",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.2 Seguridad de Aplicación",
+      "startLine": 121,
+      "endLine": 127,
+      "implementable": true,
+      "category": "security"
+    },
+    {
+      "id": "SEC-020",
+      "level": 3,
+      "title": "7.3 Infraestructura",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.3 Infraestructura",
+      "startLine": 128,
+      "endLine": 132,
+      "implementable": true,
+      "category": "setup"
+    },
+    {
+      "id": "SEC-021",
+      "level": 2,
+      "title": "8. Frontend",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend",
+      "startLine": 133,
+      "endLine": 134,
+      "implementable": false,
+      "category": "frontend"
+    },
+    {
+      "id": "SEC-022",
+      "level": 3,
+      "title": "8.1 Arquitectura Frontend",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.1 Arquitectura Frontend",
+      "startLine": 135,
+      "endLine": 141,
+      "implementable": true,
+      "category": "frontend"
+    },
+    {
+      "id": "SEC-023",
+      "level": 3,
+      "title": "8.2 UI/UX (Fidelidad 100% a Stitch)",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.2 UI/UX (Fidelidad 100% a Stitch)",
+      "startLine": 142,
+      "endLine": 151,
+      "implementable": true,
+      "category": "frontend"
+    },
+    {
+      "id": "SEC-024",
+      "level": 3,
+      "title": "8.3 Performance Frontend",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.3 Performance Frontend",
+      "startLine": 152,
+      "endLine": 157,
+      "implementable": true,
+      "category": "frontend"
+    },
+    {
+      "id": "SEC-025",
+      "level": 2,
+      "title": "9. Observabilidad y Monitoreo",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo",
+      "startLine": 158,
+      "endLine": 159,
+      "implementable": false,
+      "category": "observability"
+    },
+    {
+      "id": "SEC-026",
+      "level": 3,
+      "title": "9.1 Logging",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.1 Logging",
+      "startLine": 160,
+      "endLine": 164,
+      "implementable": true,
+      "category": "observability"
+    },
+    {
+      "id": "SEC-027",
+      "level": 3,
+      "title": "9.2 Métricas",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.2 Métricas",
+      "startLine": 165,
+      "endLine": 169,
+      "implementable": true,
+      "category": "observability"
+    },
+    {
+      "id": "SEC-028",
+      "level": 3,
+      "title": "9.3 Tracing",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.3 Tracing",
+      "startLine": 170,
+      "endLine": 173,
+      "implementable": true,
+      "category": "observability"
+    },
+    {
+      "id": "SEC-029",
+      "level": 3,
+      "title": "9.4 Alerting",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.4 Alerting",
+      "startLine": 174,
+      "endLine": 177,
+      "implementable": true,
+      "category": "observability"
+    },
+    {
+      "id": "SEC-030",
+      "level": 2,
+      "title": "10. Testing",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing",
+      "startLine": 178,
+      "endLine": 179,
+      "implementable": false,
+      "category": "testing"
+    },
+    {
+      "id": "SEC-031",
+      "level": 3,
+      "title": "10.1 Estrategia de Testing",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.1 Estrategia de Testing",
+      "startLine": 180,
+      "endLine": 185,
+      "implementable": true,
+      "category": "testing"
+    },
+    {
+      "id": "SEC-032",
+      "level": 3,
+      "title": "10.2 Tipos de Tests",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.2 Tipos de Tests",
+      "startLine": 186,
+      "endLine": 191,
+      "implementable": true,
+      "category": "testing"
+    },
+    {
+      "id": "SEC-033",
+      "level": 3,
+      "title": "10.3 Test Data",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.3 Test Data",
+      "startLine": 192,
+      "endLine": 195,
+      "implementable": true,
+      "category": "testing"
+    },
+    {
+      "id": "SEC-034",
+      "level": 2,
+      "title": "11. CI/CD y Deployment",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment",
+      "startLine": 196,
+      "endLine": 197,
+      "implementable": false,
+      "category": "cicd"
+    },
+    {
+      "id": "SEC-035",
+      "level": 3,
+      "title": "11.1 Pipeline CI/CD",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.1 Pipeline CI/CD",
+      "startLine": 198,
+      "endLine": 202,
+      "implementable": true,
+      "category": "cicd"
+    },
+    {
+      "id": "SEC-036",
+      "level": 3,
+      "title": "11.2 Estrategia de Deployment",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.2 Estrategia de Deployment",
+      "startLine": 203,
+      "endLine": 208,
+      "implementable": true,
+      "category": "cicd"
+    },
+    {
+      "id": "SEC-037",
+      "level": 3,
+      "title": "11.3 Infrastructure as Code",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.3 Infrastructure as Code",
+      "startLine": 209,
+      "endLine": 212,
+      "implementable": true,
+      "category": "other"
+    },
+    {
+      "id": "SEC-038",
+      "level": 3,
+      "title": "11.4 Configuración",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.4 Configuración",
+      "startLine": 213,
+      "endLine": 216,
+      "implementable": true,
+      "category": "cicd"
+    },
+    {
+      "id": "SEC-039",
+      "level": 3,
+      "title": "11.5 Containerización",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.5 Containerización",
+      "startLine": 217,
+      "endLine": 220,
+      "implementable": true,
+      "category": "cicd"
+    },
+    {
+      "id": "SEC-040",
+      "level": 2,
+      "title": "12. Gestión de Versiones y Código",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 12. Gestión de Versiones y Código",
+      "startLine": 221,
+      "endLine": 226,
+      "implementable": true,
+      "category": "cicd"
+    },
+    {
+      "id": "SEC-041",
+      "level": 2,
+      "title": "13. Documentación",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 13. Documentación",
+      "startLine": 227,
+      "endLine": 232,
+      "implementable": false,
+      "category": "other"
+    },
+    {
+      "id": "SEC-042",
+      "level": 2,
+      "title": "14. Costos y Recursos",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 14. Costos y Recursos",
+      "startLine": 233,
+      "endLine": 237,
+      "implementable": false,
+      "category": "other"
+    },
+    {
+      "id": "SEC-043",
+      "level": 2,
+      "title": "15. Consideraciones Operacionales",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 15. Consideraciones Operacionales",
+      "startLine": 238,
+      "endLine": 239,
+      "implementable": false,
+      "category": "operations"
+    },
+    {
+      "id": "SEC-044",
+      "level": 3,
+      "title": "15.1 Disaster Recovery",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 15. Consideraciones Operacionales > 15.1 Disaster Recovery",
+      "startLine": 240,
+      "endLine": 243,
+      "implementable": true,
+      "category": "operations"
+    },
+    {
+      "id": "SEC-045",
+      "level": 3,
+      "title": "15.2 Mantenimiento",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 15. Consideraciones Operacionales > 15.2 Mantenimiento",
+      "startLine": 244,
+      "endLine": 247,
+      "implementable": true,
+      "category": "operations"
+    },
+    {
+      "id": "SEC-046",
+      "level": 2,
+      "title": "16. Compliance y Legal",
+      "path": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 16. Compliance y Legal",
+      "startLine": 248,
+      "endLine": 255,
+      "implementable": false,
+      "category": "other"
+    }
+  ],
+  "coverage": {
+    "totalSections": 46,
+    "implementableSections": 33,
+    "coveredSections": 33,
+    "uncoveredImplementableSections": [],
+    "coveragePercentage": 100
+  },
+  "slices": [
+    {
+      "number": 1,
+      "name": "SETUP: 1. Definición del Proyecto y Negocio",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 1. Definición del Proyecto y Negocio (líneas 3-15).",
+      "estimatedLines": 26,
+      "priority": "critical",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-002",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 1. Definición del Proyecto y Negocio",
+        "lineStart": 3,
+        "lineEnd": 15,
+        "textHash": "cabe45d724416a885a9d118d4fc38ade451ba1ba58855cab58010fbb4a820220",
+        "category": "setup",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-001.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 1. Definición del Proyecto y Negocio\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 2,
+      "name": "SETUP: 2. Requerimientos Funcionales y No Funcionales",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 2. Requerimientos Funcionales y No Funcionales (líneas 16-30).",
+      "estimatedLines": 30,
+      "priority": "critical",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-003",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 2. Requerimientos Funcionales y No Funcionales",
+        "lineStart": 16,
+        "lineEnd": 30,
+        "textHash": "c254b56d38e9a6a37136c7c027550059c0a9e7db0932b3f59901eae4fb92d7c1",
+        "category": "setup",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-002.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 2. Requerimientos Funcionales y No Funcionales\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 3,
+      "name": "SETUP: 3.1 Arquitectura General",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.1 Arquitectura General (líneas 33-39).",
+      "estimatedLines": 14,
+      "priority": "critical",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-005",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.1 Arquitectura General",
+        "lineStart": 33,
+        "lineEnd": 39,
+        "textHash": "2aed0ddafe6321970689159cc05d4b6e259b9ee1da3e357cc257535e4b857bd8",
+        "category": "setup",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-003.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.1 Arquitectura General\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 4,
+      "name": "SETUP: 3.3 Infraestructura",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.3 Infraestructura (líneas 47-53).",
+      "estimatedLines": 14,
+      "priority": "critical",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-007",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.3 Infraestructura",
+        "lineStart": 47,
+        "lineEnd": 53,
+        "textHash": "555850070a73094338c3251abceb2805d23ae2cb7ebd4cb87f185e1041afbb9d",
+        "category": "setup",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-004.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.3 Infraestructura\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 5,
+      "name": "SETUP: 7.3 Infraestructura",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.3 Infraestructura (líneas 128-132).",
+      "estimatedLines": 10,
+      "priority": "critical",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-020",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.3 Infraestructura",
+        "lineStart": 128,
+        "lineEnd": 132,
+        "textHash": "036361150e64c101649ddedd9502d2b5089bdd6f6f07677458b9b3aa40192ea6",
+        "category": "setup",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-005.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.3 Infraestructura\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 6,
+      "name": "DATABASE: 4.1 Diseño de Datos",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.1 Diseño de Datos (líneas 56-66).",
+      "estimatedLines": 22,
+      "priority": "critical",
+      "dependencies": [
+        1
+      ],
+      "source": {
+        "sectionId": "SEC-009",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.1 Diseño de Datos",
+        "lineStart": 56,
+        "lineEnd": 66,
+        "textHash": "aaf870d20922a8929a1f343937c95c7f21ffb888336ce53132a7cae8b063117a",
+        "category": "database",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-006.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.1 Diseño de Datos\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 7,
+      "name": "DATABASE: 4.2 Tipos de Almacenamiento",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.2 Tipos de Almacenamiento (líneas 67-75).",
+      "estimatedLines": 18,
+      "priority": "critical",
+      "dependencies": [
+        1
+      ],
+      "source": {
+        "sectionId": "SEC-010",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.2 Tipos de Almacenamiento",
+        "lineStart": 67,
+        "lineEnd": 75,
+        "textHash": "269e8c824a55ff01ed33550266fa38e8cb5ac68d098385ef3c618709f7237476",
+        "category": "database",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-007.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.2 Tipos de Almacenamiento\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 8,
+      "name": "DATABASE: 4.3 Estrategias de Datos",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.3 Estrategias de Datos (líneas 76-81).",
+      "estimatedLines": 12,
+      "priority": "critical",
+      "dependencies": [
+        1
+      ],
+      "source": {
+        "sectionId": "SEC-011",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.3 Estrategias de Datos",
+        "lineStart": 76,
+        "lineEnd": 81,
+        "textHash": "b059761a8c3edb3aa16d7b917f017e9b2c906c196df17d66773f037984cfcd36",
+        "category": "database",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-008.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.3 Estrategias de Datos\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 9,
+      "name": "AUTH: 6. Autenticación y Autorización",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 6. Autenticación y Autorización (líneas 103-111).",
+      "estimatedLines": 18,
+      "priority": "critical",
+      "dependencies": [
+        6
+      ],
+      "source": {
+        "sectionId": "SEC-016",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 6. Autenticación y Autorización",
+        "lineStart": 103,
+        "lineEnd": 111,
+        "textHash": "fdc7afb794a45be56fe47d584e5f6f9f79f73c60429e13cc2b04ef0cf6b4a607",
+        "category": "auth",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-009.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 6. Autenticación y Autorización\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 10,
+      "name": "APIS: 5.1 API Design",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.1 API Design (líneas 84-89).",
+      "estimatedLines": 12,
+      "priority": "high",
+      "dependencies": [
+        6,
+        9
+      ],
+      "source": {
+        "sectionId": "SEC-013",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.1 API Design",
+        "lineStart": 84,
+        "lineEnd": 89,
+        "textHash": "ff4a733f49cad5ae7bd2504660bf061823a138b55aad2322b3f9a6aab8262ed9",
+        "category": "apis",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-010.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.1 API Design\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 11,
+      "name": "APIS: 5.2 Endpoints Detallados",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.2 Endpoints Detallados (líneas 90-96).",
+      "estimatedLines": 14,
+      "priority": "high",
+      "dependencies": [
+        6,
+        9
+      ],
+      "source": {
+        "sectionId": "SEC-014",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.2 Endpoints Detallados",
+        "lineStart": 90,
+        "lineEnd": 96,
+        "textHash": "82245a9278134b94eb73d85b28b4e04a142eaa58d8450ed7c8256a09742d0515",
+        "category": "apis",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-011.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.2 Endpoints Detallados\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 12,
+      "name": "INTEGRATIONS: 5.3 Integraciones Externas",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.3 Integraciones Externas (líneas 97-102).",
+      "estimatedLines": 12,
+      "priority": "medium",
+      "dependencies": [
+        10
+      ],
+      "source": {
+        "sectionId": "SEC-015",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.3 Integraciones Externas",
+        "lineStart": 97,
+        "lineEnd": 102,
+        "textHash": "33abbb19bf46d645c39704976d217cc5680593bdf6df62d785795553f2baa837",
+        "category": "integrations",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-012.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.3 Integraciones Externas\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 13,
+      "name": "SECURITY: 7.2 Seguridad de Aplicación",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.2 Seguridad de Aplicación (líneas 121-127).",
+      "estimatedLines": 14,
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "source": {
+        "sectionId": "SEC-019",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.2 Seguridad de Aplicación",
+        "lineStart": 121,
+        "lineEnd": 127,
+        "textHash": "57ec95de3aea9b48d0ce458db130674e5bb6f7c94b44569b995489acc1b4c5bd",
+        "category": "security",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-013.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.2 Seguridad de Aplicación\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 14,
+      "name": "OBSERVABILITY: 9.1 Logging",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.1 Logging (líneas 160-164).",
+      "estimatedLines": 10,
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "source": {
+        "sectionId": "SEC-026",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.1 Logging",
+        "lineStart": 160,
+        "lineEnd": 164,
+        "textHash": "3692cac7518857e48da524fe918cc17dd4e87b6f8e6d1b7a2f6a777e247595f1",
+        "category": "observability",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-014.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.1 Logging\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 15,
+      "name": "OBSERVABILITY: 9.2 Métricas",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.2 Métricas (líneas 165-169).",
+      "estimatedLines": 10,
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "source": {
+        "sectionId": "SEC-027",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.2 Métricas",
+        "lineStart": 165,
+        "lineEnd": 169,
+        "textHash": "8affae07bc2bb20ef15ecb14a41ad2e0d9e9c4db556493391296e5802ca20ffa",
+        "category": "observability",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-015.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.2 Métricas\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 16,
+      "name": "OBSERVABILITY: 9.3 Tracing",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.3 Tracing (líneas 170-173).",
+      "estimatedLines": 8,
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "source": {
+        "sectionId": "SEC-028",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.3 Tracing",
+        "lineStart": 170,
+        "lineEnd": 173,
+        "textHash": "6ed0c32939191c8863496dc747ba2d8d4720caeaa08c26b56b16ee47aa25cc73",
+        "category": "observability",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-016.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.3 Tracing\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 17,
+      "name": "OBSERVABILITY: 9.4 Alerting",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.4 Alerting (líneas 174-177).",
+      "estimatedLines": 8,
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "source": {
+        "sectionId": "SEC-029",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.4 Alerting",
+        "lineStart": 174,
+        "lineEnd": 177,
+        "textHash": "b4cfad2b5c6ff37c162b7d0a3f3a430b44dd9190bfd924e589a45969ebdc99b7",
+        "category": "observability",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-017.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.4 Alerting\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 18,
+      "name": "FRONTEND: 3.2 Componentes y Módulos",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.2 Componentes y Módulos (líneas 40-46).",
+      "estimatedLines": 14,
+      "priority": "medium",
+      "dependencies": [
+        10
+      ],
+      "source": {
+        "sectionId": "SEC-006",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.2 Componentes y Módulos",
+        "lineStart": 40,
+        "lineEnd": 46,
+        "textHash": "c3932e7df8b0a22a383a0ce87b79cc00ccab2eb670bbb46234176e3d9b366d42",
+        "category": "frontend",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-018.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.2 Componentes y Módulos\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 19,
+      "name": "FRONTEND: 8.1 Arquitectura Frontend",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.1 Arquitectura Frontend (líneas 135-141).",
+      "estimatedLines": 14,
+      "priority": "medium",
+      "dependencies": [
+        10
+      ],
+      "source": {
+        "sectionId": "SEC-022",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.1 Arquitectura Frontend",
+        "lineStart": 135,
+        "lineEnd": 141,
+        "textHash": "b02a9f428e5a8f957b837fbbf7d6ec0673476aa97d8ca4474b6a7849500b55b4",
+        "category": "frontend",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-019.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.1 Arquitectura Frontend\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 20,
+      "name": "FRONTEND: 8.2 UI/UX (Fidelidad 100% a Stitch)",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.2 UI/UX (Fidelidad 100% a Stitch) (líneas 142-151).",
+      "estimatedLines": 20,
+      "priority": "medium",
+      "dependencies": [
+        10
+      ],
+      "source": {
+        "sectionId": "SEC-023",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.2 UI/UX (Fidelidad 100% a Stitch)",
+        "lineStart": 142,
+        "lineEnd": 151,
+        "textHash": "5df5353dbfdbc9c86219ba8f53fbc0d582fe10b88e52633eef195ee0be5e3104",
+        "category": "frontend",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-020.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.2 UI/UX (Fidelidad 100% a Stitch)\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 21,
+      "name": "FRONTEND: 8.3 Performance Frontend",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.3 Performance Frontend (líneas 152-157).",
+      "estimatedLines": 12,
+      "priority": "medium",
+      "dependencies": [
+        10
+      ],
+      "source": {
+        "sectionId": "SEC-024",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.3 Performance Frontend",
+        "lineStart": 152,
+        "lineEnd": 157,
+        "textHash": "adf6116b0fa6290d3e219321c7d1e5784f3e28be5195dc86b3f70a4c9835b009",
+        "category": "frontend",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-021.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 8. Frontend > 8.3 Performance Frontend\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 22,
+      "name": "TESTING: 10.1 Estrategia de Testing",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.1 Estrategia de Testing (líneas 180-185).",
+      "estimatedLines": 12,
+      "priority": "high",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-031",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.1 Estrategia de Testing",
+        "lineStart": 180,
+        "lineEnd": 185,
+        "textHash": "cd2d72ce9d22f21a121a933f7b3d4f76a11f090c77935e8d0b473bd31600b606",
+        "category": "testing",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-022.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.1 Estrategia de Testing\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 23,
+      "name": "TESTING: 10.2 Tipos de Tests",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.2 Tipos de Tests (líneas 186-191).",
+      "estimatedLines": 12,
+      "priority": "high",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-032",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.2 Tipos de Tests",
+        "lineStart": 186,
+        "lineEnd": 191,
+        "textHash": "75c44573d1c89c92759a40b30bce3a67479842bcabc7e8366a397cadaef166aa",
+        "category": "testing",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-023.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.2 Tipos de Tests\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 24,
+      "name": "TESTING: 10.3 Test Data",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.3 Test Data (líneas 192-195).",
+      "estimatedLines": 8,
+      "priority": "high",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-033",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.3 Test Data",
+        "lineStart": 192,
+        "lineEnd": 195,
+        "textHash": "9555d386c2b9494de2231ca8356fae40029fc9b43f46fc6445f0b68215dc25a4",
+        "category": "testing",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-024.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.3 Test Data\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 25,
+      "name": "CICD: 11.1 Pipeline CI/CD",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.1 Pipeline CI/CD (líneas 198-202).",
+      "estimatedLines": 10,
+      "priority": "high",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-035",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.1 Pipeline CI/CD",
+        "lineStart": 198,
+        "lineEnd": 202,
+        "textHash": "e763450534b8ca4ab1b2f468f709237ef2c2891c1784734f04800e9800bffcfa",
+        "category": "cicd",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-025.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.1 Pipeline CI/CD\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 26,
+      "name": "CICD: 11.2 Estrategia de Deployment",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.2 Estrategia de Deployment (líneas 203-208).",
+      "estimatedLines": 12,
+      "priority": "high",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-036",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.2 Estrategia de Deployment",
+        "lineStart": 203,
+        "lineEnd": 208,
+        "textHash": "0838c12a3ef96bfad1c4d4a8bf0659f35557f33638a1e8fdcd081d1d69ce4a66",
+        "category": "cicd",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-026.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.2 Estrategia de Deployment\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 27,
+      "name": "CICD: 11.4 Configuración",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.4 Configuración (líneas 213-216).",
+      "estimatedLines": 8,
+      "priority": "high",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-038",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.4 Configuración",
+        "lineStart": 213,
+        "lineEnd": 216,
+        "textHash": "d23ba61e6b4d0aa78694489333db81134303107ffa34f306f9777f9c818bf42c",
+        "category": "cicd",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-027.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.4 Configuración\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 28,
+      "name": "CICD: 11.5 Containerización",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.5 Containerización (líneas 217-220).",
+      "estimatedLines": 8,
+      "priority": "high",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-039",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.5 Containerización",
+        "lineStart": 217,
+        "lineEnd": 220,
+        "textHash": "7b0f0ad0a3e01a977e51754d05de2dad5b26858342df2752149459f1428d54c4",
+        "category": "cicd",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-028.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.5 Containerización\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 29,
+      "name": "CICD: 12. Gestión de Versiones y Código",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 12. Gestión de Versiones y Código (líneas 221-226).",
+      "estimatedLines": 12,
+      "priority": "high",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-040",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 12. Gestión de Versiones y Código",
+        "lineStart": 221,
+        "lineEnd": 226,
+        "textHash": "e0f92b399207b5fec61636a614d20256986777744cf1682ebccf708dff7dd14b",
+        "category": "cicd",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-029.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 12. Gestión de Versiones y Código\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 30,
+      "name": "OPERATIONS: 15.1 Disaster Recovery",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 15. Consideraciones Operacionales > 15.1 Disaster Recovery (líneas 240-243).",
+      "estimatedLines": 8,
+      "priority": "low",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-044",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 15. Consideraciones Operacionales > 15.1 Disaster Recovery",
+        "lineStart": 240,
+        "lineEnd": 243,
+        "textHash": "17a5b79f6fefb6d75fe9d59d4ac93d52168b260cfd6e8ac4e5f81d7c22a4cb21",
+        "category": "operations",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-030.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 15. Consideraciones Operacionales > 15.1 Disaster Recovery\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 31,
+      "name": "OPERATIONS: 15.2 Mantenimiento",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 15. Consideraciones Operacionales > 15.2 Mantenimiento (líneas 244-247).",
+      "estimatedLines": 8,
+      "priority": "low",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-045",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 15. Consideraciones Operacionales > 15.2 Mantenimiento",
+        "lineStart": 244,
+        "lineEnd": 247,
+        "textHash": "dc2c947b049362e211e384b95bbd3a27f6e563fea9ef91bb16bf0de4f9cb900e",
+        "category": "operations",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-031.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 15. Consideraciones Operacionales > 15.2 Mantenimiento\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 32,
+      "name": "OTHER: 7.1 Secretos y Credenciales",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.1 Secretos y Credenciales (líneas 114-120).",
+      "estimatedLines": 14,
+      "priority": "medium",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-018",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.1 Secretos y Credenciales",
+        "lineStart": 114,
+        "lineEnd": 120,
+        "textHash": "7b25b4d77124898462a014bf4b4ffcc89ed55cf3f3f090821b1233b49710be8b",
+        "category": "other",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-032.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.1 Secretos y Credenciales\"",
+        "redThenGreenRequired": true
+      }
+    },
+    {
+      "number": 33,
+      "name": "OTHER: 11.3 Infrastructure as Code",
+      "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.3 Infrastructure as Code (líneas 209-212).",
+      "estimatedLines": 8,
+      "priority": "medium",
+      "dependencies": [],
+      "source": {
+        "sectionId": "SEC-037",
+        "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.3 Infrastructure as Code",
+        "lineStart": 209,
+        "lineEnd": 212,
+        "textHash": "f782dbd22179ffee167c52ca959d18f934e12f8382af6d5a0f73c963b1158dfb",
+        "category": "other",
+        "part": null
+      },
+      "contract": {
+        "testFile": "tests/contracts/slice-033.test.ts",
+        "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 11. CI/CD y Deployment > 11.3 Infrastructure as Code\"",
+        "redThenGreenRequired": true
+      }
+    }
+  ]
+}

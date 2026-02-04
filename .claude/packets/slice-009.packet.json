@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 9,
+  "name": "AUTH: 6. Autenticación y Autorización",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 6. Autenticación y Autorización (líneas 103-111).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 6. Autenticación y Autorización",
+  "lineStart": 103,
+  "lineEnd": 111,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "fdc7afb794a45be56fe47d584e5f6f9f79f73c60429e13cc2b04ef0cf6b4a607",
+  "estimatedLines": 18,
+  "priority": "critical",
+  "contract": {
+    "testFile": "tests/contracts/slice-009.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 6. Autenticación y Autorización\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:38:26.545Z"
+}

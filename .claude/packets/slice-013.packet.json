@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 13,
+  "name": "SECURITY: 7.2 Seguridad de Aplicación",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.2 Seguridad de Aplicación (líneas 121-127).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.2 Seguridad de Aplicación",
+  "lineStart": 121,
+  "lineEnd": 127,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "57ec95de3aea9b48d0ce458db130674e5bb6f7c94b44569b995489acc1b4c5bd",
+  "estimatedLines": 14,
+  "priority": "high",
+  "contract": {
+    "testFile": "tests/contracts/slice-013.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 7. Seguridad > 7.2 Seguridad de Aplicación\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:43:59.113Z"
+}

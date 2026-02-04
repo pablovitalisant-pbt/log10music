@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 6,
+  "name": "DATABASE: 4.1 Diseño de Datos",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.1 Diseño de Datos (líneas 56-66).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.1 Diseño de Datos",
+  "lineStart": 56,
+  "lineEnd": 66,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "aaf870d20922a8929a1f343937c95c7f21ffb888336ce53132a7cae8b063117a",
+  "estimatedLines": 22,
+  "priority": "critical",
+  "contract": {
+    "testFile": "tests/contracts/slice-006.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 4. Bases de Datos y Almacenamiento > 4.1 Diseño de Datos\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:34:23.196Z"
+}

@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 30,
+  "name": "OPERATIONS: 15.1 Disaster Recovery",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 15. Consideraciones Operacionales > 15.1 Disaster Recovery (líneas 240-243).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 15. Consideraciones Operacionales > 15.1 Disaster Recovery",
+  "lineStart": 240,
+  "lineEnd": 243,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "17a5b79f6fefb6d75fe9d59d4ac93d52168b260cfd6e8ac4e5f81d7c22a4cb21",
+  "estimatedLines": 8,
+  "priority": "low",
+  "contract": {
+    "testFile": "tests/contracts/slice-030.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 15. Consideraciones Operacionales > 15.1 Disaster Recovery\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T03:04:25.842Z"
+}

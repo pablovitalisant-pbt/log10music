@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 22,
+  "name": "TESTING: 10.1 Estrategia de Testing",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.1 Estrategia de Testing (líneas 180-185).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.1 Estrategia de Testing",
+  "lineStart": 180,
+  "lineEnd": 185,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "cd2d72ce9d22f21a121a933f7b3d4f76a11f090c77935e8d0b473bd31600b606",
+  "estimatedLines": 12,
+  "priority": "high",
+  "contract": {
+    "testFile": "tests/contracts/slice-022.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 10. Testing > 10.1 Estrategia de Testing\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:55:01.419Z"
+}

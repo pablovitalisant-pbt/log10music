@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 18,
+  "name": "FRONTEND: 3.2 Componentes y Módulos",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.2 Componentes y Módulos (líneas 40-46).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.2 Componentes y Módulos",
+  "lineStart": 40,
+  "lineEnd": 46,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "c3932e7df8b0a22a383a0ce87b79cc00ccab2eb670bbb46234176e3d9b366d42",
+  "estimatedLines": 14,
+  "priority": "medium",
+  "contract": {
+    "testFile": "tests/contracts/slice-018.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 3. Arquitectura del Sistema > 3.2 Componentes y Módulos\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:50:13.704Z"
+}

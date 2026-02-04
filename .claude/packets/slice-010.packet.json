@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 10,
+  "name": "APIS: 5.1 API Design",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.1 API Design (líneas 84-89).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.1 API Design",
+  "lineStart": 84,
+  "lineEnd": 89,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "ff4a733f49cad5ae7bd2504660bf061823a138b55aad2322b3f9a6aab8262ed9",
+  "estimatedLines": 12,
+  "priority": "high",
+  "contract": {
+    "testFile": "tests/contracts/slice-010.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 5. APIs y Contratos de Interfaz > 5.1 API Design\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:40:26.002Z"
+}

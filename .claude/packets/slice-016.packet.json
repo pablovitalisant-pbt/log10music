@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 16,
+  "name": "OBSERVABILITY: 9.3 Tracing",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.3 Tracing (líneas 170-173).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.3 Tracing",
+  "lineStart": 170,
+  "lineEnd": 173,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "6ed0c32939191c8863496dc747ba2d8d4720caeaa08c26b56b16ee47aa25cc73",
+  "estimatedLines": 8,
+  "priority": "high",
+  "contract": {
+    "testFile": "tests/contracts/slice-016.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 9. Observabilidad y Monitoreo > 9.3 Tracing\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:47:47.200Z"
+}

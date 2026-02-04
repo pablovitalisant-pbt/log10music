@@ -1,0 +1,18 @@
+{
+  "sliceNumber": 1,
+  "name": "SETUP: 1. Definición del Proyecto y Negocio",
+  "description": "Implementar lo descrito en: Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 1. Definición del Proyecto y Negocio (líneas 3-15).",
+  "headingPath": "Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 1. Definición del Proyecto y Negocio",
+  "lineStart": 3,
+  "lineEnd": 15,
+  "prdHash": "c5c09f8f3be3ab29c51b85580d28510e426eeba11654ab6e26c5c489ef5e4cb9",
+  "blockHash": "cabe45d724416a885a9d118d4fc38ade451ba1ba58855cab58010fbb4a820220",
+  "estimatedLines": 26,
+  "priority": "critical",
+  "contract": {
+    "testFile": "tests/contracts/slice-001.test.ts",
+    "requirement": "Cubrir comportamiento descrito en \"Planificación Exhaustiva de un Proyecto de Software: Log10Music Lead System > 1. Definición del Proyecto y Negocio\"",
+    "redThenGreenRequired": true
+  },
+  "generatedAt": "2026-02-04T02:11:29.661Z"
+}
