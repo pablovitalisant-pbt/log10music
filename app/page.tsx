@@ -6,7 +6,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <main dangerouslySetInnerHTML={{ __html: html }} />
+      <main className="landing-root" dangerouslySetInnerHTML={{ __html: html }} />
       <LeadCaptureModal />
     </>
   );

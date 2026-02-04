@@ -42,3 +42,71 @@
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
   color: transparent;
 }
+
+@media (max-width: 768px) {
+  .landing-root .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .landing-root section.py-32 {
+    padding-top: 4.5rem !important;
+    padding-bottom: 4.5rem !important;
+  }
+
+  .landing-root section.py-48 {
+    padding-top: 6rem !important;
+    padding-bottom: 6rem !important;
+  }
+
+  .landing-root .mesh-gradient h1 {
+    font-size: clamp(2.5rem, 14vw, 4.5rem) !important;
+    line-height: 0.9 !important;
+  }
+
+  .landing-root .mesh-gradient .glitch-text {
+    font-size: clamp(1.8rem, 9vw, 3rem) !important;
+    line-height: 1.05 !important;
+    text-shadow: 1px 0 #ff5f00, -1px 0 #0ff;
+  }
+
+  .landing-root .mesh-gradient .text-\[20rem\] {
+    display: none !important;
+  }
+
+  .landing-root .mesh-gradient .right-\[-10\%\] {
+    display: none !important;
+  }
+
+  .landing-root .mesh-gradient .max-w-2xl p.text-xl {
+    font-size: 1rem !important;
+    line-height: 1.45 !important;
+  }
+
+  .landing-root .mesh-gradient .flex.flex-col.sm\:flex-row.gap-6 button {
+    width: 100%;
+    padding: 1rem 1.25rem !important;
+    font-size: 1.1rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .landing-root img.h-\[500px\] {
+    height: 320px !important;
+  }
+
+  .landing-root .text-\[12rem\].md\:text-\[20rem\] {
+    font-size: 5.5rem !important;
+    line-height: 0.9 !important;
+  }
+
+  .landing-root .text-6xl.md\:text-\[10rem\] {
+    font-size: clamp(2.4rem, 12vw, 4rem) !important;
+    line-height: 0.9 !important;
+  }
+
+  .landing-root .bg-primary.text-charcoal.px-20.py-8.text-4xl {
+    width: 100%;
+    padding: 1rem 1.25rem !important;
+    font-size: 1.5rem !important;
+  }
+}
