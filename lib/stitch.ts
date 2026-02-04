@@ -1,15 +1,17 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import { cache } from 'react';
 
 function extractBody(html: string): string {
   const match = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
   return match ? match[1].trim() : html;
 }
 
-export async function getStitchBodyHtml(): Promise<string> {
+export const getStitchBodyHtml = cache(async (): Promise<string> => {
   const file = path.join(process.cwd(), 'docs', 'UI Design', 'code.html');
   const html = await fs.readFile(file, 'utf8');
   const body = extractBody(html)
+    .replace('<span class="absolute -bottom-2 left-0 w-full h-4 bg-primary/30"></span>', '')
     .replace(
       'class="relative min-h-screen flex items-center pt-20 overflow-hidden mesh-gradient"',
       'class="relative z-30 min-h-screen flex items-center pt-20 overflow-hidden mesh-gradient"'
@@ -30,4 +32,4 @@ export async function getStitchBodyHtml(): Promise<string> {
     .replace(/CONTACTO DIRECTO/g, 'SOLICITAR DIAGNÓSTICO')
     .replace(/SOLICITAR DIAGNÓSTICO GRATUITO/g, 'SOLICITAR DIAGNÓSTICO');
   return body;
-}
+});

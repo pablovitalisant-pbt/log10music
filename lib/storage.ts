@@ -15,13 +15,45 @@ type Lead = {
 
 type Db = { site_config: SiteConfig; leads: Lead[] };
 
-async function readDb(): Promise<Db> {
-  const raw = await fs.readFile(dbPath, 'utf8');
-  return JSON.parse(raw) as Db;
+const defaultDb: Db = { site_config: { header_code: '', footer_code: '' }, leads: [] };
+let dbCache: Db | null = null;
+let readInFlight: Promise<Db> | null = null;
+let writeQueue: Promise<void> = Promise.resolve();
+
+function cloneDb(db: Db): Db {
+  return JSON.parse(JSON.stringify(db)) as Db;
 }
 
-async function writeDb(db: Db): Promise<void> {
-  await fs.writeFile(dbPath, JSON.stringify(db, null, 2), 'utf8');
+async function loadDbFromDisk(): Promise<Db> {
+  try {
+    const raw = await fs.readFile(dbPath, 'utf8');
+    return JSON.parse(raw) as Db;
+  } catch (error: unknown) {
+    const err = error as NodeJS.ErrnoException;
+    if (err.code !== 'ENOENT') throw error;
+    await fs.mkdir(path.dirname(dbPath), { recursive: true });
+    await fs.writeFile(dbPath, JSON.stringify(defaultDb, null, 2), 'utf8');
+    return cloneDb(defaultDb);
+  }
+}
+
+async function readDb(): Promise<Db> {
+  if (dbCache) return cloneDb(dbCache);
+  if (!readInFlight) {
+    readInFlight = loadDbFromDisk().then((db) => {
+      dbCache = db;
+      return db;
+    });
+  }
+  const db = await readInFlight;
+  readInFlight = null;
+  return cloneDb(db);
+}
+
+function enqueueWrite(nextDb: Db): Promise<void> {
+  dbCache = cloneDb(nextDb);
+  writeQueue = writeQueue.then(() => fs.writeFile(dbPath, JSON.stringify(nextDb, null, 2), 'utf8'));
+  return writeQueue;
 }
 
 export async function getSiteConfig(): Promise<SiteConfig> {
@@ -32,7 +64,7 @@ export async function getSiteConfig(): Promise<SiteConfig> {
 export async function updateSiteConfig(config: SiteConfig): Promise<void> {
   const db = await readDb();
   db.site_config = config;
-  await writeDb(db);
+  await enqueueWrite(db);
 }
 
 export async function addLead(input: {
@@ -51,7 +83,7 @@ export async function addLead(input: {
     created_at: new Date().toISOString(),
   };
   db.leads.unshift(lead);
-  await writeDb(db);
+  await enqueueWrite(db);
   return lead;
 }
 

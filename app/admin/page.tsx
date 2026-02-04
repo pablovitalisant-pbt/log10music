@@ -25,7 +25,8 @@ function LoginView() {
 }
 
 export default async function AdminPage() {
-  const isAdmin = cookies().get(ADMIN_COOKIE_NAME)?.value === getAdminToken();
+  const cookieStore = await cookies();
+  const isAdmin = cookieStore.get(ADMIN_COOKIE_NAME)?.value === getAdminToken();
   if (!isAdmin) return <LoginView />;
 
   const [leads, config] = await Promise.all([listLeads(), getSiteConfig()]);

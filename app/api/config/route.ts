@@ -5,8 +5,9 @@ import { getSiteConfig, updateSiteConfig } from '../../../lib/storage';
 
 export const runtime = 'nodejs';
 
-function isAdmin() {
-  return cookies().get(ADMIN_COOKIE_NAME)?.value === getAdminToken();
+async function isAdmin() {
+  const cookieStore = await cookies();
+  return cookieStore.get(ADMIN_COOKIE_NAME)?.value === getAdminToken();
 }
 
 export async function GET() {
@@ -15,7 +16,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  if (!isAdmin()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!(await isAdmin())) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   const contentType = request.headers.get('content-type') || '';
   if (contentType.includes('application/json')) {
     const body = await request.json();
