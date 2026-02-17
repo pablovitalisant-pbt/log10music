@@ -36,6 +36,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {siteConfig.footer_code ? (
           <div id="footer-code" dangerouslySetInnerHTML={{ __html: siteConfig.footer_code }} />
         ) : null}
+        <script
+          src="https://platform.aminos.ai/w/chat_plugin.js"
+          data-bot-id="6129"
+        />
       </body>
     </html>
   );
