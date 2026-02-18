@@ -60,16 +60,18 @@
   }
 
   .landing-root .mesh-gradient h1 {
-    font-size: clamp(2.5rem, 14vw, 4.5rem) !important;
-    line-height: 0.9 !important;
+    font-size: clamp(2rem, 10vw, 3.2rem) !important;
+    line-height: 0.98 !important;
   }
 
   .landing-root .mesh-gradient .glitch-text {
-    font-size: clamp(1.8rem, 9vw, 3rem) !important;
+    font-size: clamp(1.2rem, 7vw, 2.2rem) !important;
     line-height: 1.05 !important;
     text-shadow: 1px 0 #ff5f00, -1px 0 #0ff;
   }
 
+  .landing-root .mesh-gradient .text-\[8rem\],
+  .landing-root .mesh-gradient .text-\[12rem\],
   .landing-root .mesh-gradient .text-\[20rem\] {
     display: none !important;
   }
@@ -78,12 +80,12 @@
     display: none !important;
   }
 
-  .landing-root .mesh-gradient .max-w-2xl p.text-xl {
-    font-size: 1rem !important;
+  .landing-root .mesh-gradient .max-w-2xl p {
+    font-size: 0.95rem !important;
     line-height: 1.45 !important;
   }
 
-  .landing-root .mesh-gradient .flex.flex-col.sm\:flex-row.gap-6 button {
+  .landing-root .mesh-gradient .hero-cta {
     width: 100%;
     padding: 1rem 1.25rem !important;
     font-size: 1.1rem !important;
