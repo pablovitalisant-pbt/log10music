@@ -31,6 +31,27 @@
 
 ## HISTORIAL DE ACTUALIZACIONES
 
+### [2026-02-19 13:30] - Slice S4 completado
+
+**Evidencia:** Tests S4 + suite + typecheck en verde
+
+**Cambios confirmados:**
+- Contrato de extracción agregado en `docs/specs/catalog.model-extract.contract.ts`
+- Wrapper CommonJS en `docs/specs/catalog.model-extract.contract.js`
+- Endpoint extract-model en `app/api/catalog/extract-model/route.ts` (+ wrapper `app/api/catalog/extract-model/route.js`)
+- Extracción base en `src/catalog/extract/modelExtractor.js` y `src/catalog/extract/normalizers.js`
+- Servicio `src/catalog/services/modelEnrichmentService.js`
+- Repo `src/catalog/repositories/sourceProfileRepo.js`
+- Repo `src/catalog/repositories/issueRepo.js` extendido para conteo
+- Tests contract-driven en `tests/contracts/slice-S4-model-extract.test.ts`
+
+**Comandos verificados:**
+- `node scripts/jest-lite.js --testPathPattern=slice-S4-model-extract`
+- `npm test`
+- `npx tsc --noEmit`
+
+**Agente:** Codex CLI
+
 ### [2026-02-19 13:00] - Slice S3 completado
 
 **Evidencia:** Tests S3 + suite + typecheck en verde

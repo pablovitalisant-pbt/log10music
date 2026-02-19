@@ -8,6 +8,9 @@ function createIssueRepo({ store } = {}) {
     listIssues() {
       return [...state.issues];
     },
+    countIssues() {
+      return state.issues.length;
+    },
   };
 }
 
