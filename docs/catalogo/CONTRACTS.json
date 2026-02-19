@@ -1,0 +1,613 @@
+{
+  "version": "1.0",
+  "basePath": "/api",
+  "endpoints": {
+    "POST /catalog/sync": {
+      "summary": "Sincronización MANUAL (admin) desde Google Drive. Actualiza el catálogo usado por /catalogo y el módulo de catálogo dentro del panel existente.",
+      "request": {
+        "type": "object",
+        "properties": {
+          "force": {
+            "type": "boolean",
+            "default": false,
+            "description": "Si true, reprocesa todo aunque no haya cambios."
+          }
+        },
+        "additionalProperties": false
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "runId": {
+            "type": "string"
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "finishedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "stats": {
+            "type": "object",
+            "properties": {
+              "vendorsDetected": {
+                "type": "integer"
+              },
+              "filesScanned": {
+                "type": "integer"
+              },
+              "filesProcessed": {
+                "type": "integer"
+              },
+              "rowsParsed": {
+                "type": "integer"
+              },
+              "productsAvailable": {
+                "type": "integer"
+              },
+              "issuesCount": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "vendorsDetected",
+              "filesScanned",
+              "filesProcessed",
+              "rowsParsed",
+              "productsAvailable",
+              "issuesCount"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "runId",
+          "startedAt",
+          "finishedAt",
+          "stats"
+        ],
+        "additionalProperties": false
+      },
+      "meta": {
+        "auth": "admin"
+      }
+    },
+    "GET /catalog/status": {
+      "summary": "Estado del último sync (admin).",
+      "request": {
+        "type": "null"
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "lastRun": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "runId": {
+                "type": "string"
+              },
+              "startedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "finishedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "stats": {
+                "$ref": "#/schemas/SyncStats"
+              }
+            },
+            "required": [
+              "runId",
+              "startedAt",
+              "finishedAt",
+              "stats"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "lastRun"
+        ],
+        "additionalProperties": false
+      },
+      "meta": {
+        "auth": "admin"
+      }
+    },
+    "GET /catalog/public": {
+      "summary": "Catálogo público (solo disponibles). No incluye precio, stock numérico ni información de importadora.",
+      "request": {
+        "type": "null"
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/schemas/PublicCatalogItem"
+            }
+          }
+        },
+        "required": [
+          "updatedAt",
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "meta": {
+        "auth": "public",
+        "cache": "public-cacheable"
+      }
+    },
+    "GET /catalog/products": {
+      "summary": "Listado admin de productos agregados (incluye fuentes disponibles).",
+      "request": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Filtro de búsqueda (modelo/brand)."
+          },
+          "available": {
+            "type": "boolean",
+            "description": "Filtra por disponibilidad."
+          },
+          "vendorId": {
+            "type": "string",
+            "description": "Filtra por importadora."
+          }
+        },
+        "additionalProperties": false
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/schemas/AdminCatalogProduct"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "meta": {
+        "auth": "admin"
+      }
+    },
+    "GET /catalog/products/{id}": {
+      "summary": "Detalle admin de un producto agregado, con trazabilidad.",
+      "request": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "response": {
+        "$ref": "#/schemas/AdminCatalogProduct"
+      },
+      "meta": {
+        "auth": "admin"
+      }
+    },
+    "GET /catalog/vendors": {
+      "summary": "Lista de importadoras (subcarpetas) detectadas/persistidas.",
+      "request": {
+        "type": "null"
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/schemas/Vendor"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "meta": {
+        "auth": "admin"
+      }
+    },
+    "GET /catalog/files": {
+      "summary": "Lista admin de archivos fuente con estado de parseo.",
+      "request": {
+        "type": "object",
+        "properties": {
+          "vendorId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/schemas/SourceFile"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "meta": {
+        "auth": "admin"
+      }
+    },
+    "GET /catalog/issues": {
+      "summary": "Issues pendientes (archivos o filas no confiables).",
+      "request": {
+        "type": "object",
+        "properties": {
+          "vendorId": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "needs_mapping",
+              "ambiguous_model",
+              "parse_failed"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/schemas/Issue"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "meta": {
+        "auth": "admin"
+      }
+    },
+    "POST /catalog/issues/{id}/resolve": {
+      "summary": "Resuelve un issue guardando reglas (SourceProfile) para un vendor y/o aplicando corrección puntual.",
+      "request": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "resolution": {
+            "$ref": "#/schemas/IssueResolution"
+          }
+        },
+        "required": [
+          "id",
+          "resolution"
+        ],
+        "additionalProperties": false
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok"
+        ],
+        "additionalProperties": false
+      },
+      "meta": {
+        "auth": "admin"
+      }
+    }
+  },
+  "schemas": {
+    "SyncStats": {
+      "type": "object",
+      "properties": {
+        "vendorsDetected": {
+          "type": "integer"
+        },
+        "filesScanned": {
+          "type": "integer"
+        },
+        "filesProcessed": {
+          "type": "integer"
+        },
+        "rowsParsed": {
+          "type": "integer"
+        },
+        "productsAvailable": {
+          "type": "integer"
+        },
+        "issuesCount": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "vendorsDetected",
+        "filesScanned",
+        "filesProcessed",
+        "rowsParsed",
+        "productsAvailable",
+        "issuesCount"
+      ],
+      "additionalProperties": false
+    },
+    "PublicCatalogItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "canonicalKey"
+        },
+        "model": {
+          "type": "string",
+          "description": "Modelo oficial (nombre público)"
+        },
+        "brand": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Marca si se puede inferir"
+        },
+        "available": {
+          "type": "boolean",
+          "const": true,
+          "description": "Siempre true en el catálogo público"
+        }
+      },
+      "required": [
+        "id",
+        "model",
+        "brand",
+        "available"
+      ],
+      "additionalProperties": false
+    },
+    "Vendor": {
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string",
+          "description": "Drive folderId"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "vendorId",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "SourceFile": {
+      "type": "object",
+      "properties": {
+        "fileId": {
+          "type": "string"
+        },
+        "vendorId": {
+          "type": "string"
+        },
+        "fileName": {
+          "type": "string"
+        },
+        "mimeType": {
+          "type": "string"
+        },
+        "modifiedTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "parsed_ok",
+            "needs_mapping",
+            "failed"
+          ]
+        },
+        "parseReport": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "fileId",
+        "vendorId",
+        "fileName",
+        "mimeType",
+        "modifiedTime",
+        "status",
+        "parseReport"
+      ],
+      "additionalProperties": false
+    },
+    "SourceRef": {
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string"
+        },
+        "vendorName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "fileId": {
+          "type": "string"
+        },
+        "fileName": {
+          "type": "string"
+        },
+        "sheetName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rowNumber": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "vendorId",
+        "vendorName",
+        "fileId",
+        "fileName",
+        "sheetName",
+        "rowNumber"
+      ],
+      "additionalProperties": false
+    },
+    "AdminCatalogProduct": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "brand": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "sourcesAvailable": {
+          "type": "array",
+          "items": {
+            "$ref": "#/schemas/SourceRef"
+          }
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "model",
+        "brand",
+        "available",
+        "sourcesAvailable",
+        "updatedAt"
+      ],
+      "additionalProperties": false
+    },
+    "Issue": {
+      "type": "object",
+      "properties": {
+        "issueId": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "needs_mapping",
+            "ambiguous_model",
+            "parse_failed"
+          ]
+        },
+        "vendorId": {
+          "type": "string"
+        },
+        "fileId": {
+          "type": "string"
+        },
+        "fileName": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "issueId",
+        "type",
+        "vendorId",
+        "fileId",
+        "fileName",
+        "detail"
+      ],
+      "additionalProperties": false
+    },
+    "IssueResolution": {
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string"
+        },
+        "profilePatch": {
+          "type": "object",
+          "description": "Cambios a SourceProfile para ese vendor."
+        },
+        "applyReparse": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "required": [
+        "vendorId",
+        "profilePatch",
+        "applyReparse"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "meta": {
+    "scope": "extension",
+    "extends": "admin-dashboard-existing",
+    "note": "Estos endpoints alimentan una sección adicional dentro del panel de administración existente. No crear un dashboard nuevo. No modificar endpoints existentes de leads/config."
+  }
+}

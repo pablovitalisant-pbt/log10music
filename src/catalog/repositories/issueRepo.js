@@ -5,8 +5,16 @@ function createIssueRepo({ store } = {}) {
       state.issues.push(issue);
       return issue;
     },
-    listIssues() {
-      return [...state.issues];
+    resolveIssue(issueId) {
+      const issue = state.issues.find((item) => item.issueId === issueId);
+      if (issue) {
+        issue.resolved = true;
+      }
+      return issue || null;
+    },
+    listIssues({ runId } = {}) {
+      if (!runId) return [...state.issues];
+      return state.issues.filter((issue) => issue.runId === runId);
     },
     countIssues() {
       return state.issues.length;

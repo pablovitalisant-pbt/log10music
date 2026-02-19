@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Log10Music | Catálogo de Audio Profesional</title>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Custom Configuration for Log10 Brand Colors -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#FF5C00',
+              dark: '#000000',
+              surface: '#0A0A0A',
+              muted: '#1A1A1A',
+              border: '#262626'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styles -->
+<style data-purpose="brand-typography">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+    
+    body {
+      background-color: #000000;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .heading-aggressive {
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 0.9;
+    }
+
+    .glass-card {
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid #262626;
+    }
+
+    /* Custom scrollbar for a premium look */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #000000; }
+    ::-webkit-scrollbar-thumb { background: #FF5C00; border-radius: 4px; }
+  </style>
+<!-- END: Custom Styles -->
+</head>
+<body>
+<!-- BEGIN: App Root -->
+<main class="min-h-screen flex flex-col" data-app="log10music-catalog" id="app-root">
+<!-- BEGIN: MainHeader -->
+<header class="sticky top-0 z-50 bg-black/90 border-b border-brand-border backdrop-blur-md" id="page-header">
+<div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<a class="flex items-center" href="/">
+<!-- Logo Placeholder -->
+<div class="h-8 w-auto flex items-center gap-2">
+<div class="w-8 h-8 bg-brand-orange"></div>
+<span class="text-xl font-black tracking-tighter italic">LOG10MUSIC</span>
+</div>
+</a>
+<nav class="hidden md:flex gap-6 text-sm font-bold uppercase tracking-widest text-zinc-400">
+<a class="hover:text-brand-orange transition-colors" href="#catalogo">Catálogo</a>
+
+<a class="hover:text-brand-orange transition-colors text-white" href="#">Stock Iquique</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-brand-orange text-black font-black px-6 py-2 text-xs uppercase tracking-widest hover:bg-orange-600 transition-all">
+          Solicitar Diagnóstico
+        </button>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: PageBody -->
+<div class="flex-grow" id="page-body">
+<!-- BEGIN: Catalogo Section -->
+<section class="py-12 md:py-24" data-purpose="public-catalog" id="catalogo">
+<div class="max-w-7xl mx-auto px-4">
+<!-- Hero Header -->
+<div class="mb-16">
+<h1 class="heading-aggressive text-5xl md:text-8xl mb-6">
+            CATÁLOGO DE<br/>
+<span class="text-brand-orange">AUDIO PROFESIONAL</span>
+</h1>
+<p class="max-w-2xl text-zinc-400 text-lg">
+            Stock real en Iquique para envío inmediato a Bolivia. Sin intermediarios, sin sorpresas aduaneras. Audio de alta gama listo para sonar.
+          </p>
+</div>
+<!-- Search and Filter Bar -->
+<div class="mb-12 flex flex-col md:flex-row gap-4">
+<div class="relative flex-grow">
+<input class="w-full bg-brand-muted border-brand-border focus:border-brand-orange focus:ring-brand-orange text-white py-4 px-6 uppercase font-bold tracking-wider text-sm" placeholder="BUSCAR EQUIPO (CONSOLAS, LINE ARRAYS, MONITORES...)" type="text"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 text-brand-orange">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+</svg>
+</div>
+</div>
+<select class="bg-brand-muted border-brand-border text-zinc-400 font-bold uppercase tracking-widest text-xs px-8 h-14 focus:ring-brand-orange focus:border-brand-orange">
+<option>Todas las Categorías</option>
+<option>Sistemas Line Array</option>
+<option>Consolas Digitales</option>
+<option>Microfonía</option>
+</select>
+</div>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="catalog-list">
+<!-- Product Card Template (Manual Repeats for Visuals) -->
+<article class="glass-card group flex flex-col" data-purpose="product-card">
+<div class="aspect-square bg-zinc-900 overflow-hidden relative">
+<img alt="Product Image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvC7mT2VKYtKXbIJfVSJXaYJgfnbcbLEr3az_-ppyTe2KgOMUGQovtuJfKvG4xs1EqJwsVu_uXsiThtHsqhuVaercQFJ7NDWkD90u_x_428m3XJA6r3fJB9wlRW1CVt7aaDPRvT43pUGVIFwpb_jlzOfjvxsbdolFTW5CviLM6j6bWdOca7rgbvPLefs3eFW2gEvmLyHzyGduzYHpZi2fc4JJbEZ-0O9-ZLhjCg8RFHinL7t0K1odV5fU2S5oka9TLjukgYhsZJYo"/>
+<div class="absolute top-4 left-4 bg-brand-orange text-black font-black px-3 py-1 text-[10px] uppercase">
+                Disponible
+              </div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<span class="text-brand-orange text-[10px] font-black uppercase tracking-[0.2em] mb-2">JBL Professional</span>
+<h3 class="heading-aggressive text-2xl mb-4">VTX V20 High Density Line Array Element</h3>
+<div class="mt-auto pt-6 border-t border-brand-border flex items-center justify-between">
+<span class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest">Consultar Stock</span>
+<button class="bg-transparent border border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-black transition-all px-6 py-2 font-black text-xs uppercase">
+                  Cotizar
+                </button>
+</div>
+</div>
+</article>
+<article class="glass-card group flex flex-col" data-purpose="product-card">
+<div class="aspect-square bg-zinc-900 overflow-hidden relative">
+<img alt="Product Image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeP0C3e1qM689t2E8miZ68LX-lwte-w-0oev98zeU1GGyf-tlEFhMnneL77aV_kPuG71iCb_UAD_gEaqf9IEXSFoQr4koKrj1NNwtjIiTtzua866aPk6aLx7-6fEo182hwqk60EKJmod4ldO1X5JGvB89gJCMnklhC_BEmE5gQTmxYA4izFJa4wl5x-BWJEbGZHNwAMRhDNcVfQVlhmxgIXVFiwNA3_l8oJHJePLkS568nTvi1j2NYKfpClQ3mBn6wd2R2aNKVAdU"/>
+<div class="absolute top-4 left-4 bg-brand-orange text-black font-black px-3 py-1 text-[10px] uppercase">
+                Disponible
+              </div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<span class="text-brand-orange text-[10px] font-black uppercase tracking-[0.2em] mb-2">DiGiCo</span>
+<h3 class="heading-aggressive text-2xl mb-4">SD12 Digital Mixing Console System</h3>
+<div class="mt-auto pt-6 border-t border-brand-border flex items-center justify-between">
+<span class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest">Consultar Stock</span>
+<button class="bg-transparent border border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-black transition-all px-6 py-2 font-black text-xs uppercase">
+                  Cotizar
+                </button>
+</div>
+</div>
+</article>
+<article class="glass-card group flex flex-col" data-purpose="product-card">
+<div class="aspect-square bg-zinc-900 overflow-hidden relative">
+<img alt="Product Image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBno-BSTL5Z0vy4Sw0IDsqYsny4-SpK3ib_FHmRbKpj9AF7hrFjz2lxja3lhXHynvyGm-hJY9gI98jZ0-2Z7Jsjt4xnqQWHYeqww6Ohjnrw7wH-pBVmp7gYjEr59EJdd_91FcxN9H2b8meCf8nYPup6i09yQI9Qxz46jwvhDzGiAJeDrUwnAzHOk5xjedZPVAS2VYJIP-uwSbeG7hDISCKTy2tX0aCSbnBftmSFh35rgsHtyBFBUrEeJOnAGa4gbB-cSGVUc_pF_XE"/>
+<div class="absolute top-4 left-4 bg-brand-orange text-black font-black px-3 py-1 text-[10px] uppercase">
+                Disponible
+              </div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<span class="text-brand-orange text-[10px] font-black uppercase tracking-[0.2em] mb-2">L-Acoustics</span>
+<h3 class="heading-aggressive text-2xl mb-4">K2 Line Source Array WST System</h3>
+<div class="mt-auto pt-6 border-t border-brand-border flex items-center justify-between">
+<span class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest">Consultar Stock</span>
+<button class="bg-transparent border border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-black transition-all px-6 py-2 font-black text-xs uppercase">
+                  Cotizar
+                </button>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- END: Catalogo Section -->
+<!-- BEGIN: Admin Catalogo Section -->
+
+<!-- END: Admin Catalogo Section -->
+</div>
+<!-- END: PageBody -->
+<!-- BEGIN: MainFooter -->
+<footer class="bg-black border-t border-brand-border py-12 md:py-20" id="page-footer">
+<div class="max-w-7xl mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="col-span-1 md:col-span-2">
+<div class="h-8 w-auto flex items-center gap-2 mb-6">
+<div class="w-8 h-8 bg-brand-orange"></div>
+<span class="text-xl font-black tracking-tighter italic">LOG10MUSIC</span>
+</div>
+<p class="text-zinc-500 text-sm max-w-sm">
+            La ventana del 0% se está cerrando. Somos tu consultora de guerra tecnológica para el audio profesional en Bolivia.
+          </p>
+</div>
+<div>
+<h4 class="font-black uppercase text-xs tracking-widest mb-6 text-white">Operaciones</h4>
+<ul class="text-zinc-500 text-sm space-y-4 font-bold uppercase tracking-wider">
+<li><a class="hover:text-brand-orange transition-colors" href="#">Stock Real</a></li>
+<li><a class="hover:text-brand-orange transition-colors" href="#">Logística</a></li>
+<li><a class="hover:text-brand-orange transition-colors" href="#">Aduanas</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-black uppercase text-xs tracking-widest mb-6 text-white">Legal</h4>
+<ul class="text-zinc-500 text-sm space-y-4 font-bold uppercase tracking-wider">
+<li><a class="hover:text-brand-orange transition-colors" href="#">Términos</a></li>
+<li><a class="hover:text-brand-orange transition-colors" href="#">Privacidad</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-8 border-t border-brand-border flex flex-col md:flex-row justify-between gap-4">
+<span class="text-[10px] text-zinc-600 font-bold uppercase tracking-[0.3em]">© 2024 LOG10MUSIC. EL AUDIO PROFESIONAL CAMBIÓ PARA SIEMPRE.</span>
+<span class="text-[10px] text-zinc-600 font-bold uppercase tracking-[0.3em]">DESARROLLADO POR SERVICIOS DIGITALES</span>
+</div>
+</div>
+</footer>
+<!-- END: MainFooter -->
+<!-- BEGIN: Modal Template (Hidden by default) -->
+
+<!-- END: Modal Template -->
+</main>
+<!-- END: App Root -->
+</body></html><!-- MISSING_IMAGES:
+- Product images for catalog items (using placehold.co)
+- Logo image for LOG10MUSIC (using stylized div/text)
+-->

@@ -1,0 +1,151 @@
+{
+  "version": "1.1",
+  "slices": [
+    {
+      "id": "S1",
+      "title": "Base de módulo Catálogo (sin tocar admin existente)",
+      "goal": "Crear la capa base del módulo Catálogo como extensión: modelos, storage, y contratos internos. Sin modificar ni reemplazar páginas/rutas actuales del admin.",
+      "deliverables": [
+        "Entidades/tablas nuevas: vendors, source_files, source_rows, catalog_products, catalog_sources, issues, source_profiles, sync_runs (si aplica)",
+        "Repositorios/servicios del módulo Catálogo (interfaces limpias) sin acoplar a UI",
+        "Migraciones/DDL y seeds mínimos (vacío)",
+        "Pruebas unitarias de persistencia (create/list)"
+      ],
+      "acceptance": [
+        "El sitio actual (landing + admin actual) sigue funcionando sin cambios regresivos",
+        "Se puede persistir y consultar Vendors/SourceFiles/CatalogProducts desde storage"
+      ]
+    },
+    {
+      "id": "S2",
+      "title": "Conector Google Drive: descubrimiento de importadoras y archivos",
+      "goal": "Implementar driveClient para listar subcarpetas (importadoras) y archivos dentro de 'Listas de Precios', persistiendo Vendor y SourceFile. No construir UI nueva aún.",
+      "deliverables": [
+        "Servicio driveClient: listVendors(folderRootId), listFiles(vendorFolderId), downloadFile(fileId)",
+        "Persistencia incremental por modifiedTime/fileId",
+        "Endpoints admin-only: GET /api/catalog/vendors, GET /api/catalog/files (filtro vendorId)"
+      ],
+      "acceptance": [
+        "Detecta vendors por subcarpeta y los guarda",
+        "Lista archivos por vendor y actualiza status/modifiedTime",
+        "No afecta performance ni rutas actuales"
+      ]
+    },
+    {
+      "id": "S3",
+      "title": "Parser tabular: extracción de filas + stock (robusto al caos)",
+      "goal": "Procesar xlsx/xls/csv crudos para generar SourceRows (raw + campos) con inferencia de stock sin depender de nombres de columna; registrar issues cuando no se pueda.",
+      "deliverables": [
+        "Detector de header row (best-effort) + fallback razonable",
+        "Extractor de filas -> SourceRow.raw_row (JSON) y campos preliminares",
+        "Heurística de stock: columna más probable + parse int",
+        "Issues: needs_mapping (p.ej. no header/stock confiable), parse_failed (errores de lectura)"
+      ],
+      "acceptance": [
+        "De un Excel típico se generan SourceRows con stock",
+        "Si un archivo falla, queda Issue y el pipeline sigue con otros archivos"
+      ]
+    },
+    {
+      "id": "S4",
+      "title": "Extracción de MODELO (nombre público) + SourceProfile por importadora",
+      "goal": "Extraer el modelo aunque venga en columna rara o embebido en descripción (token scoring + regex + normalización). Guardar reglas por vendor para reducir ambigüedad.",
+      "deliverables": [
+        "ModelExtractor: tokenización, normalización, scoring, filtros anti-ruido",
+        "Detección de ambigüedad: ambiguous_model issue",
+        "SourceProfile por vendor: headerRowHint, preferredColumns, regexList",
+        "Endpoints admin-only: GET /api/catalog/issues, POST /api/catalog/issues/{id}/resolve"
+      ],
+      "acceptance": [
+        "La mayoría de SourceRows quedan con model válido",
+        "Casos ambiguos se reportan y se pueden resolver guardando reglas por vendor"
+      ]
+    },
+    {
+      "id": "S5",
+      "title": "Agregación de catálogo + endpoints (público y admin)",
+      "goal": "Construir CatalogProducts agregados por canonicalKey y publicar solo disponibles (stock>0 en alguna importadora). Exponer endpoints según CONTRACTS_UPDATED.json.",
+      "deliverables": [
+        "Aggregator: group by canonicalKey, available = any(stock>0)",
+        "catalog_sources con trazabilidad (vendorId, fileId, sheet/row)",
+        "Endpoint público cacheable: GET /api/catalog/public (sin precio, sin stock numérico, sin vendor)",
+        "Endpoints admin-only: GET /api/catalog/products, GET /api/catalog/products/{id}, GET /api/catalog/status"
+      ],
+      "acceptance": [
+        "GET /api/catalog/public retorna solo available=true y sin campos sensibles",
+        "Admin puede ver sourcesAvailable con vendor/file/sheet/row"
+      ]
+    },
+    {
+      "id": "S6",
+      "title": "Sync end-to-end (manual) + registro de ejecuciones",
+      "goal": "Implementar POST /api/catalog/sync como sincronización manual desde admin, incremental por modifiedTime/hash, con SyncRun y métricas; sin cron por defecto.",
+      "deliverables": [
+        "POST /api/catalog/sync (admin-only) con {force:boolean}",
+        "Registro SyncRun + stats",
+        "Política incremental: solo archivos nuevos/modificados salvo force",
+        "Manejo de concurrencia (evitar doble sync simultáneo)"
+      ],
+      "acceptance": [
+        "Un sync actualiza catálogo y status sin bloquear el sitio",
+        "Re-sincronizar sin cambios no reprocesa todo (salvo force)"
+      ]
+    },
+    {
+      "id": "S7",
+      "title": "Integración UI: EXTENDER admin existente con sección Catálogo",
+      "goal": "Agregar navegación y pantallas del módulo Catálogo dentro del admin existente (sin duplicar dashboard). Reutilizar layout/auth actual.",
+      "deliverables": [
+        "Nueva entrada en el menú/dashboard existente: 'Catálogo'",
+        "Pantalla Catálogo (admin) dentro de /admin/dashboard/* con tabs: Productos/Importadoras/Archivos/Issues",
+        "Botones: Sincronizar y Sincronización completa (force) llamando a /api/catalog/sync",
+        "UI de issues: resolver (guardar SourceProfile) y reprocesar según applyReparse"
+      ],
+      "acceptance": [
+        "No existe un segundo panel; se navega desde el dashboard actual",
+        "El admin actual conserva sus pantallas existentes intactas",
+        "Desde la sección Catálogo se puede: sync, ver status, ver productos, ver issues"
+      ]
+    },
+    {
+      "id": "S8",
+      "title": "Página pública /catalogo (UI de conversión) integrada al estilo actual",
+      "goal": "Crear /catalogo en el sitio público, coherente con el estilo existente (stitch.ts + globals.css), consumiendo /api/catalog/public. Sin precio y sin stock numérico.",
+      "deliverables": [
+        "Ruta /catalogo (App Router) que obtiene datos desde GET /api/catalog/public",
+        "Buscador por modelo (client-side) y estado de carga/error",
+        "CTA 'Cotizar' conectado al flujo existente (configurable)"
+      ],
+      "acceptance": [
+        "No se muestra precio ni stock numérico",
+        "Solo se ven productos disponibles",
+        "No rompe la landing ni el formulario actual"
+      ]
+    },
+    {
+      "id": "S9",
+      "title": "PDFs como referencia por importadora (sin inventario) + mejora opcional",
+      "goal": "Registrar PDFs como SourceFiles de referencia (no generan SourceRows). Opcional: extraer diccionario de modelos para mejorar el scoring.",
+      "deliverables": [
+        "Persistencia y listado de PDFs en admin bajo su vendor",
+        "Asegurar que el pipeline ignora PDFs para inventario",
+        "Opcional: ModelDictionary para mejorar extracción de modelo"
+      ],
+      "acceptance": [
+        "PDFs aparecen en admin y no rompen sync",
+        "Catálogo no incluye nada proveniente de PDFs como inventario"
+      ]
+    }
+  ],
+  "meta": {
+    "scope": "extension",
+    "extends": "admin-dashboard-existing",
+    "non_negotiables": [
+      "NO crear un segundo panel de administración",
+      "NO borrar ni reemplazar rutas/páginas existentes del admin",
+      "El módulo Catálogo se integra dentro del dashboard existente (nueva sección/tab/ruta bajo /admin/dashboard)",
+      "No modificar endpoints existentes de leads/config; solo agregar /api/catalog/*",
+      "Catálogo público: sin precio, sin stock numérico; solo 'Disponible'"
+    ]
+  }
+}
