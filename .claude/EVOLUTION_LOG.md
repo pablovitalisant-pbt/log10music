@@ -31,6 +31,25 @@
 
 ## HISTORIAL DE ACTUALIZACIONES
 
+### [2026-02-19 12:00] - Slice S1 completado
+
+**Evidencia:** Tests S1 + suite + typecheck en verde
+
+**Cambios confirmados:**
+- Contrato Zod base del catálogo agregado en `docs/specs/catalog.foundation.contract.ts`
+- Wrapper CommonJS para runtime de tests en `docs/specs/catalog.foundation.contract.js`
+- Store base de catálogo implementado en `src/catalog/catalogStore.js`
+- Export surface en `src/catalog/index.js`
+- Tests contract-driven del slice en `tests/contracts/slice-S1-catalog-foundation.test.ts`
+- Dependencia `zod` agregada en `package.json` y `package-lock.json`
+
+**Comandos verificados:**
+- `node scripts/jest-lite.js --testPathPattern=slice-S1-catalog-foundation`
+- `npm test`
+- `npx tsc --noEmit`
+
+**Agente:** Codex CLI
+
 ### [2026-02-04 05:20] - Slice 033 completado
 
 **Evidencia:** RED/GREEN ejecutado para `tests/contracts/slice-033.test.ts`
