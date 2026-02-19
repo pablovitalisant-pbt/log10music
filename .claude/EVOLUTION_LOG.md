@@ -31,6 +31,25 @@
 
 ## HISTORIAL DE ACTUALIZACIONES
 
+### [2026-02-19 14:30] - Slice S6 completado
+
+**Evidencia:** Tests S6 + suite + typecheck en verde
+
+**Cambios confirmados:**
+- Contrato de sync agregado en `docs/specs/catalog.sync.contract.ts`
+- Wrapper CommonJS en `docs/specs/catalog.sync.contract.js`
+- Servicio `src/catalog/services/catalogSyncService.js`
+- Repo `src/catalog/repositories/syncRunRepo.js`
+- Endpoints `app/api/catalog/sync/route.ts`, `app/api/catalog/sync-runs/route.ts`, `app/api/catalog/issues/route.ts` (+ wrappers `.js`)
+- Tests contract-driven en `tests/contracts/slice-S6-catalog-sync.test.ts`
+
+**Comandos verificados:**
+- `node scripts/jest-lite.js --testPathPattern=slice-S6-catalog-sync`
+- `npm test`
+- `npx tsc --noEmit`
+
+**Agente:** Codex CLI
+
 ### [2026-02-19 14:00] - Slice S5 completado
 
 **Evidencia:** Tests S5 + suite + typecheck en verde
