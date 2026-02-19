@@ -31,6 +31,25 @@
 
 ## HISTORIAL DE ACTUALIZACIONES
 
+### [2026-02-19 15:00] - Slice S7 completado
+
+**Evidencia:** Tests S7 + suite + typecheck en verde
+
+**Cambios confirmados:**
+- Contrato de mapping agregado en `docs/specs/catalog.mapping.contract.ts`
+- Wrapper CommonJS en `docs/specs/catalog.mapping.contract.js`
+- Servicio `src/catalog/services/modelMappingService.js`
+- Repo `src/catalog/repositories/modelMappingRepo.js`
+- Endpoint `app/api/catalog/mapping/route.ts` (+ wrapper `.js`)
+- Tests contract-driven en `tests/contracts/slice-S7-model-mapping.test.ts`
+
+**Comandos verificados:**
+- `node scripts/jest-lite.js --testPathPattern=slice-S7-model-mapping`
+- `npm test`
+- `npx tsc --noEmit`
+
+**Agente:** Codex CLI
+
 ### [2026-02-19 14:30] - Slice S6 completado
 
 **Evidencia:** Tests S6 + suite + typecheck en verde
