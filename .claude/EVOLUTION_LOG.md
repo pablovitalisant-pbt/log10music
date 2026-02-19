@@ -31,6 +31,24 @@
 
 ## HISTORIAL DE ACTUALIZACIONES
 
+### [2026-02-19 15:30] - Slice S8 completado
+
+**Evidencia:** Tests S8 + suite + typecheck en verde
+
+**Cambios confirmados:**
+- Contratos health/metrics en `docs/specs/catalog.health.contract.ts` y `docs/specs/catalog.metrics.contract.ts`
+- Wrappers CommonJS en `docs/specs/catalog.health.contract.js` y `docs/specs/catalog.metrics.contract.js`
+- Endpoints `app/api/catalog/health/route.ts` y `app/api/catalog/metrics/route.ts` (+ wrappers `.js`)
+- Servicios `src/catalog/services/catalogHealthService.js` y `src/catalog/services/catalogMetricsService.js`
+- Tests contract-driven en `tests/contracts/slice-S8-catalog-health-metrics.test.ts`
+
+**Comandos verificados:**
+- `node scripts/jest-lite.js --testPathPattern=slice-S8-catalog-health-metrics`
+- `npm test`
+- `npx tsc --noEmit`
+
+**Agente:** Codex CLI
+
 ### [2026-02-19 15:00] - Slice S7 completado
 
 **Evidencia:** Tests S7 + suite + typecheck en verde
