@@ -31,6 +31,26 @@
 
 ## HISTORIAL DE ACTUALIZACIONES
 
+### [2026-02-19 14:00] - Slice S5 completado
+
+**Evidencia:** Tests S5 + suite + typecheck en verde
+
+**Cambios confirmados:**
+- Contrato de agregación agregado en `docs/specs/catalog.aggregate.contract.ts`
+- Wrapper CommonJS en `docs/specs/catalog.aggregate.contract.js`
+- Endpoints catálogo público/admin en `app/api/catalog/public/route.ts`, `app/api/catalog/products/route.ts`, `app/api/catalog/products/[id]/route.ts` (+ wrappers `.js`)
+- Agregador en `src/catalog/aggregate/catalogAggregator.js`
+- Servicio en `src/catalog/services/catalogAggregateService.js`
+- Repos en `src/catalog/repositories/catalogProductRepo.js` y `src/catalog/repositories/catalogSourceRepo.js`
+- Tests contract-driven en `tests/contracts/slice-S5-catalog-aggregate.test.ts`
+
+**Comandos verificados:**
+- `node scripts/jest-lite.js --testPathPattern=slice-S5-catalog-aggregate`
+- `npm test`
+- `npx tsc --noEmit`
+
+**Agente:** Codex CLI
+
 ### [2026-02-19 13:30] - Slice S4 completado
 
 **Evidencia:** Tests S4 + suite + typecheck en verde
