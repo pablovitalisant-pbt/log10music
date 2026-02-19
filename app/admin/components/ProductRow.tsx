@@ -1,0 +1,72 @@
+'use client';
+
+import { useState } from 'react';
+import ProductEditor from './ProductEditor';
+
+type CatalogSource = {
+  vendorId: string;
+  vendorName?: string | null;
+  fileId: string;
+  fileName?: string | null;
+};
+
+type CatalogProduct = {
+  id: string;
+  model: string;
+  brand?: string | null;
+  available: boolean;
+  sourcesAvailable: CatalogSource[];
+  updatedAt: string;
+};
+
+type ProductRowProps = {
+  product: CatalogProduct;
+};
+
+export default function ProductRow({ product }: ProductRowProps) {
+  const [openEditor, setOpenEditor] = useState(false);
+  const statusLabel = product.available ? 'Publicado' : 'Oculto';
+  const vendorName = product.sourcesAvailable[0]?.vendorName || 'Importadora';
+
+  return (
+    <>
+      <tr className="border-b border-white/10 text-sm">
+        <td className="p-3">
+          <div className="size-10 rounded bg-white/5" />
+        </td>
+        <td className="p-3">
+          <div className="font-black">{product.model}</div>
+          <div className="text-xs text-white/50">SKU: {product.id}</div>
+        </td>
+        <td className="p-3">{product.brand || 'Sin marca'}</td>
+        <td className="p-3">{vendorName}</td>
+        <td className="p-3">--</td>
+        <td className="p-3">--</td>
+        <td className="p-3">
+          <span className="rounded bg-white/10 px-2 py-1 text-xs font-black">
+            {statusLabel}
+          </span>
+        </td>
+        <td className="p-3 text-right">
+          <button
+            type="button"
+            onClick={() => setOpenEditor((value) => !value)}
+            className="rounded border border-white/20 px-3 py-1 text-xs font-black"
+          >
+            Editar
+          </button>
+        </td>
+      </tr>
+      {openEditor ? (
+        <tr className="border-b border-white/10">
+          <td colSpan={8} className="p-3">
+            <ProductEditor
+              productId={product.id}
+              initialPublished={product.available}
+            />
+          </td>
+        </tr>
+      ) : null}
+    </>
+  );
+}

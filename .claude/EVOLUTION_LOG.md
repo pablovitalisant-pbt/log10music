@@ -31,6 +31,21 @@
 
 ## HISTORIAL DE ACTUALIZACIONES
 
+### [2026-02-19 17:00] - Catálogo público y panel admin completados
+
+**Evidencia:** UI admin y catálogo público conectados a APIs existentes
+
+**Cambios confirmados:**
+- Admin productos en `app/admin/catalog/page.tsx`
+- Admin incidencias en `app/admin/incidencias/page.tsx`
+- Componentes admin en `app/admin/components/ProductTable.tsx`, `app/admin/components/ProductRow.tsx`, `app/admin/components/ProductEditor.tsx`, `app/admin/components/IncidenceTable.tsx`
+- Dashboard admin con métricas reales en `app/admin/page.tsx`
+- Catálogo público comercial en `app/catalogo/page.tsx`
+- Componentes públicos en `components/CatalogGrid.tsx` y `components/ProductCard.tsx`
+- Cliente catálogo público en `src/catalog/publicCatalogClient.js`
+
+**Agente:** Codex CLI
+
 ### [2026-02-19 16:00] - Slice S9 completado
 
 **Evidencia:** Tests S9 + suite + typecheck en verde

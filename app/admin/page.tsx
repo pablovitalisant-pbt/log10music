@@ -1,8 +1,46 @@
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { ADMIN_COOKIE_NAME, getAdminToken } from '../../lib/auth';
 import { getSiteConfig, listLeads } from '../../lib/storage';
 
 export const dynamic = 'force-dynamic';
+
+type CatalogHealth = {
+  status: 'ok' | 'degraded' | 'error';
+  lastSyncAt: string | null;
+  staleMinutes: number | null;
+  issuesOpen: number;
+  productsAvailable: number;
+  reasonCodes: string[];
+};
+
+type CatalogMetrics = {
+  windowHours: number;
+  runsTotal: number;
+  runsLast24h: number;
+  issuesTotal: number;
+  issuesAmbiguous: number;
+  filesProcessedTotal: number;
+  rowsParsedTotal: number;
+};
+
+function resolveBaseUrl() {
+  const host = headers().get('host');
+  if (!host) return 'http://localhost:3000';
+  const protocol = host.includes('localhost') ? 'http' : 'https';
+  return `${protocol}://${host}`;
+}
+
+async function fetchCatalogHealth(): Promise<CatalogHealth> {
+  const baseUrl = resolveBaseUrl();
+  const response = await fetch(`${baseUrl}/api/catalog/health`, { cache: 'no-store' });
+  return response.json();
+}
+
+async function fetchCatalogMetrics(): Promise<CatalogMetrics> {
+  const baseUrl = resolveBaseUrl();
+  const response = await fetch(`${baseUrl}/api/catalog/metrics`, { cache: 'no-store' });
+  return response.json();
+}
 
 function LoginView() {
   return (
@@ -29,7 +67,12 @@ export default async function AdminPage() {
   const isAdmin = cookieStore.get(ADMIN_COOKIE_NAME)?.value === getAdminToken();
   if (!isAdmin) return <LoginView />;
 
-  const [leads, config] = await Promise.all([listLeads(), getSiteConfig()]);
+  const [leads, config, health, metrics] = await Promise.all([
+    listLeads(),
+    getSiteConfig(),
+    fetchCatalogHealth(),
+    fetchCatalogMetrics(),
+  ]);
 
   return (
     <main className="min-h-screen bg-charcoal p-8 text-white">
@@ -40,6 +83,51 @@ export default async function AdminPage() {
             <button className="border border-white/30 px-4 py-2 font-black">Salir</button>
           </form>
         </div>
+
+        <section className="border border-white/20 bg-industrial p-6">
+          <h2 className="mb-4 text-2xl font-black">Estado del Catálogo</h2>
+          <div className="grid gap-4 md:grid-cols-5">
+            <div className="rounded border border-white/10 bg-charcoal p-4">
+              <p className="text-xs uppercase text-white/50">Estado</p>
+              <p className="text-xl font-black">{health.status}</p>
+            </div>
+            <div className="rounded border border-white/10 bg-charcoal p-4">
+              <p className="text-xs uppercase text-white/50">Productos</p>
+              <p className="text-xl font-black">{health.productsAvailable}</p>
+            </div>
+            <div className="rounded border border-white/10 bg-charcoal p-4">
+              <p className="text-xs uppercase text-white/50">Incidencias</p>
+              <p className="text-xl font-black">{health.issuesOpen}</p>
+            </div>
+            <div className="rounded border border-white/10 bg-charcoal p-4">
+              <p className="text-xs uppercase text-white/50">Syncs (24h)</p>
+              <p className="text-xl font-black">{metrics.runsLast24h}</p>
+            </div>
+            <div className="rounded border border-white/10 bg-charcoal p-4">
+              <p className="text-xs uppercase text-white/50">Ambiguous</p>
+              <p className="text-xl font-black">{metrics.issuesAmbiguous}</p>
+            </div>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2 text-xs text-white/60">
+            {health.reasonCodes.length ? (
+              health.reasonCodes.map((code) => (
+                <span key={code} className="rounded border border-white/10 px-2 py-1">
+                  {code}
+                </span>
+              ))
+            ) : (
+              <span className="rounded border border-white/10 px-2 py-1">ok</span>
+            )}
+          </div>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a href="/admin/catalog" className="rounded bg-primary px-4 py-2 text-xs font-black text-charcoal">
+              Ver productos
+            </a>
+            <a href="/admin/incidencias" className="rounded border border-white/30 px-4 py-2 text-xs font-black">
+              Ver incidencias
+            </a>
+          </div>
+        </section>
 
         <section className="border border-white/20 bg-industrial p-6">
           <h2 className="mb-4 text-2xl font-black">Inyección de Scripts</h2>

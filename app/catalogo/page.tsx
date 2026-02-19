@@ -1,16 +1,35 @@
+import { headers } from 'next/headers';
+import CatalogGrid from '../../components/CatalogGrid';
 import { fetchPublicCatalog } from '../../src/catalog/publicCatalogClient';
 
+export const metadata = {
+  title: 'Catálogo Log10Music',
+  description: 'Catálogo público de audio profesional disponible en Log10Music.',
+};
+
+function resolveBaseUrl() {
+  const host = headers().get('host');
+  if (!host) return 'http://localhost:3000';
+  const protocol = host.includes('localhost') ? 'http' : 'https';
+  return `${protocol}://${host}`;
+}
+
 export default async function CatalogoPage() {
-  const data = await fetchPublicCatalog();
+  const baseUrl = resolveBaseUrl();
+  const data = await fetchPublicCatalog({ baseUrl });
+
   return (
-    <main>
-      <h1>Catálogo</h1>
-      <p>Actualizado: {data.updatedAt}</p>
-      <ul>
-        {data.items.map((item) => (
-          <li key={item.id}>{item.model}</li>
-        ))}
-      </ul>
+    <main className="min-h-screen bg-charcoal px-6 py-12 text-white">
+      <div className="mx-auto max-w-6xl space-y-8">
+        <header className="space-y-3">
+          <p className="text-xs uppercase text-white/60">Catálogo público</p>
+          <h1 className="text-4xl font-black">Audio profesional disponible</h1>
+          <p className="text-white/70">
+            Productos listos para cotizar, con disponibilidad real y respaldo técnico.
+          </p>
+        </header>
+        <CatalogGrid items={data.items} />
+      </div>
     </main>
   );
 }
