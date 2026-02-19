@@ -31,6 +31,25 @@
 
 ## HISTORIAL DE ACTUALIZACIONES
 
+### [2026-02-19 12:30] - Slice S2 completado
+
+**Evidencia:** Tests S2 + suite + typecheck en verde
+
+**Cambios confirmados:**
+- Contrato Drive agregado en `docs/specs/catalog.drive.contract.ts`
+- Wrapper CommonJS en `docs/specs/catalog.drive.contract.js`
+- Clientes/repos/servicios base en `src/catalog/drive/driveClient.js`, `src/catalog/repositories/vendorRepo.js`, `src/catalog/repositories/sourceFileRepo.js`, `src/catalog/services/driveDiscovery.js`
+- Endpoints App Router en `app/api/catalog/vendors/route.ts` y `app/api/catalog/files/route.ts`
+- Wrappers CommonJS en `app/api/catalog/vendors/route.js` y `app/api/catalog/files/route.js`
+- Tests contract-driven en `tests/contracts/slice-S2-drive-discovery.test.ts`
+
+**Comandos verificados:**
+- `node scripts/jest-lite.js --testPathPattern=slice-S2-drive-discovery`
+- `npm test`
+- `npx tsc --noEmit`
+
+**Agente:** Codex CLI
+
 ### [2026-02-19 12:00] - Slice S1 completado
 
 **Evidencia:** Tests S1 + suite + typecheck en verde
