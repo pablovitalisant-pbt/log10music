@@ -31,6 +31,24 @@
 
 ## HISTORIAL DE ACTUALIZACIONES
 
+### [2026-02-19 16:00] - Slice S9 completado
+
+**Evidencia:** Tests S9 + suite + typecheck en verde
+
+**Cambios confirmados:**
+- Contrato público en `docs/specs/catalog.public-page.contract.ts`
+- Wrapper CommonJS en `docs/specs/catalog.public-page.contract.js`
+- Cliente público en `src/catalog/publicCatalogClient.js`
+- Página pública `/catalogo` en `app/catalogo/page.tsx`
+- Tests contract-driven en `tests/contracts/slice-S9-public-catalog-page.test.ts`
+
+**Comandos verificados:**
+- `node scripts/jest-lite.js --testPathPattern=slice-S9-public-catalog-page`
+- `npm test`
+- `npx tsc --noEmit`
+
+**Agente:** Codex CLI
+
 ### [2026-02-19 15:30] - Slice S8 completado
 
 **Evidencia:** Tests S8 + suite + typecheck en verde
