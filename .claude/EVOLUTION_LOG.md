@@ -31,6 +31,26 @@
 
 ## HISTORIAL DE ACTUALIZACIONES
 
+### [2026-02-19 13:00] - Slice S3 completado
+
+**Evidencia:** Tests S3 + suite + typecheck en verde
+
+**Cambios confirmados:**
+- Contrato de parseo agregado en `docs/specs/catalog.parse.contract.ts`
+- Wrapper CommonJS en `docs/specs/catalog.parse.contract.js`
+- Endpoint parse en `app/api/catalog/parse/route.ts` (+ wrapper `app/api/catalog/parse/route.js`)
+- Base de parsing en `src/catalog/parse/headerDetector.js`, `src/catalog/parse/stockInferer.js`, `src/catalog/parse/tabularParser.js`
+- Servicio `src/catalog/services/fileParseService.js`
+- Repos `src/catalog/repositories/sourceRowRepo.js` y `src/catalog/repositories/issueRepo.js`
+- Tests contract-driven en `tests/contracts/slice-S3-parse-tabular.test.ts`
+
+**Comandos verificados:**
+- `node scripts/jest-lite.js --testPathPattern=slice-S3-parse-tabular`
+- `npm test`
+- `npx tsc --noEmit`
+
+**Agente:** Codex CLI
+
 ### [2026-02-19 12:30] - Slice S2 completado
 
 **Evidencia:** Tests S2 + suite + typecheck en verde
