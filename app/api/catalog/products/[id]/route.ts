@@ -28,11 +28,14 @@ const FALLBACK_SOURCES = [
   },
 ];
 
-export async function GET(_request: Request, context: { params?: { id?: string } }) {
+export async function GET(
+  _request: Request,
+  { params }: { params: { id: string } }
+) {
   const catalogProductRepo = createCatalogProductRepo({ store: { products: FALLBACK_PRODUCTS } });
   const catalogSourceRepo = createCatalogSourceRepo({ store: { sources: FALLBACK_SOURCES } });
   const aggregate = buildCatalogAggregate({ catalogProductRepo, catalogSourceRepo });
-  const id = context?.params?.id;
+  const { id } = params;
   const product = aggregate.items.find((item) => item.id === id) || null;
   if (!product) {
     const payload = CatalogNotFoundSchema.parse({ error: 'Catalog product not found' });
