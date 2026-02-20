@@ -103,6 +103,13 @@ async function runCatalogSync({
   const startedAt = new Date().toISOString();
   const runId = `run-${Date.now()}`;
   const deadline = Date.now() + (Number.isFinite(deadlineMs) ? deadlineMs : 20000);
+  const existingProducts = await catalogProductRepo.listCatalogProducts();
+  const brandOverrides = new Map(
+    existingProducts
+      .filter((product) => product.brand)
+      .map((product) => [normalizeKey(product.model), product.brand])
+      .filter(([key]) => key)
+  );
   const vendors = await discoverVendors({ driveClient, vendorRepo });
   let filesScanned = 0;
   let filesProcessed = 0;
@@ -214,13 +221,16 @@ async function runCatalogSync({
             } ${row.rawRow?.model || ''} ${row.rawRow?.modelo || ''}`,
             brandMap
           );
-        const brandKey = normalizeKey(inferredBrand || '');
         const modelKey = normalizeKey(modelCandidate) || row.sourceRowId;
-        const productId = `prod-${brandKey ? `${brandKey}-` : ''}${modelKey}`;
+        if (inferredBrand && modelKey) {
+          brandOverrides.set(modelKey, inferredBrand);
+        }
+        const resolvedBrand = inferredBrand || (modelKey ? brandOverrides.get(modelKey) : null) || null;
+        const productId = `prod-${modelKey}`;
         await catalogProductRepo.upsertCatalogProduct({
           id: productId,
           model: modelCandidate,
-          brand: inferredBrand || null,
+          brand: resolvedBrand,
           available: true,
           updatedAt: new Date().toISOString(),
         });
@@ -239,6 +249,23 @@ async function runCatalogSync({
   }
 
   const productsAvailableList = await catalogProductRepo.listCatalogProducts();
+  if (brandOverrides.size > 0) {
+    for (const product of productsAvailableList) {
+      if (product.brand) continue;
+      const key = normalizeKey(product.model);
+      const override = key ? brandOverrides.get(key) : null;
+      if (override) {
+        await catalogProductRepo.upsertCatalogProduct({
+          id: product.id,
+          model: product.model,
+          brand: override,
+          available: product.available,
+          updatedAt: new Date().toISOString(),
+        });
+        product.brand = override;
+      }
+    }
+  }
   productsAvailable = productsAvailableList.length;
   const issuesCount = await issueRepo.listIssues().then((items) => items.length);
 
