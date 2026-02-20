@@ -1,6 +1,7 @@
 import { cookies, headers } from 'next/headers';
 import { ADMIN_COOKIE_NAME, getAdminToken } from '../../lib/auth';
 import { getSiteConfig, listLeads } from '../../lib/storage';
+import SyncButton from './components/SyncButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -125,6 +126,7 @@ export default async function AdminPage() {
             <a href="/admin/incidencias" className="rounded border border-white/30 px-4 py-2 text-xs font-black">
               Ver incidencias
             </a>
+            <SyncButton />
           </div>
         </section>
 
