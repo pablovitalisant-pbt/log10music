@@ -2,6 +2,7 @@ const { discoverFiles, discoverVendors } = require('./driveDiscovery');
 const { parseCatalogFile } = require('./fileParseService');
 const { enrichSourceRowWithModel } = require('./modelEnrichmentService');
 const { parseStockValue } = require('../parse/stockInferer');
+const { normalizeTokens } = require('../extract/normalizers');
 
 function slugify(value) {
   if (!value) return null;
@@ -25,6 +26,45 @@ function normalizeKey(value) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '');
+}
+
+function normalizeBrandToken(value) {
+  return normalizeTokens(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '');
+}
+
+function buildBrandMap(rows) {
+  const brandMap = new Map();
+  rows.forEach((row) => {
+    const raw = row.rawRow || {};
+    const brandValue =
+      raw.brand ||
+      raw.marca ||
+      raw.marca_producto ||
+      raw.brand_name ||
+      raw.marca_producto_nombre;
+    if (!brandValue) return;
+    const label = normalizeTokens(brandValue);
+    if (!label) return;
+    const key = normalizeBrandToken(label);
+    if (!key) return;
+    if (!brandMap.has(key)) {
+      brandMap.set(key, label);
+    }
+  });
+  return brandMap;
+}
+
+function inferBrandFromText(text, brandMap) {
+  if (!text || brandMap.size === 0) return null;
+  const normalizedText = normalizeBrandToken(text);
+  for (const [key, label] of brandMap.entries()) {
+    if (normalizedText.includes(key)) {
+      return label;
+    }
+  }
+  return null;
 }
 
 async function runCatalogSync({
@@ -119,6 +159,7 @@ async function runCatalogSync({
       }
 
       const rows = await sourceRowRepo.listSourceRows({ fileId: file.fileId });
+      const brandMap = buildBrandMap(rows);
       for (const row of rows) {
         if (Date.now() > deadline) break;
         const extraction = await enrichSourceRowWithModel({
@@ -135,13 +176,21 @@ async function runCatalogSync({
         if (stockValue !== null && stockValue <= 1) {
           continue;
         }
-        const brandKey = normalizeKey(extraction.brand || '');
+        const inferredBrand =
+          extraction.brand ||
+          inferBrandFromText(
+            `${row.rawRow?.description || ''} ${row.rawRow?.descripcion || ''} ${row.rawRow?.product || ''} ${
+              row.rawRow?.producto || ''
+            } ${row.rawRow?.model || ''} ${row.rawRow?.modelo || ''}`,
+            brandMap
+          );
+        const brandKey = normalizeKey(inferredBrand || '');
         const modelKey = normalizeKey(extraction.model) || row.sourceRowId;
         const productId = `prod-${brandKey ? `${brandKey}-` : ''}${modelKey}`;
         await catalogProductRepo.upsertCatalogProduct({
           id: productId,
           model: extraction.model,
-          brand: extraction.brand || null,
+          brand: inferredBrand || null,
           available: true,
           updatedAt: new Date().toISOString(),
         });
