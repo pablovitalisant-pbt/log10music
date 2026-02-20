@@ -8,7 +8,16 @@ import { listIssues, listProducts } from '../../../../src/catalog/persistence/ca
 export async function GET(_request: Request) {
   const syncRunRepo = createSyncRunRepo();
   const items = await listSyncRuns({ syncRunRepo });
-  if (items.length === 0) {
+  const toIso = (value: string | null | undefined) => {
+    if (!value) return new Date().toISOString();
+    return new Date(value).toISOString();
+  };
+  const normalizedItems = items.map((item) => ({
+    ...item,
+    startedAt: toIso(item.startedAt),
+    finishedAt: item.finishedAt ? toIso(item.finishedAt) : null,
+  }));
+  if (normalizedItems.length === 0) {
     const products = (await listProducts()) as Array<{ updatedAt?: string }>;
     const issues = await listIssues();
     const latestUpdatedAt = products.reduce((latest: string | null, product) => {
@@ -20,7 +29,7 @@ export async function GET(_request: Request) {
       const resolvedTimestamp = latestUpdatedAt
         ? new Date(latestUpdatedAt).toISOString()
         : new Date().toISOString();
-      items.push({
+      normalizedItems.push({
         runId: 'derived-run',
         startedAt: resolvedTimestamp,
         finishedAt: resolvedTimestamp,
@@ -35,6 +44,6 @@ export async function GET(_request: Request) {
       });
     }
   }
-  const payload = SyncRunsResponseSchema.parse({ items });
+  const payload = SyncRunsResponseSchema.parse({ items: normalizedItems });
   return Response.json(payload);
 }
