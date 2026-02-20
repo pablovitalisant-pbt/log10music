@@ -8,7 +8,7 @@ import { buildCatalogAggregate } from '../../../../src/catalog/services/catalogA
 export async function GET(_request: Request) {
   const catalogProductRepo = createCatalogProductRepo();
   const catalogSourceRepo = createCatalogSourceRepo();
-  const aggregate = buildCatalogAggregate({ catalogProductRepo, catalogSourceRepo });
+  const aggregate = await buildCatalogAggregate({ catalogProductRepo, catalogSourceRepo });
   const payload = CatalogProductsResponseSchema.parse({ items: aggregate.items });
   return Response.json(payload);
 }

@@ -1,6 +1,6 @@
 const { parseTabularFile } = require('../parse/tabularParser');
 
-function parseCatalogFile({
+async function parseCatalogFile({
   fileId,
   vendorId,
   fileName,
@@ -10,17 +10,19 @@ function parseCatalogFile({
   issueRepo,
 } = {}) {
   const rows = parseTabularFile({ buffer, mimeType });
-  const persisted = rows.map((rawRow, index) =>
-    sourceRowRepo.upsertSourceRow({
+  const persisted = [];
+  for (const [index, rawRow] of rows.entries()) {
+    const row = await sourceRowRepo.upsertSourceRow({
       sourceRowId: `${fileId}-${index + 1}`,
       vendorId,
       fileId,
       fileName,
       rowNumber: index + 1,
       rawRow,
-    })
-  );
-  const issuesCreated = issueRepo ? issueRepo.listIssues().length : 0;
+    });
+    persisted.push(row);
+  }
+  const issuesCreated = issueRepo ? await issueRepo.listIssues().then((items) => items.length) : 0;
   return {
     fileId,
     vendorId,

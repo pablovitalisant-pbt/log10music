@@ -1,4 +1,3 @@
-const { getCatalogState } = require('../state/catalogState');
 const { discoverFiles, discoverVendors } = require('./driveDiscovery');
 const { parseCatalogFile } = require('./fileParseService');
 const { enrichSourceRowWithModel } = require('./modelEnrichmentService');
@@ -25,7 +24,6 @@ async function runCatalogSync({
   catalogProductRepo,
   catalogSourceRepo,
 } = {}) {
-  const state = getCatalogState();
   const startedAt = new Date().toISOString();
   const runId = `run-${Date.now()}`;
   const vendors = await discoverVendors({ driveClient, vendorRepo });
@@ -45,7 +43,7 @@ async function runCatalogSync({
       if (!buffer) {
         continue;
       }
-      const parsed = parseCatalogFile({
+      const parsed = await parseCatalogFile({
         fileId: file.fileId,
         vendorId: vendor.vendorId,
         fileName: file.fileName,
@@ -57,9 +55,9 @@ async function runCatalogSync({
       filesProcessed += 1;
       rowsParsed += parsed.rowsParsed;
 
-      const rows = sourceRowRepo.listSourceRows().filter((row) => row.fileId === file.fileId);
+      const rows = await sourceRowRepo.listSourceRows({ fileId: file.fileId });
       for (const row of rows) {
-        const extraction = enrichSourceRowWithModel({
+        const extraction = await enrichSourceRowWithModel({
           rawRow: row.rawRow,
           issueRepo,
           vendorId: vendor.vendorId,
@@ -69,14 +67,14 @@ async function runCatalogSync({
         });
         if (extraction.status === 'extracted' && extraction.model) {
           const productId = `prod-${slugify(extraction.model) || row.sourceRowId}`;
-          catalogProductRepo.upsertCatalogProduct({
+          await catalogProductRepo.upsertCatalogProduct({
             id: productId,
             model: extraction.model,
             brand: extraction.brand || null,
             available: true,
             updatedAt: new Date().toISOString(),
           });
-          catalogSourceRepo.addCatalogSource({
+          await catalogSourceRepo.addCatalogSource({
             catalogProductId: productId,
             sourceRowId: row.sourceRowId,
             vendorId: vendor.vendorId,
@@ -91,8 +89,9 @@ async function runCatalogSync({
     }
   }
 
-  productsAvailable = catalogProductRepo.listCatalogProducts().length;
-  const issuesCount = issueRepo.listIssues().length;
+  const productsAvailableList = await catalogProductRepo.listCatalogProducts();
+  productsAvailable = productsAvailableList.length;
+  const issuesCount = await issueRepo.listIssues().then((items) => items.length);
 
   const run = {
     runId,
@@ -109,13 +108,8 @@ async function runCatalogSync({
   };
 
   if (syncRunRepo) {
-    syncRunRepo.createRun(run);
+    await syncRunRepo.createRun(run);
   }
-
-  state.lastSyncAt = run.finishedAt;
-  state.productsAvailable = productsAvailable;
-  state.filesProcessedTotal += filesProcessed;
-  state.rowsParsedTotal += rowsParsed;
 
   return run;
 }

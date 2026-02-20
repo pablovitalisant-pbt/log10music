@@ -22,10 +22,11 @@ export async function POST(request: Request) {
   }
 
   const issueRepo = createIssueRepo();
-  const result = enrichSourceRowWithModel({
+  const result = await enrichSourceRowWithModel({
     rawRow: parsedRequest.data.rawRow,
     issueRepo,
   });
+  const issuesCreated = await issueRepo.countIssues();
   const payload = ModelExtractResponseSchema.parse({
     vendorId: parsedRequest.data.vendorId,
     fileId: parsedRequest.data.fileId,
@@ -33,7 +34,7 @@ export async function POST(request: Request) {
     status: result.status,
     model: result.model ?? null,
     brand: result.brand ?? null,
-    issuesCreated: issueRepo.countIssues(),
+    issuesCreated,
   });
 
   return Response.json(payload);

@@ -1,20 +1,12 @@
-const { getCatalogState } = require('../state/catalogState');
+const { upsertFile, listFiles } = require('../persistence/catalogDb');
 
 function createSourceFileRepo({ store } = {}) {
-  const state = store || getCatalogState();
   return {
-    upsertSourceFile(file) {
-      const index = state.files.findIndex((item) => item.fileId === file.fileId);
-      if (index >= 0) {
-        state.files[index] = file;
-        return file;
-      }
-      state.files.push(file);
-      return file;
+    async upsertSourceFile(file) {
+      return store ? store.upsertSourceFile(file) : upsertFile(file);
     },
-    listSourceFiles({ vendorId } = {}) {
-      if (!vendorId) return [...state.files];
-      return state.files.filter((file) => file.vendorId === vendorId);
+    async listSourceFiles({ vendorId } = {}) {
+      return store ? store.listSourceFiles({ vendorId }) : listFiles({ vendorId });
     },
   };
 }

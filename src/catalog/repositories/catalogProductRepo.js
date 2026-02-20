@@ -1,22 +1,15 @@
-const { getCatalogState } = require('../state/catalogState');
+const { upsertProduct, listProducts, getProductById } = require('../persistence/catalogDb');
 
 function createCatalogProductRepo({ store } = {}) {
-  const state = store || getCatalogState();
   return {
-    upsertCatalogProduct(product) {
-      const index = state.products.findIndex((item) => item.id === product.id);
-      if (index >= 0) {
-        state.products[index] = product;
-        return product;
-      }
-      state.products.push(product);
-      return product;
+    async upsertCatalogProduct(product) {
+      return store ? store.upsertCatalogProduct(product) : upsertProduct(product);
     },
-    listCatalogProducts() {
-      return [...state.products];
+    async listCatalogProducts() {
+      return store ? store.listCatalogProducts() : listProducts();
     },
-    getCatalogProductById(id) {
-      return state.products.find((item) => item.id === id) || null;
+    async getCatalogProductById(id) {
+      return store ? store.getCatalogProductById(id) : getProductById(id);
     },
   };
 }

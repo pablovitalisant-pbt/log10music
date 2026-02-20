@@ -1,19 +1,12 @@
-const { getCatalogState } = require('../state/catalogState');
+const { upsertRow, listRows } = require('../persistence/catalogDb');
 
 function createSourceRowRepo({ store } = {}) {
-  const state = store || getCatalogState();
   return {
-    upsertSourceRow(row) {
-      const index = state.rows.findIndex((item) => item.sourceRowId === row.sourceRowId);
-      if (index >= 0) {
-        state.rows[index] = row;
-        return row;
-      }
-      state.rows.push(row);
-      return row;
+    async upsertSourceRow(row) {
+      return store ? store.upsertSourceRow(row) : upsertRow(row);
     },
-    listSourceRows() {
-      return [...state.rows];
+    async listSourceRows({ fileId } = {}) {
+      return store ? store.listSourceRows({ fileId }) : listRows({ fileId });
     },
   };
 }

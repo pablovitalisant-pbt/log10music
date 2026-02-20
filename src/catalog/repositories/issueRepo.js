@@ -1,25 +1,22 @@
-const { getCatalogState } = require('../state/catalogState');
+const { addIssue, listIssues, resolveIssue } = require('../persistence/catalogDb');
 
 function createIssueRepo({ store } = {}) {
-  const state = store || getCatalogState();
   return {
-    createIssue(issue) {
-      state.issues.push(issue);
-      return issue;
+    async createIssue(issue) {
+      return store ? store.createIssue(issue) : addIssue(issue);
     },
-    resolveIssue(issueId) {
-      const issue = state.issues.find((item) => item.issueId === issueId);
-      if (issue) {
-        issue.resolved = true;
-      }
-      return issue || null;
+    async resolveIssue(issueId) {
+      return store ? store.resolveIssue(issueId) : resolveIssue(issueId);
     },
-    listIssues({ runId } = {}) {
-      if (!runId) return [...state.issues];
-      return state.issues.filter((issue) => issue.runId === runId);
+    async listIssues({ runId } = {}) {
+      if (store) return store.listIssues({ runId });
+      const items = await listIssues();
+      if (!runId) return items;
+      return items;
     },
-    countIssues() {
-      return state.issues.length;
+    async countIssues() {
+      const items = store ? store.listIssues({}) : await listIssues();
+      return items.length;
     },
   };
 }

@@ -6,7 +6,7 @@ import { listSyncRuns } from '../../../../src/catalog/services/catalogSyncServic
 
 export async function GET(_request: Request) {
   const syncRunRepo = createSyncRunRepo();
-  const items = listSyncRuns({ syncRunRepo });
+  const items = await listSyncRuns({ syncRunRepo });
   const payload = SyncRunsResponseSchema.parse({ items });
   return Response.json(payload);
 }

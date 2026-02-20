@@ -1,11 +1,11 @@
 function createModelMappingRepo({ store } = {}) {
   const state = store || { mappings: [] };
   return {
-    addMapping(mapping) {
+    async addMapping(mapping) {
       state.mappings.push(mapping);
       return mapping;
     },
-    listMappings() {
+    async listMappings() {
       return [...state.mappings];
     },
   };

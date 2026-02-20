@@ -8,7 +8,7 @@ import { buildCatalogAggregate } from '../../../../src/catalog/services/catalogA
 export async function GET(_request: Request) {
   const catalogProductRepo = createCatalogProductRepo();
   const catalogSourceRepo = createCatalogSourceRepo();
-  const aggregate = buildCatalogAggregate({ catalogProductRepo, catalogSourceRepo });
+  const aggregate = await buildCatalogAggregate({ catalogProductRepo, catalogSourceRepo });
   const items = aggregate.items.filter((item) => item.available === true).map((item) => ({
     id: item.id,
     model: item.model,

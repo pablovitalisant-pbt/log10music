@@ -1,15 +1,12 @@
-const { getCatalogState } = require('../state/catalogState');
+const { addSource, listSources } = require('../persistence/catalogDb');
 
 function createCatalogSourceRepo({ store } = {}) {
-  const state = store || getCatalogState();
   return {
-    addCatalogSource(source) {
-      state.sources.push(source);
-      return source;
+    async addCatalogSource(source) {
+      return store ? store.addCatalogSource(source) : addSource(source);
     },
-    listCatalogSources({ catalogProductId } = {}) {
-      if (!catalogProductId) return [...state.sources];
-      return state.sources.filter((source) => source.catalogProductId === catalogProductId);
+    async listCatalogSources({ catalogProductId } = {}) {
+      return store ? store.listCatalogSources({ catalogProductId }) : listSources({ catalogProductId });
     },
   };
 }

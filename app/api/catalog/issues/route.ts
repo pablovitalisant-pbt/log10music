@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const runId = searchParams.get('runId') || undefined;
   const issueRepo = createIssueRepo();
-  const items = listIssues({ issueRepo, runId });
+  const items = await listIssues({ issueRepo, runId });
   const payload = IssuesResponseSchema.parse({ items });
   return Response.json(payload);
 }

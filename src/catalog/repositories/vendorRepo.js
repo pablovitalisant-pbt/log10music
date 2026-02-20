@@ -1,19 +1,12 @@
-const { getCatalogState } = require('../state/catalogState');
+const { upsertVendor, listVendors } = require('../persistence/catalogDb');
 
 function createVendorRepo({ store } = {}) {
-  const state = store || getCatalogState();
   return {
-    upsertVendor(vendor) {
-      const index = state.vendors.findIndex((item) => item.vendorId === vendor.vendorId);
-      if (index >= 0) {
-        state.vendors[index] = vendor;
-        return vendor;
-      }
-      state.vendors.push(vendor);
-      return vendor;
+    async upsertVendor(vendor) {
+      return store ? store.upsertVendor(vendor) : upsertVendor(vendor);
     },
-    listVendors() {
-      return [...state.vendors];
+    async listVendors() {
+      return store ? store.listVendors() : listVendors();
     },
   };
 }

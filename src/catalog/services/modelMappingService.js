@@ -1,6 +1,6 @@
-function resolveModelMapping({ mappingRepo, issueRepo, mapping }) {
-  const stored = mappingRepo.addMapping(mapping);
-  issueRepo.resolveIssue(mapping.issueId);
+async function resolveModelMapping({ mappingRepo, issueRepo, mapping }) {
+  const stored = await mappingRepo.addMapping(mapping);
+  await issueRepo.resolveIssue(mapping.issueId);
   return {
     ...stored,
     resolved: true,

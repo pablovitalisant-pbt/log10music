@@ -1,9 +1,16 @@
 const { extractModel } = require('../extract/modelExtractor');
 
-function enrichSourceRowWithModel({ rawRow, issueRepo, vendorId, fileId, fileName, sourceRowId } = {}) {
+async function enrichSourceRowWithModel({
+  rawRow,
+  issueRepo,
+  vendorId,
+  fileId,
+  fileName,
+  sourceRowId,
+} = {}) {
   const result = extractModel(rawRow);
   if (result.status === 'ambiguous') {
-    issueRepo.createIssue({
+    await issueRepo.createIssue({
       issueId: `issue-${Date.now()}`,
       type: 'ambiguous_model',
       vendorId: vendorId || 'unknown',

@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
   const sourceRowRepo = createSourceRowRepo();
   const issueRepo = createIssueRepo();
-  const result = parseCatalogFile({
+  const result = await parseCatalogFile({
     fileId: parsedRequest.data.fileId,
     vendorId: parsedRequest.data.vendorId,
     sourceRowRepo,

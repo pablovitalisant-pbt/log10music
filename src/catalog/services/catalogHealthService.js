@@ -1,5 +1,5 @@
-function getCatalogHealth({ state, lastSyncAt, issuesOpen, productsAvailable } = {}) {
-  const resolvedLastSyncAt = lastSyncAt ?? (state ? state.lastSyncAt : null);
+function getCatalogHealth({ lastSyncAt, issuesOpen, productsAvailable } = {}) {
+  const resolvedLastSyncAt = lastSyncAt ?? null;
   const hasLastSync = Boolean(resolvedLastSyncAt);
   const staleMinutes = hasLastSync ? 0 : null;
   const reasonCodes = [];
@@ -11,16 +11,8 @@ function getCatalogHealth({ state, lastSyncAt, issuesOpen, productsAvailable } =
     status,
     lastSyncAt: hasLastSync ? resolvedLastSyncAt : null,
     staleMinutes,
-    issuesOpen: Number.isFinite(issuesOpen)
-      ? issuesOpen
-      : state
-        ? state.issues.filter((issue) => !issue.resolved).length
-        : 0,
-    productsAvailable: Number.isFinite(productsAvailable)
-      ? productsAvailable
-      : state
-        ? state.productsAvailable || 0
-        : 0,
+    issuesOpen: Number.isFinite(issuesOpen) ? issuesOpen : 0,
+    productsAvailable: Number.isFinite(productsAvailable) ? productsAvailable : 0,
     reasonCodes,
   };
 }

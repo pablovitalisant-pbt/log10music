@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
   const mappingRepo = createModelMappingRepo();
   const issueRepo = createIssueRepo();
-  const result = resolveModelMapping({
+  const result = await resolveModelMapping({
     mappingRepo,
     issueRepo,
     mapping: parsed.data,

@@ -1,14 +1,12 @@
-const { getCatalogState } = require('../state/catalogState');
+const { addSyncRun, listSyncRuns } = require('../persistence/catalogDb');
 
 function createSyncRunRepo({ store } = {}) {
-  const state = store || getCatalogState();
   return {
-    createRun(run) {
-      state.runs.push(run);
-      return run;
+    async createRun(run) {
+      return store ? store.createRun(run) : addSyncRun(run);
     },
-    listRuns() {
-      return [...state.runs];
+    async listRuns() {
+      return store ? store.listRuns() : listSyncRuns();
     },
   };
 }

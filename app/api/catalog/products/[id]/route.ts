@@ -12,7 +12,7 @@ export async function GET(
 ) {
   const catalogProductRepo = createCatalogProductRepo();
   const catalogSourceRepo = createCatalogSourceRepo();
-  const aggregate = buildCatalogAggregate({ catalogProductRepo, catalogSourceRepo });
+  const aggregate = await buildCatalogAggregate({ catalogProductRepo, catalogSourceRepo });
   const { id } = await params;
   const product = aggregate.items.find((item) => item.id === id) || null;
   if (!product) {
