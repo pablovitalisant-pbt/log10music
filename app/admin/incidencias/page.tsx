@@ -14,15 +14,15 @@ type IssuesResponse = {
   items: Issue[];
 };
 
-function resolveBaseUrl() {
-  const host = headers().get('host');
+async function resolveBaseUrl() {
+  const host = (await headers()).get('host');
   if (!host) return 'http://localhost:3000';
   const protocol = host.includes('localhost') ? 'http' : 'https';
   return `${protocol}://${host}`;
 }
 
 export default async function IncidenciasPage() {
-  const baseUrl = resolveBaseUrl();
+  const baseUrl = await resolveBaseUrl();
   const response = await fetch(`${baseUrl}/api/catalog/issues`, { cache: 'no-store' });
   const data = (await response.json()) as IssuesResponse;
 

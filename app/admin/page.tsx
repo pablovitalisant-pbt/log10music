@@ -23,21 +23,19 @@ type CatalogMetrics = {
   rowsParsedTotal: number;
 };
 
-function resolveBaseUrl() {
-  const host = headers().get('host');
+async function resolveBaseUrl() {
+  const host = (await headers()).get('host');
   if (!host) return 'http://localhost:3000';
   const protocol = host.includes('localhost') ? 'http' : 'https';
   return `${protocol}://${host}`;
 }
 
-async function fetchCatalogHealth(): Promise<CatalogHealth> {
-  const baseUrl = resolveBaseUrl();
+async function fetchCatalogHealth(baseUrl: string): Promise<CatalogHealth> {
   const response = await fetch(`${baseUrl}/api/catalog/health`, { cache: 'no-store' });
   return response.json();
 }
 
-async function fetchCatalogMetrics(): Promise<CatalogMetrics> {
-  const baseUrl = resolveBaseUrl();
+async function fetchCatalogMetrics(baseUrl: string): Promise<CatalogMetrics> {
   const response = await fetch(`${baseUrl}/api/catalog/metrics`, { cache: 'no-store' });
   return response.json();
 }
@@ -67,11 +65,12 @@ export default async function AdminPage() {
   const isAdmin = cookieStore.get(ADMIN_COOKIE_NAME)?.value === getAdminToken();
   if (!isAdmin) return <LoginView />;
 
+  const baseUrl = await resolveBaseUrl();
   const [leads, config, health, metrics] = await Promise.all([
     listLeads(),
     getSiteConfig(),
-    fetchCatalogHealth(),
-    fetchCatalogMetrics(),
+    fetchCatalogHealth(baseUrl),
+    fetchCatalogMetrics(baseUrl),
   ]);
 
   return (

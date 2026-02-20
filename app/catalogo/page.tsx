@@ -7,15 +7,15 @@ export const metadata = {
   description: 'Catálogo público de audio profesional disponible en Log10Music.',
 };
 
-function resolveBaseUrl() {
-  const host = headers().get('host');
+async function resolveBaseUrl() {
+  const host = (await headers()).get('host');
   if (!host) return 'http://localhost:3000';
   const protocol = host.includes('localhost') ? 'http' : 'https';
   return `${protocol}://${host}`;
 }
 
 export default async function CatalogoPage() {
-  const baseUrl = resolveBaseUrl();
+  const baseUrl = await resolveBaseUrl();
   const data = await fetchPublicCatalog({ baseUrl });
 
   return (

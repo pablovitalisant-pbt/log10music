@@ -19,15 +19,15 @@ type CatalogProductsResponse = {
   items: CatalogProduct[];
 };
 
-function resolveBaseUrl() {
-  const host = headers().get('host');
+async function resolveBaseUrl() {
+  const host = (await headers()).get('host');
   if (!host) return 'http://localhost:3000';
   const protocol = host.includes('localhost') ? 'http' : 'https';
   return `${protocol}://${host}`;
 }
 
 export default async function CatalogAdminPage() {
-  const baseUrl = resolveBaseUrl();
+  const baseUrl = await resolveBaseUrl();
   const response = await fetch(`${baseUrl}/api/catalog/products`, { cache: 'no-store' });
   const data = (await response.json()) as CatalogProductsResponse;
 
