@@ -22,7 +22,11 @@ export async function GET(_request: Request) {
   }>;
   const toIso = (value: string | null | undefined) => {
     if (!value) return new Date().toISOString();
-    return new Date(value).toISOString();
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) {
+      return new Date().toISOString();
+    }
+    return parsed.toISOString();
   };
   const normalizedItems = items.map((item) => ({
     ...item,
