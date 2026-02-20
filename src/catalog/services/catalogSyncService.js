@@ -1,4 +1,7 @@
+const { getCatalogState } = require('../state/catalogState');
+
 function runCatalogSync({ syncRunRepo } = {}) {
+  const state = getCatalogState();
   const resolvedRunId = `run-${Date.now()}`;
   const run = {
     runId: resolvedRunId,
@@ -16,6 +19,7 @@ function runCatalogSync({ syncRunRepo } = {}) {
   if (syncRunRepo) {
     syncRunRepo.createRun(run);
   }
+  state.lastSyncAt = run.finishedAt;
   return run;
 }
 

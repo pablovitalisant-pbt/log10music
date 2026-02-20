@@ -1,5 +1,7 @@
+const { getCatalogState } = require('../state/catalogState');
+
 function createIssueRepo({ store } = {}) {
-  const state = store || { issues: [] };
+  const state = store || getCatalogState();
   return {
     createIssue(issue) {
       state.issues.push(issue);

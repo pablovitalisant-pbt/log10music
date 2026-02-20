@@ -1,5 +1,7 @@
+const { getCatalogState } = require('../state/catalogState');
+
 function createSyncRunRepo({ store } = {}) {
-  const state = store || { runs: [] };
+  const state = store || getCatalogState();
   return {
     createRun(run) {
       state.runs.push(run);
