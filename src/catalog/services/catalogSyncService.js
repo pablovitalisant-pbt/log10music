@@ -3,6 +3,11 @@ const { parseCatalogFile } = require('./fileParseService');
 const { enrichSourceRowWithModel } = require('./modelEnrichmentService');
 const { parseStockValue } = require('../parse/stockInferer');
 const { normalizeTokens } = require('../extract/normalizers');
+const {
+  deleteRowsByFile,
+  deleteSourcesByFile,
+  deleteOrphanProducts,
+} = require('../persistence/catalogDb');
 
 function slugify(value) {
   if (!value) return null;
@@ -133,6 +138,8 @@ async function runCatalogSync({
       if (!buffer) {
         continue;
       }
+      await deleteSourcesByFile(file.fileId);
+      await deleteRowsByFile(file.fileId);
       const parsed = await parseCatalogFile({
         fileId: file.fileId,
         vendorId: vendor.vendorId,
@@ -229,6 +236,7 @@ async function runCatalogSync({
   if (syncRunRepo) {
     await syncRunRepo.updateRun(runId, { stats: finishedRun.stats, finishedAt: finishedRun.finishedAt });
   }
+  await deleteOrphanProducts();
 
   return finishedRun;
 }

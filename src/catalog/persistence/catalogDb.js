@@ -203,6 +203,50 @@ async function addSource(source) {
   };
 }
 
+async function deleteSourcesByFile(fileId) {
+  if (!fileId) return 0;
+  const supabase = getSupabaseClient();
+  const { error, count } = await supabase
+    .from('catalog_sources')
+    .delete({ count: 'exact' })
+    .eq('file_id', fileId);
+  if (error) throw new Error(`Supabase deleteSourcesByFile failed: ${error.message}`);
+  return count || 0;
+}
+
+async function deleteRowsByFile(fileId) {
+  if (!fileId) return 0;
+  const supabase = getSupabaseClient();
+  const { error, count } = await supabase
+    .from('catalog_rows')
+    .delete({ count: 'exact' })
+    .eq('file_id', fileId);
+  if (error) throw new Error(`Supabase deleteRowsByFile failed: ${error.message}`);
+  return count || 0;
+}
+
+async function deleteOrphanProducts() {
+  const supabase = getSupabaseClient();
+  const { data: sources, error: sourceError } = await supabase
+    .from('catalog_sources')
+    .select('catalog_product_id');
+  if (sourceError) throw new Error(`Supabase listSources for cleanup failed: ${sourceError.message}`);
+  const keepIds = new Set((sources || []).map((row) => row.catalog_product_id));
+  const { data: products, error: productError } = await supabase
+    .from('catalog_products')
+    .select('id');
+  if (productError) throw new Error(`Supabase listProducts for cleanup failed: ${productError.message}`);
+  const toDelete = (products || [])
+    .map((row) => row.id)
+    .filter((id) => !keepIds.has(id));
+  if (toDelete.length === 0) return 0;
+  const { error, count } = await supabase
+    .from('catalog_products')
+    .delete({ count: 'exact' })
+    .in('id', toDelete);
+  if (error) throw new Error(`Supabase deleteOrphanProducts failed: ${error.message}`);
+  return count || 0;
+}
 async function listSources({ catalogProductId } = {}) {
   const supabase = getSupabaseClient();
   let query = supabase
@@ -403,4 +447,7 @@ module.exports = {
   updateSyncRun,
   listSyncRuns,
   getLatestSyncRun,
+  deleteSourcesByFile,
+  deleteRowsByFile,
+  deleteOrphanProducts,
 };
