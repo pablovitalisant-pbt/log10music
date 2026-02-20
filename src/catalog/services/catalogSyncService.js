@@ -48,6 +48,22 @@ async function runCatalogSync({
   let filesProcessed = 0;
   let rowsParsed = 0;
   let productsAvailable = 0;
+  const run = {
+    runId,
+    startedAt,
+    finishedAt: null,
+    stats: {
+      vendorsDetected: vendors.length,
+      filesScanned: 0,
+      filesProcessed: 0,
+      rowsParsed: 0,
+      productsAvailable: 0,
+      issuesCount: 0,
+    },
+  };
+  if (syncRunRepo) {
+    await syncRunRepo.createRun(run);
+  }
 
   for (const vendor of vendors) {
     if (Date.now() > deadline) break;
@@ -56,6 +72,18 @@ async function runCatalogSync({
       files = files.slice(0, Math.max(0, maxFilesPerVendor));
     }
     filesScanned += files.length;
+    if (syncRunRepo) {
+      await syncRunRepo.updateRun(runId, {
+        stats: {
+          vendorsDetected: vendors.length,
+          filesScanned,
+          filesProcessed,
+          rowsParsed,
+          productsAvailable,
+          issuesCount: await issueRepo.listIssues().then((items) => items.length),
+        },
+      });
+    }
     for (const file of files) {
       if (Date.now() > deadline) break;
       const buffer = await driveClient.downloadFile({
@@ -77,6 +105,18 @@ async function runCatalogSync({
       });
       filesProcessed += 1;
       rowsParsed += parsed.rowsParsed;
+      if (syncRunRepo) {
+        await syncRunRepo.updateRun(runId, {
+          stats: {
+            vendorsDetected: vendors.length,
+            filesScanned,
+            filesProcessed,
+            rowsParsed,
+            productsAvailable,
+            issuesCount: await issueRepo.listIssues().then((items) => items.length),
+          },
+        });
+      }
 
       const rows = await sourceRowRepo.listSourceRows({ fileId: file.fileId });
       for (const row of rows) {
@@ -123,7 +163,7 @@ async function runCatalogSync({
   productsAvailable = productsAvailableList.length;
   const issuesCount = await issueRepo.listIssues().then((items) => items.length);
 
-  const run = {
+  const finishedRun = {
     runId,
     startedAt,
     finishedAt: new Date().toISOString(),
@@ -138,10 +178,10 @@ async function runCatalogSync({
   };
 
   if (syncRunRepo) {
-    await syncRunRepo.createRun(run);
+    await syncRunRepo.updateRun(runId, { stats: finishedRun.stats, finishedAt: finishedRun.finishedAt });
   }
 
-  return run;
+  return finishedRun;
 }
 
 function listSyncRuns({ syncRunRepo } = {}) {

@@ -314,6 +314,35 @@ async function addSyncRun(run) {
   };
 }
 
+async function updateSyncRun(runId, patch) {
+  const supabase = getSupabaseClient();
+  const resolvedFinishedAt = patch.finishedAt
+    ? new Date(patch.finishedAt).toISOString()
+    : patch.finishedAt === null
+      ? null
+      : undefined;
+  const updatePayload = {
+    stats: patch.stats,
+  };
+  if (resolvedFinishedAt !== undefined) {
+    updatePayload.finished_at = resolvedFinishedAt;
+  }
+  const { data, error } = await supabase
+    .from('catalog_sync_runs')
+    .update(updatePayload)
+    .eq('run_id', runId)
+    .select('run_id, started_at, finished_at, stats')
+    .maybeSingle();
+  if (error) throw new Error(`Supabase updateSyncRun failed: ${error.message}`);
+  if (!data) return null;
+  return {
+    runId: data.run_id,
+    startedAt: data.started_at,
+    finishedAt: data.finished_at ? new Date(data.finished_at).toISOString() : null,
+    stats: data.stats || {},
+  };
+}
+
 async function listSyncRuns() {
   const supabase = getSupabaseClient();
   const { data, error } = await supabase
@@ -371,6 +400,7 @@ module.exports = {
   listIssues,
   resolveIssue,
   addSyncRun,
+  updateSyncRun,
   listSyncRuns,
   getLatestSyncRun,
 };
