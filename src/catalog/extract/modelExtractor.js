@@ -1,21 +1,74 @@
 const { normalizeTokens } = require('./normalizers');
 
+const BRAND_TOKENS = [
+  { token: 'yamaha', label: 'Yamaha' },
+  { token: 'jbl', label: 'JBL' },
+  { token: 'akg', label: 'AKG' },
+  { token: 'mackie', label: 'Mackie' },
+  { token: 'peavey', label: 'Peavey' },
+  { token: 'dbx', label: 'DBX' },
+  { token: 'crown', label: 'Crown' },
+  { token: 'blaupunkt', label: 'Blaupunkt' },
+  { token: 'novik', label: 'Novik' },
+  { token: 'proel', label: 'Proel' },
+  { token: 'skp', label: 'SKP' },
+  { token: 'neutrik', label: 'Neutrik' },
+  { token: 'rean', label: 'Rean' },
+  { token: 'probass', label: 'Probass' },
+  { token: 'digico', label: 'DiGiCo' },
+];
+
+const HEADER_LIKE = ['stock', 'precio', 'producto', 'marca', 'descripcion', 'codigo', 'unidad', 'packing'];
+
+function extractBrandFromText(text) {
+  const lower = text.toLowerCase();
+  const match = BRAND_TOKENS.find((entry) => lower.includes(entry.token));
+  if (!match) return null;
+  return match.label;
+}
+
+function isHeaderLike(modelCandidate) {
+  const normalized = modelCandidate.toLowerCase();
+  if (normalized === 'total' || normalized.startsWith('total ')) return true;
+  if (HEADER_LIKE.some((token) => normalized.includes(token))) {
+    const headerHits = HEADER_LIKE.reduce(
+      (acc, token) => (normalized.includes(token) ? acc + 1 : acc),
+      0
+    );
+    return headerHits >= 2;
+  }
+  return false;
+}
+
 function extractModel(rawRow) {
   if (!rawRow) return { status: 'ambiguous', model: null, brand: null };
+  const brandValue = rawRow.brand || rawRow.marca || rawRow.marca_producto || rawRow.brand_name;
+  const modelValue =
+    rawRow.model ||
+    rawRow.modelo ||
+    rawRow.product ||
+    rawRow.producto ||
+    rawRow.description ||
+    rawRow.descripcion;
+
+  const modelCandidate = normalizeTokens(modelValue || '');
+  if (modelCandidate && isHeaderLike(modelCandidate)) {
+    return { status: 'ambiguous', model: null, brand: null };
+  }
+
   const fields = Object.values(rawRow);
-  const normalized = fields.map((value) => normalizeTokens(value)).filter(Boolean);
-  const joined = normalized.join(' ');
+  const normalizedFields = fields.map((value) => normalizeTokens(value)).filter(Boolean);
+  const joined = modelCandidate || normalizedFields.join(' ');
   if (!joined) return { status: 'ambiguous', model: null, brand: null };
   if (joined.includes('???')) {
     return { status: 'ambiguous', model: null, brand: null };
   }
-  if (joined.toLowerCase().includes('yamaha hs5')) {
-    return { status: 'extracted', model: 'Yamaha HS5', brand: 'Yamaha' };
-  }
   if (joined.length < 3) {
     return { status: 'ambiguous', model: null, brand: null };
   }
-  return { status: 'extracted', model: joined, brand: null };
+  const brand =
+    (brandValue ? normalizeTokens(brandValue) : null) || extractBrandFromText(joined);
+  return { status: 'extracted', model: joined, brand: brand || null };
 }
 
 module.exports = {

@@ -1,6 +1,7 @@
 const { discoverFiles, discoverVendors } = require('./driveDiscovery');
 const { parseCatalogFile } = require('./fileParseService');
 const { enrichSourceRowWithModel } = require('./modelEnrichmentService');
+const { parseStockValue } = require('../parse/stockInferer');
 
 function slugify(value) {
   if (!value) return null;
@@ -12,6 +13,18 @@ function slugify(value) {
     .trim()
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-');
+}
+
+function normalizeKey(value) {
+  if (!value) return null;
+  return value
+    .toString()
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
 }
 
 async function runCatalogSync({
@@ -76,26 +89,32 @@ async function runCatalogSync({
           fileName: file.fileName,
           sourceRowId: row.sourceRowId,
         });
-        if (extraction.status === 'extracted' && extraction.model) {
-          const productId = `prod-${slugify(extraction.model) || row.sourceRowId}`;
-          await catalogProductRepo.upsertCatalogProduct({
-            id: productId,
-            model: extraction.model,
-            brand: extraction.brand || null,
-            available: true,
-            updatedAt: new Date().toISOString(),
-          });
-          await catalogSourceRepo.addCatalogSource({
-            catalogProductId: productId,
-            sourceRowId: row.sourceRowId,
-            vendorId: vendor.vendorId,
-            vendorName: vendor.name || null,
-            fileId: file.fileId,
-            fileName: file.fileName || null,
-            sheetName: row.sheetName || null,
-            rowNumber: row.rowNumber || null,
-          });
+        if (extraction.status !== 'extracted' || !extraction.model) continue;
+        const stockValue =
+          parseStockValue(row.rawRow?.stock ?? row.rawRow?.saldo ?? row.rawRow?.disponible) ?? null;
+        if (stockValue !== null && stockValue <= 1) {
+          continue;
         }
+        const brandKey = normalizeKey(extraction.brand || '');
+        const modelKey = normalizeKey(extraction.model) || row.sourceRowId;
+        const productId = `prod-${brandKey ? `${brandKey}-` : ''}${modelKey}`;
+        await catalogProductRepo.upsertCatalogProduct({
+          id: productId,
+          model: extraction.model,
+          brand: extraction.brand || null,
+          available: true,
+          updatedAt: new Date().toISOString(),
+        });
+        await catalogSourceRepo.addCatalogSource({
+          catalogProductId: productId,
+          sourceRowId: row.sourceRowId,
+          vendorId: vendor.vendorId,
+          vendorName: vendor.name || null,
+          fileId: file.fileId,
+          fileName: file.fileName || null,
+          sheetName: row.sheetName || null,
+          rowNumber: row.rowNumber || null,
+        });
       }
     }
   }
