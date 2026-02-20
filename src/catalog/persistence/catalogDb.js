@@ -321,10 +321,14 @@ async function listSyncRuns() {
     .select('run_id, started_at, finished_at, stats')
     .order('started_at', { ascending: false });
   if (error) throw new Error(`Supabase listSyncRuns failed: ${error.message}`);
+  const normalizeIso = (value) => {
+    if (!value) return null;
+    return new Date(value).toISOString();
+  };
   return (data || []).map((row) => ({
     runId: row.run_id,
-    startedAt: row.started_at,
-    finishedAt: row.finished_at ? new Date(row.finished_at).toISOString() : null,
+    startedAt: normalizeIso(row.started_at),
+    finishedAt: normalizeIso(row.finished_at),
     stats: row.stats || {},
   }));
 }
@@ -339,10 +343,14 @@ async function getLatestSyncRun() {
     .maybeSingle();
   if (error) throw new Error(`Supabase getLatestSyncRun failed: ${error.message}`);
   if (!data) return null;
+  const normalizeIso = (value) => {
+    if (!value) return null;
+    return new Date(value).toISOString();
+  };
   return {
     runId: data.run_id,
-    startedAt: data.started_at,
-    finishedAt: data.finished_at ? new Date(data.finished_at).toISOString() : null,
+    startedAt: normalizeIso(data.started_at),
+    finishedAt: normalizeIso(data.finished_at),
     stats: data.stats || {},
   };
 }
