@@ -1,5 +1,20 @@
 const { getSupabaseClient } = require('./supabaseClient');
 
+async function fetchAllRows(buildQuery, { pageSize = 1000 } = {}) {
+  const all = [];
+  let from = 0;
+  for (;;) {
+    const to = from + pageSize - 1;
+    const { data, error } = await buildQuery().range(from, to);
+    if (error) throw error;
+    if (!data || data.length === 0) break;
+    all.push(...data);
+    if (data.length < pageSize) break;
+    from += pageSize;
+  }
+  return all;
+}
+
 async function upsertVendor(vendor) {
   const supabase = getSupabaseClient();
   const { data, error } = await supabase
@@ -97,12 +112,19 @@ async function upsertRow(row) {
 
 async function listRows({ fileId } = {}) {
   const supabase = getSupabaseClient();
-  let query = supabase
-    .from('catalog_rows')
-    .select('source_row_id, vendor_id, file_id, file_name, row_number, raw_row');
-  if (fileId) query = query.eq('file_id', fileId);
-  const { data, error } = await query;
-  if (error) throw new Error(`Supabase listRows failed: ${error.message}`);
+  const buildQuery = () => {
+    let query = supabase
+      .from('catalog_rows')
+      .select('source_row_id, vendor_id, file_id, file_name, row_number, raw_row');
+    if (fileId) query = query.eq('file_id', fileId);
+    return query;
+  };
+  let data;
+  try {
+    data = await fetchAllRows(buildQuery);
+  } catch (error) {
+    throw new Error(`Supabase listRows failed: ${error.message}`);
+  }
   return (data || []).map((row) => ({
     sourceRowId: row.source_row_id,
     vendorId: row.vendor_id,
@@ -141,10 +163,14 @@ async function upsertProduct(product) {
 
 async function listProducts() {
   const supabase = getSupabaseClient();
-  const { data, error } = await supabase
-    .from('catalog_products')
-    .select('id, model, brand, available, updated_at');
-  if (error) throw new Error(`Supabase listProducts failed: ${error.message}`);
+  let data;
+  try {
+    data = await fetchAllRows(() =>
+      supabase.from('catalog_products').select('id, model, brand, available, updated_at')
+    );
+  } catch (error) {
+    throw new Error(`Supabase listProducts failed: ${error.message}`);
+  }
   return (data || []).map((row) => ({
     id: row.id,
     model: row.model,
@@ -227,15 +253,21 @@ async function deleteRowsByFile(fileId) {
 
 async function deleteOrphanProducts() {
   const supabase = getSupabaseClient();
-  const { data: sources, error: sourceError } = await supabase
-    .from('catalog_sources')
-    .select('catalog_product_id');
-  if (sourceError) throw new Error(`Supabase listSources for cleanup failed: ${sourceError.message}`);
+  let sources;
+  try {
+    sources = await fetchAllRows(() =>
+      supabase.from('catalog_sources').select('catalog_product_id')
+    );
+  } catch (error) {
+    throw new Error(`Supabase listSources for cleanup failed: ${error.message}`);
+  }
   const keepIds = new Set((sources || []).map((row) => row.catalog_product_id));
-  const { data: products, error: productError } = await supabase
-    .from('catalog_products')
-    .select('id');
-  if (productError) throw new Error(`Supabase listProducts for cleanup failed: ${productError.message}`);
+  let products;
+  try {
+    products = await fetchAllRows(() => supabase.from('catalog_products').select('id'));
+  } catch (error) {
+    throw new Error(`Supabase listProducts for cleanup failed: ${error.message}`);
+  }
   const toDelete = (products || [])
     .map((row) => row.id)
     .filter((id) => !keepIds.has(id));
@@ -255,14 +287,21 @@ async function deleteOrphanProducts() {
 }
 async function listSources({ catalogProductId } = {}) {
   const supabase = getSupabaseClient();
-  let query = supabase
-    .from('catalog_sources')
-    .select(
-      'catalog_product_id, source_row_id, vendor_id, vendor_name, file_id, file_name, sheet_name, row_number'
-    );
-  if (catalogProductId) query = query.eq('catalog_product_id', catalogProductId);
-  const { data, error } = await query;
-  if (error) throw new Error(`Supabase listSources failed: ${error.message}`);
+  const buildQuery = () => {
+    let query = supabase
+      .from('catalog_sources')
+      .select(
+        'catalog_product_id, source_row_id, vendor_id, vendor_name, file_id, file_name, sheet_name, row_number'
+      );
+    if (catalogProductId) query = query.eq('catalog_product_id', catalogProductId);
+    return query;
+  };
+  let data;
+  try {
+    data = await fetchAllRows(buildQuery);
+  } catch (error) {
+    throw new Error(`Supabase listSources failed: ${error.message}`);
+  }
   return (data || []).map((row) => ({
     catalogProductId: row.catalog_product_id,
     sourceRowId: row.source_row_id,
