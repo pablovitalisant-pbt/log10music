@@ -28,8 +28,8 @@ function getSupabaseClient(): SupabaseClient {
   const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const token = supabaseServiceRoleKey || supabaseAnonKey;
 
-  if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error('Missing SUPABASE_URL or SUPABASE_ANON_KEY in environment.');
+  if (!supabaseUrl) {
+    throw new Error('Missing SUPABASE_URL in environment.');
   }
   if (!token) {
     throw new Error('Missing Supabase auth token. Set SUPABASE_ANON_KEY (or SUPABASE_SERVICE_ROLE_KEY).');
