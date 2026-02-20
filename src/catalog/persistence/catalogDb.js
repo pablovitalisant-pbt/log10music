@@ -240,12 +240,18 @@ async function deleteOrphanProducts() {
     .map((row) => row.id)
     .filter((id) => !keepIds.has(id));
   if (toDelete.length === 0) return 0;
-  const { error, count } = await supabase
-    .from('catalog_products')
-    .delete({ count: 'exact' })
-    .in('id', toDelete);
-  if (error) throw new Error(`Supabase deleteOrphanProducts failed: ${error.message}`);
-  return count || 0;
+  const chunkSize = 200;
+  let deleted = 0;
+  for (let index = 0; index < toDelete.length; index += chunkSize) {
+    const chunk = toDelete.slice(index, index + chunkSize);
+    const { error, count } = await supabase
+      .from('catalog_products')
+      .delete({ count: 'exact' })
+      .in('id', chunk);
+    if (error) throw new Error(`Supabase deleteOrphanProducts failed: ${error.message}`);
+    deleted += count || 0;
+  }
+  return deleted;
 }
 async function listSources({ catalogProductId } = {}) {
   const supabase = getSupabaseClient();
