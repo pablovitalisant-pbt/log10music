@@ -3,6 +3,7 @@ type PublicCatalogItem = {
   model: string;
   brand?: string | null;
   available: boolean;
+  imageUrl?: string | null;
 };
 
 type ProductCardProps = {
@@ -12,7 +13,19 @@ type ProductCardProps = {
 export default function ProductCard({ item }: ProductCardProps) {
   return (
     <article className="rounded border border-white/10 bg-industrial p-5 text-white">
-      <div className="aspect-[4/3] rounded bg-white/5" />
+      <div className="aspect-[4/3] overflow-hidden rounded bg-white/5">
+        {item.imageUrl ? (
+          <img
+            src={item.imageUrl}
+            alt={item.model}
+            className="h-full w-full object-cover"
+            loading="lazy"
+            referrerPolicy="no-referrer"
+          />
+        ) : (
+          <div className="h-full w-full" />
+        )}
+      </div>
       <div className="mt-4">
         <p className="text-xs uppercase text-white/50">{item.brand || 'Sin marca'}</p>
         <h3 className="text-lg font-black">{item.model}</h3>

@@ -15,6 +15,9 @@ type CatalogProduct = {
   model: string;
   brand?: string | null;
   available: boolean;
+  imageUrl?: string | null;
+  imageSource?: string | null;
+  imageUpdatedAt?: string | null;
   sourcesAvailable: CatalogSource[];
   updatedAt: string;
 };
@@ -32,7 +35,19 @@ export default function ProductRow({ product }: ProductRowProps) {
     <>
       <tr className="border-b border-white/10 text-sm">
         <td className="p-3">
-          <div className="size-10 rounded bg-white/5" />
+          <div className="size-10 overflow-hidden rounded bg-white/5">
+            {product.imageUrl ? (
+              <img
+                src={product.imageUrl}
+                alt={product.model}
+                className="h-full w-full object-cover"
+                loading="lazy"
+                referrerPolicy="no-referrer"
+              />
+            ) : (
+              <div className="h-full w-full" />
+            )}
+          </div>
         </td>
         <td className="p-3">
           <div className="font-black">{product.model}</div>

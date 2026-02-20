@@ -6,6 +6,9 @@ export const PublicCatalogItemSchema = z
     model: z.string(),
     brand: z.string().nullable().optional(),
     available: z.boolean(),
+    imageUrl: z.string().url().nullable().optional(),
+    imageSource: z.enum(['ml', 'logokit', 'cache']).nullable().optional(),
+    imageUpdatedAt: z.string().datetime().nullable().optional(),
   })
   .strict();
 
@@ -26,6 +29,9 @@ export const CatalogProductAdminSchema = z
     model: z.string(),
     brand: z.string().nullable().optional(),
     available: z.boolean(),
+    imageUrl: z.string().url().nullable().optional(),
+    imageSource: z.enum(['ml', 'logokit', 'cache']).nullable().optional(),
+    imageUpdatedAt: z.string().datetime().nullable().optional(),
     sourcesAvailable: z.array(CatalogSourceSchema),
     updatedAt: z.string().datetime(),
   })

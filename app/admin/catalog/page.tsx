@@ -6,6 +6,9 @@ type CatalogProduct = {
   model: string;
   brand?: string | null;
   available: boolean;
+  imageUrl?: string | null;
+  imageSource?: string | null;
+  imageUpdatedAt?: string | null;
   sourcesAvailable: Array<{
     vendorId: string;
     vendorName?: string | null;

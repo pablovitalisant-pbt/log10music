@@ -3,6 +3,9 @@ function aggregateCatalog({ products, sources, updatedAt }) {
   (products || []).forEach((product) => {
     productMap.set(product.id, {
       ...product,
+      imageUrl: product.imageUrl ?? null,
+      imageSource: product.imageSource ?? null,
+      imageUpdatedAt: product.imageUpdatedAt ?? null,
       sourcesAvailable: [],
     });
   });
