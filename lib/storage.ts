@@ -37,7 +37,7 @@ function getSupabaseClient(): SupabaseClient {
 
   if (process.env.NODE_ENV !== 'production' && !envLogged) {
     console.log(
-      `[supabase] env loaded url=${mask(supabaseUrl)} anon=${mask(supabaseAnonKey)} serviceRole=${
+      `[supabase] env loaded url=${mask(supabaseUrl)} anon=${supabaseAnonKey ? mask(supabaseAnonKey) : 'absent'} serviceRole=${
         supabaseServiceRoleKey ? 'present' : 'absent'
       }`
     );
