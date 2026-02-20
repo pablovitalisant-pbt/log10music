@@ -20,9 +20,22 @@ const BRAND_TOKENS = [
 
 const HEADER_LIKE = ['stock', 'precio', 'producto', 'marca', 'descripcion', 'codigo', 'unidad', 'packing'];
 
+function normalizeForToken(value) {
+  return value
+    .toString()
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
 function extractBrandFromText(text) {
-  const lower = text.toLowerCase();
-  const match = BRAND_TOKENS.find((entry) => lower.includes(entry.token));
+  const normalized = normalizeForToken(text);
+  if (!normalized) return null;
+  const match = BRAND_TOKENS.find((entry) =>
+    normalized.includes(` ${entry.token} `) || normalized.startsWith(`${entry.token} `) || normalized.endsWith(` ${entry.token}`)
+  );
   if (!match) return null;
   return match.label;
 }
@@ -92,7 +105,7 @@ function extractModel(rawRow) {
   if (joined.length < 3) {
     return { status: 'ambiguous', model: null, brand: null };
   }
-  const brand = brandResult.brand || extractBrandFromText(joined);
+  const brand = brandResult.brand || extractBrandFromText(joined) || extractBrandFromText(modelCandidate || '');
   return { status: 'extracted', model: joined, brand: brand || null };
 }
 
