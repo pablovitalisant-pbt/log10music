@@ -1,29 +1,113 @@
-async function searchCatalogImages({ query, limit } = {}) {
+const { normalizeTokens } = require('../extract/normalizers');
+
+function normalizeKey(value) {
+  if (!value) return '';
+  return value
+    .toString()
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '')
+    .trim();
+}
+
+function buildLogoKitUrl(brand, { token, size, fallback } = {}) {
+  if (!brand || !token) return null;
+  const domain = `${normalizeKey(brand)}.com`;
+  if (!domain || domain === '.com') return null;
+  const params = new URLSearchParams({ token });
+  if (size) params.set('size', String(size));
+  if (fallback) params.set('fallback', fallback);
+  return `https://img.logokit.com/${domain}?${params.toString()}`;
+}
+
+function findMatchingProduct(query, products) {
+  if (!Array.isArray(products) || products.length === 0) return null;
+  const queryKey = normalizeKey(query);
+  if (!queryKey) return null;
+  return (
+    products.find((product) => normalizeKey(product.model) === queryKey) ||
+    products.find((product) => normalizeKey(`${product.brand || ''}${product.model}`) === queryKey) ||
+    products.find((product) => normalizeKey(product.model).includes(queryKey))
+  );
+}
+
+async function searchCatalogImages({ query, limit, catalogProductRepo } = {}) {
   const trimmed = (query || '').trim();
   if (!trimmed) return [];
   const resolvedLimit = Number.isFinite(limit) ? Math.max(1, Math.min(5, limit)) : 1;
+  const now = new Date().toISOString();
+  const products = catalogProductRepo ? await catalogProductRepo.listCatalogProducts() : [];
+  const matchedProduct = findMatchingProduct(trimmed, products);
+  if (matchedProduct?.imageUrl) {
+    return [
+      {
+        url: matchedProduct.imageUrl,
+        source: matchedProduct.imageSource || 'cache',
+        updatedAt: matchedProduct.imageUpdatedAt || now,
+      },
+    ].slice(0, resolvedLimit);
+  }
+
   const siteId = (process.env.ML_SITE_ID || 'MLC').toString().trim();
   const url = `https://api.mercadolibre.com/sites/${encodeURIComponent(
     siteId
   )}/search?q=${encodeURIComponent(trimmed)}&limit=${resolvedLimit}`;
   try {
     const response = await fetch(url, { method: 'GET' });
-    if (!response.ok) return [];
-    const payload = await response.json();
-    const results = Array.isArray(payload?.results) ? payload.results : [];
-    const now = new Date().toISOString();
-    return results
-      .map((item) => item?.thumbnail)
-      .filter((thumbnail) => typeof thumbnail === 'string' && thumbnail.startsWith('http'))
-      .map((thumbnail) => ({
-        url: thumbnail,
-        source: 'ml',
-        updatedAt: now,
-      }))
-      .slice(0, resolvedLimit);
+    if (response.ok) {
+      const payload = await response.json();
+      const results = Array.isArray(payload?.results) ? payload.results : [];
+      const items = results
+        .map((item) => item?.thumbnail)
+        .filter((thumbnail) => typeof thumbnail === 'string' && thumbnail.startsWith('http'))
+        .map((thumbnail) => ({
+          url: thumbnail,
+          source: 'ml',
+          updatedAt: now,
+        }))
+        .slice(0, resolvedLimit);
+      if (items.length > 0 && matchedProduct && catalogProductRepo) {
+        await catalogProductRepo.upsertCatalogProduct({
+          id: matchedProduct.id,
+          model: matchedProduct.model,
+          brand: matchedProduct.brand || null,
+          available: matchedProduct.available,
+          updatedAt: matchedProduct.updatedAt || now,
+          imageUrl: items[0].url,
+          imageSource: 'ml',
+          imageUpdatedAt: now,
+        });
+      }
+      if (items.length > 0) return items;
+    }
   } catch (_error) {
-    return [];
+    // ignore and fall back
   }
+
+  const logoToken = (process.env.LOGOKIT_PUBLISHABLE_TOKEN || '').trim();
+  const fallback = (process.env.LOGOKIT_FALLBACK || 'monogram').trim();
+  const size = process.env.LOGOKIT_SIZE ? Number(process.env.LOGOKIT_SIZE) : undefined;
+  const brand =
+    matchedProduct?.brand ||
+    normalizeTokens(trimmed).split(' ').find((token) => token.length >= 2) ||
+    null;
+  const logoUrl = buildLogoKitUrl(brand, { token: logoToken, size, fallback });
+  if (!logoUrl) return [];
+  const logoItem = { url: logoUrl, source: 'logokit', updatedAt: now };
+  if (matchedProduct && catalogProductRepo) {
+    await catalogProductRepo.upsertCatalogProduct({
+      id: matchedProduct.id,
+      model: matchedProduct.model,
+      brand: matchedProduct.brand || null,
+      available: matchedProduct.available,
+      updatedAt: matchedProduct.updatedAt || now,
+      imageUrl: logoItem.url,
+      imageSource: 'logokit',
+      imageUpdatedAt: now,
+    });
+  }
+  return [logoItem].slice(0, resolvedLimit);
 }
 
 module.exports = {

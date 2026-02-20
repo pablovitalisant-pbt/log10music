@@ -1,6 +1,8 @@
+export {};
+
 const {
-  CatalogImageResponseSchema,
-  CatalogImageBadRequestSchema,
+  CatalogImageResponseSchema: ImagesResponseSchema,
+  CatalogImageBadRequestSchema: ImagesBadRequestSchema,
 } = require('../../docs/specs/catalog.images.contract.js');
 const { GET: getImages } = require('../../app/api/catalog/images/route.ts');
 
@@ -9,7 +11,7 @@ describe('slice-S11 catalog images', () => {
     const response = await getImages(new Request('http://localhost/api/catalog/images'));
     expect(response.status).toBe(400);
     const payload = await response.json();
-    CatalogImageBadRequestSchema.parse(payload);
+    ImagesBadRequestSchema.parse(payload);
   });
 
   it('returns images for a query', async () => {
@@ -18,7 +20,7 @@ describe('slice-S11 catalog images', () => {
     );
     expect(response.status).toBe(200);
     const payload = await response.json();
-    CatalogImageResponseSchema.parse(payload);
+    ImagesResponseSchema.parse(payload);
     expect(payload.items.length).toBe(2);
   });
 });

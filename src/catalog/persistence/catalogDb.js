@@ -137,19 +137,26 @@ async function listRows({ fileId } = {}) {
 
 async function upsertProduct(product) {
   const supabase = getSupabaseClient();
+  const payload = {
+    id: product.id,
+    model: product.model,
+    brand: product.brand || null,
+    available: product.available,
+    updated_at: product.updatedAt,
+  };
+  if (Object.prototype.hasOwnProperty.call(product, 'imageUrl')) {
+    payload.image_url = product.imageUrl;
+  }
+  if (Object.prototype.hasOwnProperty.call(product, 'imageSource')) {
+    payload.image_source = product.imageSource;
+  }
+  if (Object.prototype.hasOwnProperty.call(product, 'imageUpdatedAt')) {
+    payload.image_updated_at = product.imageUpdatedAt;
+  }
   const { data, error } = await supabase
     .from('catalog_products')
-    .upsert(
-      {
-        id: product.id,
-        model: product.model,
-        brand: product.brand || null,
-        available: product.available,
-        updated_at: product.updatedAt,
-      },
-      { onConflict: 'id' }
-    )
-    .select('id, model, brand, available, updated_at')
+    .upsert(payload, { onConflict: 'id' })
+    .select('id, model, brand, available, updated_at, image_url, image_source, image_updated_at')
     .single();
   if (error) throw new Error(`Supabase upsertProduct failed: ${error.message}`);
   return {
@@ -158,6 +165,9 @@ async function upsertProduct(product) {
     brand: data.brand,
     available: data.available,
     updatedAt: data.updated_at,
+    imageUrl: data.image_url || null,
+    imageSource: data.image_source || null,
+    imageUpdatedAt: data.image_updated_at ? new Date(data.image_updated_at).toISOString() : null,
   };
 }
 
@@ -166,7 +176,9 @@ async function listProducts() {
   let data;
   try {
     data = await fetchAllRows(() =>
-      supabase.from('catalog_products').select('id, model, brand, available, updated_at')
+      supabase
+        .from('catalog_products')
+        .select('id, model, brand, available, updated_at, image_url, image_source, image_updated_at')
     );
   } catch (error) {
     throw new Error(`Supabase listProducts failed: ${error.message}`);
@@ -177,6 +189,9 @@ async function listProducts() {
     brand: row.brand,
     available: row.available,
     updatedAt: row.updated_at ? new Date(row.updated_at).toISOString() : new Date().toISOString(),
+    imageUrl: row.image_url || null,
+    imageSource: row.image_source || null,
+    imageUpdatedAt: row.image_updated_at ? new Date(row.image_updated_at).toISOString() : null,
   }));
 }
 
@@ -184,7 +199,7 @@ async function getProductById(id) {
   const supabase = getSupabaseClient();
   const { data, error } = await supabase
     .from('catalog_products')
-    .select('id, model, brand, available, updated_at')
+    .select('id, model, brand, available, updated_at, image_url, image_source, image_updated_at')
     .eq('id', id)
     .maybeSingle();
   if (error) throw new Error(`Supabase getProductById failed: ${error.message}`);
@@ -195,6 +210,9 @@ async function getProductById(id) {
     brand: data.brand,
     available: data.available,
     updatedAt: data.updated_at ? new Date(data.updated_at).toISOString() : new Date().toISOString(),
+    imageUrl: data.image_url || null,
+    imageSource: data.image_source || null,
+    imageUpdatedAt: data.image_updated_at ? new Date(data.image_updated_at).toISOString() : null,
   };
 }
 

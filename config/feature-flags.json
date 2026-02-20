@@ -1,4 +1,5 @@
 {
   "catalogBrandEngineV1": true,
-  "catalogImagesV1": false
+  "catalogImagesV1": false,
+  "catalogImagesFallbackV1": false
 }

@@ -10,7 +10,7 @@ export const CatalogImageRequestSchema = z
 export const CatalogImageItemSchema = z
   .object({
     url: z.string().url(),
-    source: z.enum(['ml', 'cache']),
+    source: z.enum(['ml', 'logokit', 'cache']),
     updatedAt: z.string().datetime(),
   })
   .strict();
@@ -28,7 +28,7 @@ export const CatalogProductImageSchema = z
     model: z.string(),
     brand: z.string().nullable().optional(),
     imageUrl: z.string().url().nullable().optional(),
-    imageSource: z.enum(['ml', 'cache']).nullable().optional(),
+    imageSource: z.enum(['ml', 'logokit', 'cache']).nullable().optional(),
     imageUpdatedAt: z.string().datetime().nullable().optional(),
   })
   .strict();
