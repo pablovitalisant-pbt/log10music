@@ -150,7 +150,7 @@ async function listProducts() {
     model: row.model,
     brand: row.brand,
     available: row.available,
-    updatedAt: row.updated_at,
+    updatedAt: row.updated_at ? new Date(row.updated_at).toISOString() : new Date().toISOString(),
   }));
 }
 
@@ -168,7 +168,7 @@ async function getProductById(id) {
     model: data.model,
     brand: data.brand,
     available: data.available,
-    updatedAt: data.updated_at,
+    updatedAt: data.updated_at ? new Date(data.updated_at).toISOString() : new Date().toISOString(),
   };
 }
 
