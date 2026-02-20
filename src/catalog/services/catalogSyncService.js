@@ -286,7 +286,15 @@ async function runCatalogSync({
   if (syncRunRepo) {
     await syncRunRepo.updateRun(runId, { stats: finishedRun.stats, finishedAt: finishedRun.finishedAt });
   }
-  await deleteOrphanProducts();
+  try {
+  try {
+    await deleteOrphanProducts();
+  } catch (error) {
+    console.warn('[catalog] deleteOrphanProducts failed, continuing sync:', error?.message || error);
+  }
+  } catch (error) {
+    console.warn('[catalog] deleteOrphanProducts failed, continuing sync:', error?.message || error);
+  }
 
   return finishedRun;
 }
