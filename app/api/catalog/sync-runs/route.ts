@@ -7,7 +7,19 @@ import { listIssues, listProducts } from '../../../../src/catalog/persistence/ca
 
 export async function GET(_request: Request) {
   const syncRunRepo = createSyncRunRepo();
-  const items = await listSyncRuns({ syncRunRepo });
+  const items = (await listSyncRuns({ syncRunRepo })) as Array<{
+    runId: string;
+    startedAt: string;
+    finishedAt: string | null;
+    stats: {
+      vendorsDetected: number;
+      filesScanned: number;
+      filesProcessed: number;
+      rowsParsed: number;
+      productsAvailable: number;
+      issuesCount: number;
+    };
+  }>;
   const toIso = (value: string | null | undefined) => {
     if (!value) return new Date().toISOString();
     return new Date(value).toISOString();
