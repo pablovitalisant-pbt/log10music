@@ -1,5 +1,7 @@
+const { getCatalogState } = require('../state/catalogState');
+
 function createVendorRepo({ store } = {}) {
-  const state = store || { vendors: [] };
+  const state = store || getCatalogState();
   return {
     upsertVendor(vendor) {
       const index = state.vendors.findIndex((item) => item.vendorId === vendor.vendorId);

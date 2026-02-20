@@ -1,5 +1,7 @@
+const { getCatalogState } = require('../state/catalogState');
+
 function createSourceRowRepo({ store } = {}) {
-  const state = store || { rows: [] };
+  const state = store || getCatalogState();
   return {
     upsertSourceRow(row) {
       const index = state.rows.findIndex((item) => item.sourceRowId === row.sourceRowId);

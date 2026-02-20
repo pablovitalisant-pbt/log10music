@@ -1,5 +1,7 @@
+const { getCatalogState } = require('../state/catalogState');
+
 function createSourceFileRepo({ store } = {}) {
-  const state = store || { files: [] };
+  const state = store || getCatalogState();
   return {
     upsertSourceFile(file) {
       const index = state.files.findIndex((item) => item.fileId === file.fileId);

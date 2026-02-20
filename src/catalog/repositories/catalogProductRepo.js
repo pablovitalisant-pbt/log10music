@@ -1,5 +1,7 @@
+const { getCatalogState } = require('../state/catalogState');
+
 function createCatalogProductRepo({ store } = {}) {
-  const state = store || { products: [] };
+  const state = store || getCatalogState();
   return {
     upsertCatalogProduct(product) {
       const index = state.products.findIndex((item) => item.id === product.id);

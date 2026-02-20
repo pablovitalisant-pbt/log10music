@@ -1,5 +1,7 @@
+const { getCatalogState } = require('../state/catalogState');
+
 function createCatalogSourceRepo({ store } = {}) {
-  const state = store || { sources: [] };
+  const state = store || getCatalogState();
   return {
     addCatalogSource(source) {
       state.sources.push(source);

@@ -5,38 +5,9 @@ import { createCatalogProductRepo } from '../../../../src/catalog/repositories/c
 import { createCatalogSourceRepo } from '../../../../src/catalog/repositories/catalogSourceRepo.js';
 import { buildCatalogAggregate } from '../../../../src/catalog/services/catalogAggregateService.js';
 
-const FALLBACK_PRODUCTS = [
-  {
-    id: 'product-1',
-    model: 'Yamaha HS5',
-    brand: 'Yamaha',
-    available: true,
-    updatedAt: '2026-02-19T12:00:00.000Z',
-  },
-  {
-    id: 'product-2',
-    model: 'DiGiCo SD12',
-    brand: 'DiGiCo',
-    available: false,
-    updatedAt: '2026-02-19T12:00:00.000Z',
-  },
-];
-
-const FALLBACK_SOURCES = [
-  {
-    catalogProductId: 'product-1',
-    vendorId: 'vendor-1',
-    vendorName: null,
-    fileId: 'file-1',
-    fileName: null,
-    sheetName: null,
-    rowNumber: null,
-  },
-];
-
 export async function GET(_request: Request) {
-  const catalogProductRepo = createCatalogProductRepo({ store: { products: FALLBACK_PRODUCTS } });
-  const catalogSourceRepo = createCatalogSourceRepo({ store: { sources: FALLBACK_SOURCES } });
+  const catalogProductRepo = createCatalogProductRepo();
+  const catalogSourceRepo = createCatalogSourceRepo();
   const aggregate = buildCatalogAggregate({ catalogProductRepo, catalogSourceRepo });
   const items = aggregate.items.filter((item) => item.available === true).map((item) => ({
     id: item.id,

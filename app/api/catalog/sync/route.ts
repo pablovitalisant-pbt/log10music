@@ -3,7 +3,14 @@ import {
   SyncRequestSchema,
 } from '../../../../docs/specs/catalog.sync.contract.js';
 import { SyncRunSchema } from '../../../../docs/specs/catalog.foundation.contract.js';
+import { createDriveClient } from '../../../../src/catalog/drive/driveClient.js';
+import { createCatalogProductRepo } from '../../../../src/catalog/repositories/catalogProductRepo.js';
+import { createCatalogSourceRepo } from '../../../../src/catalog/repositories/catalogSourceRepo.js';
+import { createIssueRepo } from '../../../../src/catalog/repositories/issueRepo.js';
+import { createSourceFileRepo } from '../../../../src/catalog/repositories/sourceFileRepo.js';
+import { createSourceRowRepo } from '../../../../src/catalog/repositories/sourceRowRepo.js';
 import { createSyncRunRepo } from '../../../../src/catalog/repositories/syncRunRepo.js';
+import { createVendorRepo } from '../../../../src/catalog/repositories/vendorRepo.js';
 import { runCatalogSync } from '../../../../src/catalog/services/catalogSyncService.js';
 
 export async function POST(request: Request) {
@@ -28,7 +35,23 @@ export async function POST(request: Request) {
   }
 
   const syncRunRepo = createSyncRunRepo();
-  const run = runCatalogSync({ syncRunRepo });
+  const driveClient = createDriveClient();
+  const vendorRepo = createVendorRepo();
+  const sourceFileRepo = createSourceFileRepo();
+  const sourceRowRepo = createSourceRowRepo();
+  const issueRepo = createIssueRepo();
+  const catalogProductRepo = createCatalogProductRepo();
+  const catalogSourceRepo = createCatalogSourceRepo();
+  const run = await runCatalogSync({
+    syncRunRepo,
+    driveClient,
+    vendorRepo,
+    sourceFileRepo,
+    sourceRowRepo,
+    issueRepo,
+    catalogProductRepo,
+    catalogSourceRepo,
+  });
   const payload = SyncRunSchema.parse(run);
   return Response.json(payload);
 }

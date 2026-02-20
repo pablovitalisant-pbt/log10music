@@ -1,6 +1,11 @@
 const state = {
   runs: [],
   issues: [],
+  vendors: [],
+  files: [],
+  rows: [],
+  products: [],
+  sources: [],
   lastSyncAt: null,
   productsAvailable: 0,
   filesProcessedTotal: 0,
