@@ -183,7 +183,14 @@ async function runCatalogSync({
         if (stockValue !== null && stockValue <= 1) {
           continue;
         }
+        const rowBrandValue =
+          row.rawRow?.brand ||
+          row.rawRow?.marca ||
+          row.rawRow?.marca_producto ||
+          row.rawRow?.brand_name ||
+          row.rawRow?.marca_producto_nombre;
         const inferredBrand =
+          (rowBrandValue ? normalizeTokens(rowBrandValue) : null) ||
           extraction.brand ||
           inferBrandFromText(
             `${row.rawRow?.description || ''} ${row.rawRow?.descripcion || ''} ${row.rawRow?.product || ''} ${
