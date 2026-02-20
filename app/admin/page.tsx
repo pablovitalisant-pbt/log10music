@@ -67,12 +67,35 @@ export default async function AdminPage() {
   if (!isAdmin) return <LoginView />;
 
   const baseUrl = await resolveBaseUrl();
-  const [leads, config, health, metrics] = await Promise.all([
-    listLeads(),
-    getSiteConfig(),
-    fetchCatalogHealth(baseUrl),
-    fetchCatalogMetrics(baseUrl),
-  ]);
+  let leads: Awaited<ReturnType<typeof listLeads>> = [];
+  let config: Awaited<ReturnType<typeof getSiteConfig>> = { header_code: '', footer_code: '' };
+  let health: CatalogHealth = {
+    status: 'degraded',
+    lastSyncAt: null,
+    staleMinutes: null,
+    issuesOpen: 0,
+    productsAvailable: 0,
+    reasonCodes: ['admin_data_error'],
+  };
+  let metrics: CatalogMetrics = {
+    windowHours: 24,
+    runsTotal: 0,
+    runsLast24h: 0,
+    issuesTotal: 0,
+    issuesAmbiguous: 0,
+    filesProcessedTotal: 0,
+    rowsParsedTotal: 0,
+  };
+  try {
+    [leads, config, health, metrics] = await Promise.all([
+      listLeads(),
+      getSiteConfig(),
+      fetchCatalogHealth(baseUrl),
+      fetchCatalogMetrics(baseUrl),
+    ]);
+  } catch (error) {
+    console.error('[admin] failed to load data', error);
+  }
 
   return (
     <main className="min-h-screen bg-charcoal p-8 text-white">
