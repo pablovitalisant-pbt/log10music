@@ -292,12 +292,15 @@ async function resolveIssue(issueId) {
 
 async function addSyncRun(run) {
   const supabase = getSupabaseClient();
+  const resolvedFinishedAt = run.finishedAt
+    ? new Date(run.finishedAt).toISOString()
+    : null;
   const { data, error } = await supabase
     .from('catalog_sync_runs')
     .insert({
       run_id: run.runId,
       started_at: run.startedAt,
-      finished_at: run.finishedAt || null,
+      finished_at: resolvedFinishedAt,
       stats: run.stats || {},
     })
     .select('run_id, started_at, finished_at, stats')
@@ -321,7 +324,7 @@ async function listSyncRuns() {
   return (data || []).map((row) => ({
     runId: row.run_id,
     startedAt: row.started_at,
-    finishedAt: row.finished_at,
+    finishedAt: row.finished_at ? new Date(row.finished_at).toISOString() : null,
     stats: row.stats || {},
   }));
 }
@@ -339,7 +342,7 @@ async function getLatestSyncRun() {
   return {
     runId: data.run_id,
     startedAt: data.started_at,
-    finishedAt: data.finished_at,
+    finishedAt: data.finished_at ? new Date(data.finished_at).toISOString() : null,
     stats: data.stats || {},
   };
 }

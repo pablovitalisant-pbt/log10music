@@ -17,10 +17,13 @@ export async function GET(_request: Request) {
       return Date.parse(product.updatedAt) > Date.parse(latest) ? product.updatedAt : latest;
     }, null as string | null);
     if (products.length > 0) {
+      const resolvedTimestamp = latestUpdatedAt
+        ? new Date(latestUpdatedAt).toISOString()
+        : new Date().toISOString();
       items.push({
         runId: 'derived-run',
-        startedAt: latestUpdatedAt || new Date().toISOString(),
-        finishedAt: latestUpdatedAt || new Date().toISOString(),
+        startedAt: resolvedTimestamp,
+        finishedAt: resolvedTimestamp,
         stats: {
           vendorsDetected: 0,
           filesScanned: 0,
