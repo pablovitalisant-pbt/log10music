@@ -42,6 +42,13 @@ export async function POST(request: Request) {
   const issueRepo = createIssueRepo();
   const catalogProductRepo = createCatalogProductRepo();
   const catalogSourceRepo = createCatalogSourceRepo();
+  const maxFilesPerVendor = process.env.SYNC_MAX_FILES_PER_VENDOR
+    ? Number(process.env.SYNC_MAX_FILES_PER_VENDOR)
+    : 3;
+  const maxRowsPerFile = process.env.SYNC_MAX_ROWS_PER_FILE
+    ? Number(process.env.SYNC_MAX_ROWS_PER_FILE)
+    : 300;
+  const deadlineMs = process.env.SYNC_DEADLINE_MS ? Number(process.env.SYNC_DEADLINE_MS) : 20000;
   const run = await runCatalogSync({
     syncRunRepo,
     driveClient,
@@ -51,6 +58,9 @@ export async function POST(request: Request) {
     issueRepo,
     catalogProductRepo,
     catalogSourceRepo,
+    maxFilesPerVendor,
+    maxRowsPerFile,
+    deadlineMs,
   });
   const payload = SyncRunSchema.parse(run);
   return Response.json(payload);

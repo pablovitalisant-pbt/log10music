@@ -8,10 +8,12 @@ async function parseCatalogFile({
   mimeType,
   sourceRowRepo,
   issueRepo,
+  maxRows,
 } = {}) {
   const rows = parseTabularFile({ buffer, mimeType });
+  const limitedRows = Number.isFinite(maxRows) ? rows.slice(0, Math.max(0, maxRows)) : rows;
   const persisted = [];
-  for (const [index, rawRow] of rows.entries()) {
+  for (const [index, rawRow] of limitedRows.entries()) {
     const row = await sourceRowRepo.upsertSourceRow({
       sourceRowId: `${fileId}-${index + 1}`,
       vendorId,

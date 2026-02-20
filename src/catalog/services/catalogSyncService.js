@@ -23,9 +23,13 @@ async function runCatalogSync({
   issueRepo,
   catalogProductRepo,
   catalogSourceRepo,
+  maxFilesPerVendor,
+  maxRowsPerFile,
+  deadlineMs,
 } = {}) {
   const startedAt = new Date().toISOString();
   const runId = `run-${Date.now()}`;
+  const deadline = Date.now() + (Number.isFinite(deadlineMs) ? deadlineMs : 20000);
   const vendors = await discoverVendors({ driveClient, vendorRepo });
   let filesScanned = 0;
   let filesProcessed = 0;
@@ -33,9 +37,14 @@ async function runCatalogSync({
   let productsAvailable = 0;
 
   for (const vendor of vendors) {
-    const files = await discoverFiles({ driveClient, sourceFileRepo, vendorId: vendor.vendorId });
+    if (Date.now() > deadline) break;
+    let files = await discoverFiles({ driveClient, sourceFileRepo, vendorId: vendor.vendorId });
+    if (Number.isFinite(maxFilesPerVendor)) {
+      files = files.slice(0, Math.max(0, maxFilesPerVendor));
+    }
     filesScanned += files.length;
     for (const file of files) {
+      if (Date.now() > deadline) break;
       const buffer = await driveClient.downloadFile({
         fileId: file.fileId,
         mimeType: file.mimeType,
@@ -51,12 +60,14 @@ async function runCatalogSync({
         mimeType: file.mimeType,
         sourceRowRepo,
         issueRepo,
+        maxRows: maxRowsPerFile,
       });
       filesProcessed += 1;
       rowsParsed += parsed.rowsParsed;
 
       const rows = await sourceRowRepo.listSourceRows({ fileId: file.fileId });
       for (const row of rows) {
+        if (Date.now() > deadline) break;
         const extraction = await enrichSourceRowWithModel({
           rawRow: row.rawRow,
           issueRepo,
