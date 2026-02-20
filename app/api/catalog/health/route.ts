@@ -9,7 +9,7 @@ import {
 export async function GET(_request: Request) {
   const latestRun = await getLatestSyncRun();
   const issues = (await listIssues()) as Array<{ resolved?: boolean }>;
-  const products = await listProducts();
+  const products = (await listProducts()) as Array<{ available?: boolean }>;
   const health = getCatalogHealth({
     lastSyncAt: latestRun ? latestRun.finishedAt : null,
     issuesOpen: issues.filter((issue) => !issue.resolved).length,
