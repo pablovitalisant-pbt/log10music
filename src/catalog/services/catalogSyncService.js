@@ -72,6 +72,21 @@ function inferBrandFromText(text, brandMap) {
   return null;
 }
 
+function inferModelFromRow(rawRow) {
+  if (!rawRow) return null;
+  const candidate =
+    rawRow.product ||
+    rawRow.producto ||
+    rawRow.model ||
+    rawRow.modelo ||
+    rawRow.description ||
+    rawRow.descripcion ||
+    rawRow.code ||
+    rawRow.codigo;
+  const normalized = normalizeTokens(candidate || '');
+  return normalized.length >= 2 ? normalized : null;
+}
+
 async function runCatalogSync({
   syncRunRepo,
   driveClient,
@@ -177,7 +192,8 @@ async function runCatalogSync({
           fileName: file.fileName,
           sourceRowId: row.sourceRowId,
         });
-        if (extraction.status !== 'extracted' || !extraction.model) continue;
+        const modelCandidate = extraction.status === 'extracted' ? extraction.model : inferModelFromRow(row.rawRow);
+        if (!modelCandidate) continue;
         const stockValue =
           parseStockValue(row.rawRow?.stock ?? row.rawRow?.saldo ?? row.rawRow?.disponible) ?? null;
         if (stockValue !== null && stockValue <= 1) {
@@ -199,11 +215,11 @@ async function runCatalogSync({
             brandMap
           );
         const brandKey = normalizeKey(inferredBrand || '');
-        const modelKey = normalizeKey(extraction.model) || row.sourceRowId;
+        const modelKey = normalizeKey(modelCandidate) || row.sourceRowId;
         const productId = `prod-${brandKey ? `${brandKey}-` : ''}${modelKey}`;
         await catalogProductRepo.upsertCatalogProduct({
           id: productId,
-          model: extraction.model,
+          model: modelCandidate,
           brand: inferredBrand || null,
           available: true,
           updatedAt: new Date().toISOString(),
