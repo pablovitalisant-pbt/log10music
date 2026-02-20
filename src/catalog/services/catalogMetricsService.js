@@ -1,7 +1,10 @@
+const { getCatalogState } = require('../state/catalogState');
+
 function getCatalogMetrics({ state, windowHours = 24 } = {}) {
+  const resolvedState = state || getCatalogState();
   const now = Date.now();
-  const runs = state ? state.runs : [];
-  const issues = state ? state.issues : [];
+  const runs = resolvedState ? resolvedState.runs : [];
+  const issues = resolvedState ? resolvedState.issues : [];
   const runsTotal = runs.length;
   const runsLast24h = runs.filter((run) => {
     const startedAt = Date.parse(run.startedAt || '');
@@ -16,8 +19,8 @@ function getCatalogMetrics({ state, windowHours = 24 } = {}) {
     runsLast24h,
     issuesTotal,
     issuesAmbiguous,
-    filesProcessedTotal: state ? state.filesProcessedTotal || 0 : 0,
-    rowsParsedTotal: state ? state.rowsParsedTotal || 0 : 0,
+    filesProcessedTotal: resolvedState ? resolvedState.filesProcessedTotal || 0 : 0,
+    rowsParsedTotal: resolvedState ? resolvedState.rowsParsedTotal || 0 : 0,
   };
 }
 
