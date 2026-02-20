@@ -564,3 +564,31 @@
 **Agente:** Bootstrap automático v2.0-FINAL
 
 ---
+
+### [2026-02-20 13:40] - Slice S12 cierre (imágenes catálogo con fallback + cache)
+
+**Cambios confirmados:**
+- Fallback de imágenes: MercadoLibre → LogoKit (cache en `catalog_products`)
+- Endpoint `/api/catalog/images` actualizado para usar cache y fallback
+- Contrato actualizado para `imageSource` con `logokit`
+- Tests del slice S12 agregados y verdes
+- Feature flag agregado `catalogImagesFallbackV1: false`
+
+**Paths tocados:**
+- `docs/specs/catalog.images.contract.ts`
+- `docs/specs/catalog.images.contract.js`
+- `src/catalog/services/catalogImageService.js`
+- `app/api/catalog/images/route.ts`
+- `src/catalog/persistence/catalogDb.js`
+- `tests/contracts/slice-S11-catalog-images.test.ts`
+- `tests/contracts/slice-S12-catalog-images-fallback.test.ts`
+- `config/feature-flags.json`
+- `package.json`
+- `package-lock.json`
+
+**Verificación:**
+- `node scripts/jest-lite.js --testPathPattern=slice-S12-catalog-images-fallback`
+- `npm test`
+- `npx tsc --noEmit`
+
+**Agente:** Codex CLI
