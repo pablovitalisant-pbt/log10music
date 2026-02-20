@@ -9,9 +9,9 @@ export async function GET(_request: Request) {
   const syncRunRepo = createSyncRunRepo();
   const items = await listSyncRuns({ syncRunRepo });
   if (items.length === 0) {
-    const products = await listProducts();
+    const products = (await listProducts()) as Array<{ updatedAt?: string }>;
     const issues = await listIssues();
-    const latestUpdatedAt = products.reduce((latest, product) => {
+    const latestUpdatedAt = products.reduce((latest: string | null, product) => {
       if (!product.updatedAt) return latest;
       if (!latest) return product.updatedAt;
       return Date.parse(product.updatedAt) > Date.parse(latest) ? product.updatedAt : latest;
