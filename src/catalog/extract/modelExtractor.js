@@ -27,6 +27,32 @@ function extractBrandFromText(text) {
   return match.label;
 }
 
+function identifyBrandFromRow(rawRow) {
+  if (!rawRow || typeof rawRow !== 'object') {
+    return { brand: null, confidence: 0, method: 'none' };
+  }
+  const headerBrand =
+    rawRow.brand ||
+    rawRow.marca ||
+    rawRow.marca_producto ||
+    rawRow.brand_name ||
+    rawRow.marca_producto_nombre;
+  if (headerBrand) {
+    const normalized = normalizeTokens(headerBrand);
+    if (normalized.length >= 2) {
+      return { brand: normalized, confidence: 0.95, method: 'header' };
+    }
+  }
+  const fields = Object.values(rawRow);
+  const normalizedFields = fields.map((value) => normalizeTokens(value)).filter(Boolean);
+  const joined = normalizedFields.join(' ');
+  const tokenBrand = joined ? extractBrandFromText(joined) : null;
+  if (tokenBrand) {
+    return { brand: tokenBrand, confidence: 0.6, method: 'token' };
+  }
+  return { brand: null, confidence: 0, method: 'none' };
+}
+
 function isHeaderLike(modelCandidate) {
   const normalized = modelCandidate.toLowerCase();
   if (normalized === 'total' || normalized.startsWith('total ')) return true;
@@ -42,7 +68,7 @@ function isHeaderLike(modelCandidate) {
 
 function extractModel(rawRow) {
   if (!rawRow) return { status: 'ambiguous', model: null, brand: null };
-  const brandValue = rawRow.brand || rawRow.marca || rawRow.marca_producto || rawRow.brand_name;
+  const brandResult = identifyBrandFromRow(rawRow);
   const modelValue =
     rawRow.model ||
     rawRow.modelo ||
@@ -66,11 +92,11 @@ function extractModel(rawRow) {
   if (joined.length < 3) {
     return { status: 'ambiguous', model: null, brand: null };
   }
-  const brand =
-    (brandValue ? normalizeTokens(brandValue) : null) || extractBrandFromText(joined);
+  const brand = brandResult.brand || extractBrandFromText(joined);
   return { status: 'extracted', model: joined, brand: brand || null };
 }
 
 module.exports = {
   extractModel,
+  identifyBrandFromRow,
 };
