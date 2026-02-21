@@ -89,20 +89,42 @@ function pickModelToken(model) {
   return strong || tokens.find((token) => token.length >= 2) || normalized;
 }
 
-function matchesExpectedTitle({ title, model, brand }) {
-  const normalizedTitle = normalizeTitle(title);
-  if (!normalizedTitle) return false;
-  const modelToken = pickModelToken(model);
-  if (modelToken && !normalizedTitle.includes(modelToken.toLowerCase())) {
-    return false;
-  }
-  if (brand) {
-    const brandToken = normalizeTokens(brand).toLowerCase();
-    if (brandToken && !normalizedTitle.includes(brandToken)) {
-      return false;
+function extractAttributeValue(detail, keys) {
+  const attributes = Array.isArray(detail?.attributes) ? detail.attributes : [];
+  for (const attr of attributes) {
+    const id = (attr?.id || '').toString().toLowerCase();
+    const name = (attr?.name || '').toString().toLowerCase();
+    if (keys.some((key) => id === key || name === key)) {
+      return attr?.value_name || attr?.value || null;
     }
   }
-  return true;
+  return null;
+}
+
+function matchesExpectedTitle({ title, model, brand, detail }) {
+  const normalizedTitle = normalizeTitle(title);
+  if (!normalizedTitle) return false;
+  const titleKey = normalizeKey(title);
+  const modelToken = pickModelToken(model);
+  const modelKey = normalizeKey(modelToken || model || '');
+  const brandKey = normalizeKey(brand || '');
+
+  const attrBrand = normalizeKey(
+    extractAttributeValue(detail, ['brand', 'marca']) || ''
+  );
+  const attrModel = normalizeKey(
+    extractAttributeValue(detail, ['model', 'modelo']) || ''
+  );
+
+  const modelMatch =
+    (modelKey && titleKey.includes(modelKey)) ||
+    (modelKey && attrModel && attrModel.includes(modelKey));
+  const brandMatch =
+    !brandKey ||
+    (brandKey && titleKey.includes(brandKey)) ||
+    (brandKey && attrBrand && attrBrand.includes(brandKey));
+
+  return Boolean(modelMatch && brandMatch);
 }
 
 function inferExpectedFromQuery(query) {
@@ -128,7 +150,7 @@ async function searchCatalogImages({
   const trimmed = (query || '').trim();
   if (!trimmed) return [];
   const resolvedLimit = Number.isFinite(limit) ? Math.max(1, Math.min(5, limit)) : 1;
-  const searchLimit = Math.max(resolvedLimit, 10);
+  const searchLimit = Math.max(resolvedLimit, 20);
   const now = new Date().toISOString();
   const products = catalogProductRepo ? await catalogProductRepo.listCatalogProducts() : [];
   const matchedProduct = findMatchingProduct(trimmed, products);
@@ -212,7 +234,12 @@ async function searchCatalogImages({
               const title = detail?.title || result?.title || '';
               if (
                 (expectedBrand || expectedModel) &&
-                !matchesExpectedTitle({ title, model: expectedModel, brand: expectedBrand })
+                !matchesExpectedTitle({
+                  title,
+                  model: expectedModel,
+                  brand: expectedBrand,
+                  detail,
+                })
               ) {
                 continue;
               }
@@ -284,7 +311,12 @@ async function searchCatalogImages({
           const title = detail?.name || detail?.title || '';
           if (
             (expectedBrand || expectedModel) &&
-            !matchesExpectedTitle({ title, model: expectedModel, brand: expectedBrand })
+            !matchesExpectedTitle({
+              title,
+              model: expectedModel,
+              brand: expectedBrand,
+              detail,
+            })
           ) {
             continue;
           }
