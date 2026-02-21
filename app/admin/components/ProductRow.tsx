@@ -30,6 +30,7 @@ export default function ProductRow({ product }: ProductRowProps) {
   const [openEditor, setOpenEditor] = useState(false);
   const [imageUrl, setImageUrl] = useState(product.imageUrl || null);
   const [imageSource, setImageSource] = useState(product.imageSource || null);
+  const isApprovedImage = imageSource === 'manual';
   const statusLabel = product.available ? 'Publicado' : 'Oculto';
   const vendorName = product.sourcesAvailable[0]?.vendorName || 'Importadora';
   const imageMode =
@@ -41,7 +42,14 @@ export default function ProductRow({ product }: ProductRowProps) {
     <>
       <tr className="border-b border-white/10 text-sm">
         <td className="p-3">
-          <div className="size-10 overflow-hidden rounded bg-white/5 flex items-center justify-center">
+          <div className="flex items-center gap-2">
+            <span
+              className={`h-2 w-2 rounded-full ${
+                isApprovedImage ? 'bg-emerald-400' : 'bg-red-400'
+              }`}
+              title={isApprovedImage ? 'Imagen aprobada' : 'Imagen sin aprobar'}
+            />
+            <div className="size-10 overflow-hidden rounded bg-white/5 flex items-center justify-center">
             {imageUrl ? (
               <img
                 src={imageUrl}
@@ -53,6 +61,7 @@ export default function ProductRow({ product }: ProductRowProps) {
             ) : (
               <div className="h-full w-full" />
             )}
+            </div>
           </div>
         </td>
         <td className="p-3">
