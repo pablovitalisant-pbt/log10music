@@ -645,3 +645,27 @@
 - `npx tsc --noEmit`
 
 **Agente:** Codex CLI
+
+---
+
+### [2026-02-21 01:05] - Slice S15 cierre (imágenes hi-res + UI no pixelada)
+
+**Cambios confirmados:**
+- MercadoLibre hi-res via `/items/{id}` para imágenes grandes
+- LogoKit en UI se renderiza `object-contain` para evitar pixelación
+- Feature flag agregado `catalogImagesHiResV1: false`
+
+**Paths tocados:**
+- `src/catalog/services/catalogImageService.js`
+- `components/ProductCard.tsx`
+- `components/CatalogGrid.tsx`
+- `app/admin/components/ProductRow.tsx`
+- `tests/contracts/slice-S15-catalog-images-hires.test.ts`
+- `config/feature-flags.json`
+
+**Verificación:**
+- `node scripts/jest-lite.js --testPathPattern=slice-S15-catalog-images-hires`
+- `npm test`
+- `npx tsc --noEmit`
+
+**Agente:** Codex CLI

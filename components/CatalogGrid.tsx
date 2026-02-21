@@ -9,6 +9,7 @@ type PublicCatalogItem = {
   brand?: string | null;
   available: boolean;
   imageUrl?: string | null;
+  imageSource?: string | null;
 };
 
 type CatalogGridProps = {

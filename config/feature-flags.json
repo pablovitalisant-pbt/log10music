@@ -3,5 +3,6 @@
   "catalogImagesV1": false,
   "catalogImagesFallbackV1": false,
   "catalogImagesUiV1": false,
-  "catalogImagesUiFetchV1": false
+  "catalogImagesUiFetchV1": false,
+  "catalogImagesHiResV1": false
 }

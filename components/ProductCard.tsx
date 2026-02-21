@@ -4,6 +4,7 @@ type PublicCatalogItem = {
   brand?: string | null;
   available: boolean;
   imageUrl?: string | null;
+  imageSource?: string | null;
 };
 
 type ProductCardProps = {
@@ -11,6 +12,8 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({ item }: ProductCardProps) {
+  const imageMode =
+    item.imageSource === 'logokit' ? 'object-contain bg-white/5' : 'object-cover';
   return (
     <article className="rounded border border-white/10 bg-industrial p-5 text-white">
       <div className="aspect-[4/3] overflow-hidden rounded bg-white/5">
@@ -18,7 +21,7 @@ export default function ProductCard({ item }: ProductCardProps) {
           <img
             src={item.imageUrl}
             alt={item.model}
-            className="h-full w-full object-cover"
+            className={`h-full w-full ${imageMode}`}
             loading="lazy"
             referrerPolicy="no-referrer"
           />

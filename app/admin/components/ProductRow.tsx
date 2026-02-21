@@ -30,6 +30,8 @@ export default function ProductRow({ product }: ProductRowProps) {
   const [openEditor, setOpenEditor] = useState(false);
   const statusLabel = product.available ? 'Publicado' : 'Oculto';
   const vendorName = product.sourcesAvailable[0]?.vendorName || 'Importadora';
+  const imageMode =
+    product.imageSource === 'logokit' ? 'object-contain bg-white/5' : 'object-cover';
 
   return (
     <>
@@ -40,7 +42,7 @@ export default function ProductRow({ product }: ProductRowProps) {
               <img
                 src={product.imageUrl}
                 alt={product.model}
-                className="h-full w-full object-cover"
+                className={`h-full w-full ${imageMode}`}
                 loading="lazy"
                 referrerPolicy="no-referrer"
               />

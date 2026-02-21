@@ -58,15 +58,32 @@ async function searchCatalogImages({ query, limit, catalogProductRepo } = {}) {
     if (response.ok) {
       const payload = await response.json();
       const results = Array.isArray(payload?.results) ? payload.results : [];
-      const items = results
-        .map((item) => item?.thumbnail)
-        .filter((thumbnail) => typeof thumbnail === 'string' && thumbnail.startsWith('http'))
-        .map((thumbnail) => ({
-          url: thumbnail,
-          source: 'ml',
-          updatedAt: now,
-        }))
-        .slice(0, resolvedLimit);
+      const items = [];
+      for (const result of results) {
+        if (items.length >= resolvedLimit) break;
+        const id = result?.id;
+        let imageUrl = result?.thumbnail;
+        if (id) {
+          try {
+            const detailResponse = await fetch(`https://api.mercadolibre.com/items/${id}`, {
+              method: 'GET',
+            });
+            if (detailResponse.ok) {
+              const detail = await detailResponse.json();
+              const pictures = Array.isArray(detail?.pictures) ? detail.pictures : [];
+              const pictureUrl = pictures[0]?.url;
+              if (typeof pictureUrl === 'string' && pictureUrl.startsWith('http')) {
+                imageUrl = pictureUrl;
+              }
+            }
+          } catch (_error) {
+            // ignore and fall back to thumbnail
+          }
+        }
+        if (typeof imageUrl === 'string' && imageUrl.startsWith('http')) {
+          items.push({ url: imageUrl, source: 'ml', updatedAt: now });
+        }
+      }
       if (items.length > 0 && matchedProduct && catalogProductRepo) {
         await catalogProductRepo.upsertCatalogProduct({
           id: matchedProduct.id,
