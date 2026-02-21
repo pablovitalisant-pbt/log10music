@@ -50,18 +50,26 @@ async function searchCatalogImages({ query, limit, catalogProductRepo } = {}) {
   }
 
   const siteId = (process.env.ML_SITE_ID || 'MLC').toString().trim();
-  const searchQuery =
+  const queryCandidates = [
     matchedProduct?.brand && matchedProduct?.model
       ? `${matchedProduct.brand} ${matchedProduct.model}`
-      : trimmed;
-  const url = `https://api.mercadolibre.com/sites/${encodeURIComponent(
-    siteId
-  )}/search?q=${encodeURIComponent(searchQuery.slice(0, 80))}&limit=${resolvedLimit}`;
+      : null,
+    matchedProduct?.model || null,
+    matchedProduct?.brand || null,
+    trimmed,
+  ].filter(Boolean);
+
   try {
-    const response = await fetch(url, { method: 'GET' });
-    if (response.ok) {
+    for (const candidate of queryCandidates) {
+      if (!candidate) continue;
+      const url = `https://api.mercadolibre.com/sites/${encodeURIComponent(
+        siteId
+      )}/search?q=${encodeURIComponent(candidate.slice(0, 80))}&limit=${resolvedLimit}`;
+      const response = await fetch(url, { method: 'GET' });
+      if (!response.ok) continue;
       const payload = await response.json();
       const results = Array.isArray(payload?.results) ? payload.results : [];
+      if (!results.length) continue;
       const items = [];
       for (const result of results) {
         if (items.length >= resolvedLimit) break;
