@@ -537,6 +537,66 @@ async function upsertIntegration(key, payload) {
   };
 }
 
+async function getApprovedProductImageOverride(productId) {
+  const supabase = getSupabaseClient();
+  const { data, error } = await supabase
+    .from('catalog_product_images')
+    .select('product_id, image_url, source, status, query, notes, updated_at, approved_at')
+    .eq('product_id', productId)
+    .eq('status', 'approved')
+    .maybeSingle();
+  if (error) throw new Error(`Supabase getApprovedProductImageOverride failed: ${error.message}`);
+  if (!data) return null;
+  return {
+    productId: data.product_id,
+    imageUrl: data.image_url,
+    source: data.source,
+    status: data.status,
+    query: data.query,
+    notes: data.notes,
+    updatedAt: data.updated_at,
+    approvedAt: data.approved_at,
+  };
+}
+
+async function upsertProductImageOverride({
+  productId,
+  imageUrl,
+  source,
+  status,
+  query,
+  notes,
+}) {
+  const supabase = getSupabaseClient();
+  const now = new Date().toISOString();
+  const payload = {
+    product_id: productId,
+    image_url: imageUrl,
+    source: source || 'manual',
+    status: status || 'approved',
+    query: query || null,
+    notes: notes || null,
+    updated_at: now,
+    approved_at: status === 'approved' ? now : null,
+  };
+  const { data, error } = await supabase
+    .from('catalog_product_images')
+    .upsert(payload, { onConflict: 'product_id' })
+    .select('product_id, image_url, source, status, query, notes, updated_at, approved_at')
+    .single();
+  if (error) throw new Error(`Supabase upsertProductImageOverride failed: ${error.message}`);
+  return {
+    productId: data.product_id,
+    imageUrl: data.image_url,
+    source: data.source,
+    status: data.status,
+    query: data.query,
+    notes: data.notes,
+    updatedAt: data.updated_at,
+    approvedAt: data.approved_at,
+  };
+}
+
 module.exports = {
   upsertVendor,
   listVendors,
@@ -558,6 +618,8 @@ module.exports = {
   getLatestSyncRun,
   getIntegration,
   upsertIntegration,
+  getApprovedProductImageOverride,
+  upsertProductImageOverride,
   deleteSourcesByFile,
   deleteRowsByFile,
   deleteOrphanProducts,

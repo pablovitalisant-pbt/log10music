@@ -118,7 +118,13 @@ function inferExpectedFromQuery(query) {
   return { brand: null, model: normalized };
 }
 
-async function searchCatalogImages({ query, limit, catalogProductRepo, accessToken } = {}) {
+async function searchCatalogImages({
+  query,
+  limit,
+  catalogProductRepo,
+  accessToken,
+  productImageRepo,
+} = {}) {
   const trimmed = (query || '').trim();
   if (!trimmed) return [];
   const resolvedLimit = Number.isFinite(limit) ? Math.max(1, Math.min(5, limit)) : 1;
@@ -129,6 +135,18 @@ async function searchCatalogImages({ query, limit, catalogProductRepo, accessTok
   const inferred = inferExpectedFromQuery(trimmed);
   const expectedBrand = matchedProduct?.brand || inferred.brand;
   const expectedModel = matchedProduct?.model || inferred.model;
+  if (matchedProduct && productImageRepo) {
+    const override = await productImageRepo.getApprovedOverride(matchedProduct.id);
+    if (override?.imageUrl) {
+      return [
+        {
+          url: override.imageUrl,
+          source: override.source || 'manual',
+          updatedAt: override.updatedAt || now,
+        },
+      ].slice(0, resolvedLimit);
+    }
+  }
   if (matchedProduct?.imageUrl) {
     return [
       {

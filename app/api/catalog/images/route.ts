@@ -5,6 +5,7 @@ import {
 import { searchCatalogImages } from '../../../../src/catalog/services/catalogImageService.js';
 import { createCatalogProductRepo } from '../../../../src/catalog/repositories/catalogProductRepo.js';
 import { getIntegration } from '../../../../src/catalog/persistence/catalogDb.js';
+import { createProductImageRepo } from '../../../../src/catalog/repositories/productImageRepo.js';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -16,6 +17,7 @@ export async function GET(request: Request) {
     return Response.json(payload, { status: 400 });
   }
   const catalogProductRepo = createCatalogProductRepo();
+  const productImageRepo = createProductImageRepo();
   let accessToken = '';
   try {
     const integration = await getIntegration('mercadolibre');
@@ -29,7 +31,13 @@ export async function GET(request: Request) {
   } catch (_error) {
     accessToken = '';
   }
-  const items = await searchCatalogImages({ query, limit, catalogProductRepo, accessToken });
+  const items = await searchCatalogImages({
+    query,
+    limit,
+    catalogProductRepo,
+    accessToken,
+    productImageRepo,
+  });
   const payload = CatalogImageResponseSchema.parse({ query, items });
   return Response.json(payload);
 }

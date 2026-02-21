@@ -81,6 +81,9 @@ export default function ProductRow({ product }: ProductRowProps) {
           <td colSpan={8} className="p-3">
             <ProductEditor
               productId={product.id}
+              model={product.model}
+              brand={product.brand}
+              imageUrl={product.imageUrl || null}
               initialPublished={product.available}
             />
           </td>
