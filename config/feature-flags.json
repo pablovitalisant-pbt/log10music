@@ -1,8 +1,8 @@
 {
   "catalogBrandEngineV1": true,
-  "catalogImagesV1": false,
-  "catalogImagesFallbackV1": false,
-  "catalogImagesUiV1": false,
-  "catalogImagesUiFetchV1": false,
-  "catalogImagesHiResV1": false
+  "catalogImagesV1": true,
+  "catalogImagesFallbackV1": true,
+  "catalogImagesUiV1": true,
+  "catalogImagesUiFetchV1": true,
+  "catalogImagesHiResV1": true
 }
