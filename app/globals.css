@@ -118,12 +118,14 @@
 }
 
 .landing-root {
-  --cta-calypso: #00ffe5;
+  --cta-calypso: #99ff00;
 }
 
 .landing-root button.bg-primary,
 .landing-root a.bg-primary {
   background-color: var(--cta-calypso) !important;
+  box-shadow: 0 0 50px rgba(153, 255, 0, 0.35);
+  transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
 .landing-root button.border-primary,
@@ -138,7 +140,13 @@
 
 .landing-root button[class*="shadow-[0_0_80px_rgba(255,95,0,0.5)]"],
 .landing-root a[class*="shadow-[0_0_80px_rgba(255,95,0,0.5)]"] {
-  box-shadow: 0 0 80px rgba(0, 255, 229, 0.5) !important;
+  box-shadow: 0 0 80px rgba(153, 255, 0, 0.5) !important;
+}
+
+.landing-root button.bg-primary:hover,
+.landing-root a.bg-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 70px rgba(153, 255, 0, 0.5);
 }
 
 @media (max-width: 430px) {
