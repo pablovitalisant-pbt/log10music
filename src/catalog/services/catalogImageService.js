@@ -77,13 +77,58 @@ function buildCompactMlQuery(model, brand) {
   return compact;
 }
 
+function normalizeTitle(value) {
+  return normalizeTokens(value || '').toLowerCase();
+}
+
+function pickModelToken(model) {
+  const normalized = normalizeTokens(model || '');
+  if (!normalized) return null;
+  const tokens = normalized.split(' ').filter(Boolean);
+  const strong = tokens.find((token) => /[a-z]*\d+[a-z]*/i.test(token));
+  return strong || tokens.find((token) => token.length >= 2) || normalized;
+}
+
+function matchesExpectedTitle({ title, model, brand }) {
+  const normalizedTitle = normalizeTitle(title);
+  if (!normalizedTitle) return false;
+  const modelToken = pickModelToken(model);
+  if (modelToken && !normalizedTitle.includes(modelToken.toLowerCase())) {
+    return false;
+  }
+  if (brand) {
+    const brandToken = normalizeTokens(brand).toLowerCase();
+    if (brandToken && !normalizedTitle.includes(brandToken)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function inferExpectedFromQuery(query) {
+  const normalized = normalizeTokens(query || '');
+  if (!normalized) return { model: null, brand: null };
+  const tokens = normalized.split(' ').filter(Boolean);
+  if (tokens.length >= 2) {
+    return {
+      brand: tokens[0],
+      model: tokens.slice(1).join(' '),
+    };
+  }
+  return { brand: null, model: normalized };
+}
+
 async function searchCatalogImages({ query, limit, catalogProductRepo, accessToken } = {}) {
   const trimmed = (query || '').trim();
   if (!trimmed) return [];
   const resolvedLimit = Number.isFinite(limit) ? Math.max(1, Math.min(5, limit)) : 1;
+  const searchLimit = Math.max(resolvedLimit, 10);
   const now = new Date().toISOString();
   const products = catalogProductRepo ? await catalogProductRepo.listCatalogProducts() : [];
   const matchedProduct = findMatchingProduct(trimmed, products);
+  const inferred = inferExpectedFromQuery(trimmed);
+  const expectedBrand = matchedProduct?.brand || inferred.brand;
+  const expectedModel = matchedProduct?.model || inferred.model;
   if (matchedProduct?.imageUrl) {
     return [
       {
@@ -127,7 +172,7 @@ async function searchCatalogImages({ query, limit, catalogProductRepo, accessTok
       if (!candidate) continue;
       const url = `https://api.mercadolibre.com/sites/${encodeURIComponent(
         siteId
-      )}/search?q=${encodeURIComponent(candidate.slice(0, 80))}&limit=${resolvedLimit}`;
+      )}/search?q=${encodeURIComponent(candidate.slice(0, 80))}&limit=${searchLimit}`;
       const response = await fetch(url, { method: 'GET', headers: mlHeaders });
       if (!response.ok) continue;
       const payload = await response.json();
@@ -146,6 +191,13 @@ async function searchCatalogImages({ query, limit, catalogProductRepo, accessTok
             });
             if (detailResponse.ok) {
               const detail = await detailResponse.json();
+              const title = detail?.title || result?.title || '';
+              if (
+                (expectedBrand || expectedModel) &&
+                !matchesExpectedTitle({ title, model: expectedModel, brand: expectedBrand })
+              ) {
+                continue;
+              }
               const pictures = Array.isArray(detail?.pictures) ? detail.pictures : [];
               const pictureUrl = pictures[0]?.url;
               if (typeof pictureUrl === 'string' && pictureUrl.startsWith('http')) {
@@ -183,7 +235,7 @@ async function searchCatalogImages({ query, limit, catalogProductRepo, accessTok
       if (!candidate) continue;
       const url = `https://api.mercadolibre.com/products/search?site_id=${encodeURIComponent(
         siteId
-      )}&q=${encodeURIComponent(candidate.slice(0, 80))}&limit=${resolvedLimit}`;
+      )}&q=${encodeURIComponent(candidate.slice(0, 80))}&limit=${searchLimit}`;
       const response = await fetch(url, { method: 'GET', headers: mlHeaders });
       if (!response.ok) continue;
       const payload = await response.json();
@@ -211,6 +263,13 @@ async function searchCatalogImages({ query, limit, catalogProductRepo, accessTok
           );
           if (!detailResponse.ok) continue;
           const detail = await detailResponse.json();
+          const title = detail?.name || detail?.title || '';
+          if (
+            (expectedBrand || expectedModel) &&
+            !matchesExpectedTitle({ title, model: expectedModel, brand: expectedBrand })
+          ) {
+            continue;
+          }
           const pictures = Array.isArray(detail?.pictures) ? detail.pictures : [];
           const pictureUrl = pictures[0]?.url || detail?.thumbnail;
           if (typeof pictureUrl === 'string' && pictureUrl.startsWith('http')) {
