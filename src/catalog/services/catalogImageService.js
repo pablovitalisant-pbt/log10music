@@ -32,6 +32,51 @@ function findMatchingProduct(query, products) {
   );
 }
 
+function buildCompactMlQuery(model, brand) {
+  const normalizedModel = normalizeTokens(model || '');
+  if (!normalizedModel) return brand || null;
+  const stopwords = new Set([
+    'linea',
+    'microfono',
+    'microfonos',
+    'sistema',
+    'set',
+    'kit',
+    'de',
+    'del',
+    'para',
+    'con',
+    'sin',
+    'y',
+    'un',
+    'una',
+    'par',
+    'pack',
+    'vocal',
+    'instrumento',
+    'inalambrico',
+    'caja',
+    'acustica',
+    'activo',
+    'pasiva',
+    'sub',
+    'bajo',
+    'monitor',
+    'estudio',
+  ]);
+  const tokens = normalizedModel.split(' ').filter(Boolean);
+  const candidate = tokens.find((token) => {
+    if (stopwords.has(token.toLowerCase())) return false;
+    if (/^\d+$/.test(token)) return false;
+    return token.length >= 2;
+  });
+  const compact = candidate || tokens.find((token) => token.length >= 2) || normalizedModel;
+  if (brand) {
+    return `${normalizeTokens(brand)} ${compact}`.trim();
+  }
+  return compact;
+}
+
 async function searchCatalogImages({ query, limit, catalogProductRepo } = {}) {
   const trimmed = (query || '').trim();
   if (!trimmed) return [];
@@ -54,6 +99,7 @@ async function searchCatalogImages({ query, limit, catalogProductRepo } = {}) {
     matchedProduct?.brand && matchedProduct?.model
       ? `${matchedProduct.brand} ${matchedProduct.model}`
       : null,
+    matchedProduct?.model ? buildCompactMlQuery(matchedProduct.model, matchedProduct.brand) : null,
     matchedProduct?.model || null,
     matchedProduct?.brand || null,
     trimmed,

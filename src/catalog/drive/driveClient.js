@@ -39,6 +39,7 @@ function createDriveClient({ rootFolderId, serviceAccountJson } = {}) {
       const response = await drive.files.list({
         q: `'${resolvedRootFolderId}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false`,
         fields: 'files(id,name)',
+        orderBy: 'name',
         supportsAllDrives: false,
       });
       const files = response.data.files || [];
@@ -52,6 +53,7 @@ function createDriveClient({ rootFolderId, serviceAccountJson } = {}) {
       const response = await drive.files.list({
         q: `'${vendorId}' in parents and trashed = false and mimeType != 'application/vnd.google-apps.folder'`,
         fields: 'files(id,name,mimeType,modifiedTime)',
+        orderBy: 'modifiedTime desc,name',
         supportsAllDrives: false,
       });
       const files = response.data.files || [];
