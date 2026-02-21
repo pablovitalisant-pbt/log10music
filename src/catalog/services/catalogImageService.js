@@ -169,7 +169,7 @@ async function searchCatalogImages({
       ].slice(0, resolvedLimit);
     }
   }
-  if (matchedProduct?.imageUrl) {
+  if (matchedProduct?.imageUrl && matchedProduct.imageSource !== 'logokit') {
     return [
       {
         url: matchedProduct.imageUrl,
