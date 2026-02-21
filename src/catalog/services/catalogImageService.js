@@ -59,13 +59,26 @@ async function searchCatalogImages({ query, limit, catalogProductRepo } = {}) {
     trimmed,
   ].filter(Boolean);
 
+  const mlHeaders = {
+    'User-Agent': 'log10music/1.0 (+https://log10music.vercel.app)',
+    Accept: 'application/json',
+  };
+
+  function resolveMlImageFromResult(result) {
+    const thumbnailId = result?.thumbnail_id;
+    if (typeof thumbnailId === 'string' && thumbnailId.trim()) {
+      return `https://http2.mlstatic.com/D_${thumbnailId.trim()}-O.jpg`;
+    }
+    return result?.thumbnail || null;
+  }
+
   try {
     for (const candidate of queryCandidates) {
       if (!candidate) continue;
       const url = `https://api.mercadolibre.com/sites/${encodeURIComponent(
         siteId
       )}/search?q=${encodeURIComponent(candidate.slice(0, 80))}&limit=${resolvedLimit}`;
-      const response = await fetch(url, { method: 'GET' });
+      const response = await fetch(url, { method: 'GET', headers: mlHeaders });
       if (!response.ok) continue;
       const payload = await response.json();
       const results = Array.isArray(payload?.results) ? payload.results : [];
@@ -74,11 +87,12 @@ async function searchCatalogImages({ query, limit, catalogProductRepo } = {}) {
       for (const result of results) {
         if (items.length >= resolvedLimit) break;
         const id = result?.id;
-        let imageUrl = result?.thumbnail;
+        let imageUrl = resolveMlImageFromResult(result);
         if (id) {
           try {
             const detailResponse = await fetch(`https://api.mercadolibre.com/items/${id}`, {
               method: 'GET',
+              headers: mlHeaders,
             });
             if (detailResponse.ok) {
               const detail = await detailResponse.json();
