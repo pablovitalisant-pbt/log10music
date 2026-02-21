@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { ADMIN_COOKIE_NAME, getAdminToken } from '../../../../lib/auth';
+import { ADMIN_COOKIE_NAME, getAdminToken } from '../../../../../lib/auth';
 
 function resolveBaseUrl(request: Request): string {
   const header = request.headers.get('x-forwarded-host') || request.headers.get('host');

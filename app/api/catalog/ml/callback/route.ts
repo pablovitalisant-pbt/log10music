@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { upsertIntegration } from '../../../../src/catalog/persistence/catalogDb';
+import { upsertIntegration } from '../../../../../src/catalog/persistence/catalogDb';
 
 function resolveBaseUrl(request: Request): string {
   const header = request.headers.get('x-forwarded-host') || request.headers.get('host');

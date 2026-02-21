@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getIntegration } from '../../../../src/catalog/persistence/catalogDb';
+import { getIntegration } from '../../../../../src/catalog/persistence/catalogDb';
 
 export async function GET() {
   const record = await getIntegration('mercadolibre');
