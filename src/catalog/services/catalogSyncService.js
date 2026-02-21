@@ -110,17 +110,35 @@ async function runCatalogSync({
       .map((product) => [normalizeKey(product.model), product.brand])
       .filter(([key]) => key)
   );
-  const vendors = await discoverVendors({ driveClient, vendorRepo });
   let filesScanned = 0;
   let filesProcessed = 0;
   let rowsParsed = 0;
   let productsAvailable = 0;
+  let vendors = [];
+  let vendorsDetected = 0;
+  let discoveryError = null;
+  const safeIssueCount = async () => {
+    if (!issueRepo) return 0;
+    try {
+      const items = await issueRepo.listIssues();
+      return items.length;
+    } catch (_error) {
+      return 0;
+    }
+  };
+  try {
+    vendors = await discoverVendors({ driveClient, vendorRepo });
+    vendorsDetected = vendors.length;
+  } catch (error) {
+    discoveryError = error;
+  }
   const run = {
     runId,
     startedAt,
     finishedAt: null,
+    error: null,
     stats: {
-      vendorsDetected: vendors.length,
+      vendorsDetected,
       filesScanned: 0,
       filesProcessed: 0,
       rowsParsed: 0,
@@ -132,171 +150,203 @@ async function runCatalogSync({
     await syncRunRepo.createRun(run);
   }
 
-  for (const vendor of vendors) {
-    if (Date.now() > deadline) break;
-    let files = await discoverFiles({ driveClient, sourceFileRepo, vendorId: vendor.vendorId });
-    if (Number.isFinite(maxFilesPerVendor)) {
-      files = files.slice(0, Math.max(0, maxFilesPerVendor));
+  try {
+    if (discoveryError) {
+      throw discoveryError;
     }
-    filesScanned += files.length;
-    if (syncRunRepo) {
-      await syncRunRepo.updateRun(runId, {
-        stats: {
-          vendorsDetected: vendors.length,
-          filesScanned,
-          filesProcessed,
-          rowsParsed,
-          productsAvailable,
-          issuesCount: await issueRepo.listIssues().then((items) => items.length),
-        },
-      });
-    }
-    for (const file of files) {
+    for (const vendor of vendors) {
       if (Date.now() > deadline) break;
-      const buffer = await driveClient.downloadFile({
-        fileId: file.fileId,
-        mimeType: file.mimeType,
-      });
-      if (!buffer) {
-        continue;
+      let files = await discoverFiles({ driveClient, sourceFileRepo, vendorId: vendor.vendorId });
+      if (Number.isFinite(maxFilesPerVendor)) {
+        files = files.slice(0, Math.max(0, maxFilesPerVendor));
       }
-      await deleteSourcesByFile(file.fileId);
-      await deleteRowsByFile(file.fileId);
-      const parsed = await parseCatalogFile({
-        fileId: file.fileId,
-        vendorId: vendor.vendorId,
-        fileName: file.fileName,
-        buffer,
-        mimeType: file.mimeType,
-        sourceRowRepo,
-        issueRepo,
-        maxRows: maxRowsPerFile,
-      });
-      filesProcessed += 1;
-      rowsParsed += parsed.rowsParsed;
+      filesScanned += files.length;
       if (syncRunRepo) {
         await syncRunRepo.updateRun(runId, {
           stats: {
-            vendorsDetected: vendors.length,
+            vendorsDetected,
             filesScanned,
             filesProcessed,
             rowsParsed,
             productsAvailable,
-            issuesCount: await issueRepo.listIssues().then((items) => items.length),
+            issuesCount: await safeIssueCount(),
           },
         });
       }
-
-      const rows = await sourceRowRepo.listSourceRows({ fileId: file.fileId });
-      const brandMap = buildBrandMap(rows);
-      for (const row of rows) {
+      for (const file of files) {
         if (Date.now() > deadline) break;
-        const extraction = await enrichSourceRowWithModel({
-          rawRow: row.rawRow,
-          issueRepo,
-          vendorId: vendor.vendorId,
+        const buffer = await driveClient.downloadFile({
           fileId: file.fileId,
-          fileName: file.fileName,
-          sourceRowId: row.sourceRowId,
+          mimeType: file.mimeType,
         });
-        const modelCandidate = extraction.status === 'extracted' ? extraction.model : inferModelFromRow(row.rawRow);
-        if (!modelCandidate) continue;
-        const stockValue =
-          parseStockValue(row.rawRow?.stock ?? row.rawRow?.saldo ?? row.rawRow?.disponible) ?? null;
-        if (stockValue !== null && stockValue <= 1) {
+        if (!buffer) {
           continue;
         }
-        const rowBrandValue =
-          row.rawRow?.brand ||
-          row.rawRow?.marca ||
-          row.rawRow?.marca_producto ||
-          row.rawRow?.brand_name ||
-          row.rawRow?.marca_producto_nombre;
-        const inferredBrand =
-          (rowBrandValue ? normalizeTokens(rowBrandValue) : null) ||
-          extraction.brand ||
-          inferBrandFromText(
-            `${row.rawRow?.description || ''} ${row.rawRow?.descripcion || ''} ${row.rawRow?.product || ''} ${
-              row.rawRow?.producto || ''
-            } ${row.rawRow?.model || ''} ${row.rawRow?.modelo || ''}`,
-            brandMap
-          );
-        const modelKey = normalizeKey(modelCandidate) || row.sourceRowId;
-        if (inferredBrand && modelKey) {
-          brandOverrides.set(modelKey, inferredBrand);
-        }
-        const resolvedBrand = inferredBrand || (modelKey ? brandOverrides.get(modelKey) : null) || null;
-        const productId = `prod-${modelKey}`;
-        await catalogProductRepo.upsertCatalogProduct({
-          id: productId,
-          model: modelCandidate,
-          brand: resolvedBrand,
-          available: true,
-          updatedAt: new Date().toISOString(),
-        });
-        await catalogSourceRepo.addCatalogSource({
-          catalogProductId: productId,
-          sourceRowId: row.sourceRowId,
-          vendorId: vendor.vendorId,
-          vendorName: vendor.name || null,
+        await deleteSourcesByFile(file.fileId);
+        await deleteRowsByFile(file.fileId);
+        const parsed = await parseCatalogFile({
           fileId: file.fileId,
-          fileName: file.fileName || null,
-          sheetName: row.sheetName || null,
-          rowNumber: row.rowNumber || null,
+          vendorId: vendor.vendorId,
+          fileName: file.fileName,
+          buffer,
+          mimeType: file.mimeType,
+          sourceRowRepo,
+          issueRepo,
+          maxRows: maxRowsPerFile,
         });
+        filesProcessed += 1;
+        rowsParsed += parsed.rowsParsed;
+        if (syncRunRepo) {
+          await syncRunRepo.updateRun(runId, {
+            stats: {
+              vendorsDetected,
+              filesScanned,
+              filesProcessed,
+              rowsParsed,
+              productsAvailable,
+              issuesCount: await safeIssueCount(),
+            },
+          });
+        }
+
+        const rows = await sourceRowRepo.listSourceRows({ fileId: file.fileId });
+        const brandMap = buildBrandMap(rows);
+        for (const row of rows) {
+          if (Date.now() > deadline) break;
+          const extraction = await enrichSourceRowWithModel({
+            rawRow: row.rawRow,
+            issueRepo,
+            vendorId: vendor.vendorId,
+            fileId: file.fileId,
+            fileName: file.fileName,
+            sourceRowId: row.sourceRowId,
+          });
+          const modelCandidate =
+            extraction.status === 'extracted' ? extraction.model : inferModelFromRow(row.rawRow);
+          if (!modelCandidate) continue;
+          const stockValue =
+            parseStockValue(row.rawRow?.stock ?? row.rawRow?.saldo ?? row.rawRow?.disponible) ?? null;
+          if (stockValue !== null && stockValue <= 1) {
+            continue;
+          }
+          const rowBrandValue =
+            row.rawRow?.brand ||
+            row.rawRow?.marca ||
+            row.rawRow?.marca_producto ||
+            row.rawRow?.brand_name ||
+            row.rawRow?.marca_producto_nombre;
+          const inferredBrand =
+            (rowBrandValue ? normalizeTokens(rowBrandValue) : null) ||
+            extraction.brand ||
+            inferBrandFromText(
+              `${row.rawRow?.description || ''} ${row.rawRow?.descripcion || ''} ${row.rawRow?.product || ''} ${
+                row.rawRow?.producto || ''
+              } ${row.rawRow?.model || ''} ${row.rawRow?.modelo || ''}`,
+              brandMap
+            );
+          const modelKey = normalizeKey(modelCandidate) || row.sourceRowId;
+          if (inferredBrand && modelKey) {
+            brandOverrides.set(modelKey, inferredBrand);
+          }
+          const resolvedBrand = inferredBrand || (modelKey ? brandOverrides.get(modelKey) : null) || null;
+          const productId = `prod-${modelKey}`;
+          await catalogProductRepo.upsertCatalogProduct({
+            id: productId,
+            model: modelCandidate,
+            brand: resolvedBrand,
+            available: true,
+            updatedAt: new Date().toISOString(),
+          });
+          await catalogSourceRepo.addCatalogSource({
+            catalogProductId: productId,
+            sourceRowId: row.sourceRowId,
+            vendorId: vendor.vendorId,
+            vendorName: vendor.name || null,
+            fileId: file.fileId,
+            fileName: file.fileName || null,
+            sheetName: row.sheetName || null,
+            rowNumber: row.rowNumber || null,
+          });
+        }
       }
     }
-  }
 
-  const productsAvailableList = await catalogProductRepo.listCatalogProducts();
-  if (brandOverrides.size > 0) {
-    for (const product of productsAvailableList) {
-      if (product.brand) continue;
-      const key = normalizeKey(product.model);
-      const override = key ? brandOverrides.get(key) : null;
-      if (override) {
-        await catalogProductRepo.upsertCatalogProduct({
-          id: product.id,
-          model: product.model,
-          brand: override,
-          available: product.available,
-          updatedAt: new Date().toISOString(),
-        });
-        product.brand = override;
+    const productsAvailableList = await catalogProductRepo.listCatalogProducts();
+    if (brandOverrides.size > 0) {
+      for (const product of productsAvailableList) {
+        if (product.brand) continue;
+        const key = normalizeKey(product.model);
+        const override = key ? brandOverrides.get(key) : null;
+        if (override) {
+          await catalogProductRepo.upsertCatalogProduct({
+            id: product.id,
+            model: product.model,
+            brand: override,
+            available: product.available,
+            updatedAt: new Date().toISOString(),
+          });
+          product.brand = override;
+        }
       }
     }
-  }
-  productsAvailable = productsAvailableList.length;
-  const issuesCount = await issueRepo.listIssues().then((items) => items.length);
+    productsAvailable = productsAvailableList.length;
+    const issuesCount = await safeIssueCount();
 
-  const finishedRun = {
-    runId,
-    startedAt,
-    finishedAt: new Date().toISOString(),
-    stats: {
-      vendorsDetected: vendors.length,
-      filesScanned,
-      filesProcessed,
-      rowsParsed,
-      productsAvailable,
-      issuesCount,
-    },
-  };
+    const finishedRun = {
+      runId,
+      startedAt,
+      finishedAt: new Date().toISOString(),
+      error: null,
+      stats: {
+        vendorsDetected,
+        filesScanned,
+        filesProcessed,
+        rowsParsed,
+        productsAvailable,
+        issuesCount,
+      },
+    };
 
-  if (syncRunRepo) {
-    await syncRunRepo.updateRun(runId, { stats: finishedRun.stats, finishedAt: finishedRun.finishedAt });
-  }
-  try {
-  try {
-    await deleteOrphanProducts();
+    if (syncRunRepo) {
+      await syncRunRepo.updateRun(runId, {
+        stats: finishedRun.stats,
+        finishedAt: finishedRun.finishedAt,
+        error: null,
+      });
+    }
+    try {
+      await deleteOrphanProducts();
+    } catch (error) {
+      console.warn('[catalog] deleteOrphanProducts failed, continuing sync:', error?.message || error);
+    }
+
+    return finishedRun;
   } catch (error) {
-    console.warn('[catalog] deleteOrphanProducts failed, continuing sync:', error?.message || error);
+    const errorMessage = (error?.message || String(error) || 'sync_failed').toString().slice(0, 5000);
+    const issuesCount = await safeIssueCount();
+    const failedRun = {
+      runId,
+      startedAt,
+      finishedAt: new Date().toISOString(),
+      error: errorMessage,
+      stats: {
+        vendorsDetected,
+        filesScanned,
+        filesProcessed,
+        rowsParsed,
+        productsAvailable,
+        issuesCount,
+      },
+    };
+    if (syncRunRepo) {
+      await syncRunRepo.updateRun(runId, {
+        stats: failedRun.stats,
+        finishedAt: failedRun.finishedAt,
+        error: failedRun.error,
+      });
+    }
+    return failedRun;
   }
-  } catch (error) {
-    console.warn('[catalog] deleteOrphanProducts failed, continuing sync:', error?.message || error);
-  }
-
-  return finishedRun;
 }
 
 function listSyncRuns({ syncRunRepo } = {}) {

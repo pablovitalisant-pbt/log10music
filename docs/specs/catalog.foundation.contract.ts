@@ -72,6 +72,7 @@ export const SyncRunSchema = z.object({
   runId: z.string(),
   startedAt: z.string().datetime(),
   finishedAt: z.string().datetime().nullable().optional(),
+  error: z.string().nullable().optional(),
   stats: SyncStatsSchema,
 });
 

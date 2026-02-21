@@ -408,15 +408,17 @@ async function addSyncRun(run) {
       run_id: run.runId,
       started_at: run.startedAt,
       finished_at: resolvedFinishedAt,
+      error: run.error ?? null,
       stats: run.stats || {},
     })
-    .select('run_id, started_at, finished_at, stats')
+    .select('run_id, started_at, finished_at, error, stats')
     .single();
   if (error) throw new Error(`Supabase addSyncRun failed: ${error.message}`);
   return {
     runId: data.run_id,
     startedAt: data.started_at,
     finishedAt: data.finished_at,
+    error: data.error ?? null,
     stats: data.stats || {},
   };
 }
@@ -431,6 +433,9 @@ async function updateSyncRun(runId, patch) {
   const updatePayload = {
     stats: patch.stats,
   };
+  if (Object.prototype.hasOwnProperty.call(patch, 'error')) {
+    updatePayload.error = patch.error ?? null;
+  }
   if (resolvedFinishedAt !== undefined) {
     updatePayload.finished_at = resolvedFinishedAt;
   }
@@ -438,7 +443,7 @@ async function updateSyncRun(runId, patch) {
     .from('catalog_sync_runs')
     .update(updatePayload)
     .eq('run_id', runId)
-    .select('run_id, started_at, finished_at, stats')
+    .select('run_id, started_at, finished_at, error, stats')
     .maybeSingle();
   if (error) throw new Error(`Supabase updateSyncRun failed: ${error.message}`);
   if (!data) return null;
@@ -446,6 +451,7 @@ async function updateSyncRun(runId, patch) {
     runId: data.run_id,
     startedAt: data.started_at,
     finishedAt: data.finished_at ? new Date(data.finished_at).toISOString() : null,
+    error: data.error ?? null,
     stats: data.stats || {},
   };
 }
@@ -454,7 +460,7 @@ async function listSyncRuns() {
   const supabase = getSupabaseClient();
   const { data, error } = await supabase
     .from('catalog_sync_runs')
-    .select('run_id, started_at, finished_at, stats')
+    .select('run_id, started_at, finished_at, error, stats')
     .order('started_at', { ascending: false });
   if (error) throw new Error(`Supabase listSyncRuns failed: ${error.message}`);
   const normalizeIso = (value) => {
@@ -465,6 +471,7 @@ async function listSyncRuns() {
     runId: row.run_id,
     startedAt: normalizeIso(row.started_at),
     finishedAt: normalizeIso(row.finished_at),
+    error: row.error ?? null,
     stats: row.stats || {},
   }));
 }
@@ -473,7 +480,7 @@ async function getLatestSyncRun() {
   const supabase = getSupabaseClient();
   const { data, error } = await supabase
     .from('catalog_sync_runs')
-    .select('run_id, started_at, finished_at, stats')
+    .select('run_id, started_at, finished_at, error, stats')
     .order('started_at', { ascending: false })
     .limit(1)
     .maybeSingle();
@@ -487,6 +494,7 @@ async function getLatestSyncRun() {
     runId: data.run_id,
     startedAt: normalizeIso(data.started_at),
     finishedAt: normalizeIso(data.finished_at),
+    error: data.error ?? null,
     stats: data.stats || {},
   };
 }

@@ -13,6 +13,7 @@ export default function SyncButton() {
     filesProcessed?: number;
     rowsParsed?: number;
     productsAvailable?: number;
+    issuesCount?: number;
   } | null>(null);
 
   useEffect(() => {
@@ -28,6 +29,12 @@ export default function SyncButton() {
         if (current) {
           setRunId(current.runId);
           setStats(current.stats || null);
+          if (current.error) {
+            setStage('Error');
+            setError(current.error);
+            setIsRunning(false);
+            return;
+          }
           if (current.startedAt && !current.finishedAt) {
             const startedAtMs = Date.parse(current.startedAt);
             if (Number.isFinite(startedAtMs) && Date.now() - startedAtMs > stuckThresholdMs) {
@@ -130,6 +137,11 @@ export default function SyncButton() {
               {stats.rowsParsed ?? 0} · Productos {stats.productsAvailable ?? 0}
             </>
           ) : null}
+        </span>
+      ) : null}
+      {stats && stats.issuesCount ? (
+        <span className="text-xs text-amber-200">
+          Incidencias detectadas: {stats.issuesCount}. Revisa <a href="/admin/incidencias" className="underline">incidencias</a>.
         </span>
       ) : null}
       {error ? <span className="text-xs text-red-300">{error}</span> : null}

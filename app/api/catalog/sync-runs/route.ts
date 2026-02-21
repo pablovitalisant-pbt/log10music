@@ -11,6 +11,7 @@ export async function GET(_request: Request) {
     runId: string;
     startedAt: string;
     finishedAt: string | null;
+    error?: string | null;
     stats: {
       vendorsDetected: number;
       filesScanned: number;
@@ -49,6 +50,7 @@ export async function GET(_request: Request) {
         runId: 'derived-run',
         startedAt: resolvedTimestamp,
         finishedAt: resolvedTimestamp,
+        error: null,
         stats: {
           vendorsDetected: 0,
           filesScanned: 0,
