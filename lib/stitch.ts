@@ -28,8 +28,10 @@ export const getStitchBodyHtml = cache(async (): Promise<string> => {
       'class="border-4 border-white/20 hover:border-primary text-white px-12 py-6 text-2xl font-black transform -skew-x-6 transition-all"',
       'class="relative z-30 border-4 border-primary bg-white text-primary px-12 py-6 text-2xl font-black transform -skew-x-6 transition-all"'
     )
-    .replace(/HABLAR CON UN EXPERTO/g, 'SOLICITAR DIAGNÓSTICO')
-    .replace(/CONTACTO DIRECTO/g, 'SOLICITAR DIAGNÓSTICO')
-    .replace(/SOLICITAR DIAGNÓSTICO GRATUITO/g, 'SOLICITAR DIAGNÓSTICO');
+    .replace(/HABLAR CON UN EXPERTO/g, 'ACCEDER AL CATÁLOGO')
+    .replace(/CONTACTO DIRECTO/g, 'ACCEDER AL CATÁLOGO')
+    .replace(/SOLICITAR DIAGNÓSTICO GRATUITO/g, 'ACCEDER AL CATÁLOGO')
+    .replace(/CONSULTAR BENEFICIOS/g, 'ACCEDER AL CATÁLOGO')
+    .replace(/SOLICITAR DIAGNÓSTICO/g, 'ACCEDER AL CATÁLOGO');
   return body;
 });
