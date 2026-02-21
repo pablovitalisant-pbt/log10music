@@ -7,7 +7,7 @@ const PublicCatalogItemSchema = z
     brand: z.string().nullable().optional(),
     available: z.boolean(),
     imageUrl: z.string().url().nullable().optional(),
-    imageSource: z.enum(['ml', 'logokit', 'cache']).nullable().optional(),
+    imageSource: z.enum(['ml', 'logokit', 'cache', 'manual']).nullable().optional(),
     imageUpdatedAt: z.string().datetime().nullable().optional(),
   })
   .strict();
@@ -30,7 +30,7 @@ const CatalogProductAdminSchema = z
     brand: z.string().nullable().optional(),
     available: z.boolean(),
     imageUrl: z.string().url().nullable().optional(),
-    imageSource: z.enum(['ml', 'logokit', 'cache']).nullable().optional(),
+    imageSource: z.enum(['ml', 'logokit', 'cache', 'manual']).nullable().optional(),
     imageUpdatedAt: z.string().datetime().nullable().optional(),
     sourcesAvailable: z.array(CatalogSourceSchema),
     updatedAt: z.string().datetime(),
