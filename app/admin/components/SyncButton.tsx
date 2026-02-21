@@ -69,11 +69,19 @@ export default function SyncButton() {
           const payload = await response.json();
           if (payload && typeof payload.error === 'string') {
             serverError = payload.error;
+          } else if (payload) {
+            serverError = JSON.stringify(payload);
           }
         } catch (parseError) {
-          serverError = '';
+          try {
+            serverError = await response.text();
+          } catch (_readError) {
+            serverError = '';
+          }
         }
-        setError(serverError || 'No se pudo iniciar la sincronizacion');
+        setError(
+          serverError || `No se pudo iniciar la sincronizacion (HTTP ${response.status})`
+        );
         setIsRunning(false);
         return;
       }
@@ -83,7 +91,8 @@ export default function SyncButton() {
       }
       setMessage('Sincronizacion en curso.');
     } catch (err) {
-      setError('No se pudo iniciar la sincronizacion');
+      const message = err instanceof Error ? err.message : String(err);
+      setError(message || 'No se pudo iniciar la sincronizacion');
       setIsRunning(false);
     } finally {
       // keep running state until polling sees finishedAt
