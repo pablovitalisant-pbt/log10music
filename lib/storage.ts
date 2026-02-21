@@ -92,6 +92,7 @@ export async function addLead(input: {
       company: input.company,
       phone: input.phone,
       source: input.source || '/',
+      whatsapp_confirmed: false,
     })
     .select('id, full_name, company, phone, source, created_at')
     .single();
@@ -107,4 +108,13 @@ export async function listLeads(): Promise<Lead[]> {
     .order('created_at', { ascending: false });
   if (error) throw new Error(`Supabase listLeads failed: ${error.message}`);
   return (data || []) as Lead[];
+}
+
+export async function confirmLead(id: string): Promise<void> {
+  const supabase = getSupabaseClient();
+  const { error } = await supabase
+    .from('leads')
+    .update({ whatsapp_confirmed: true })
+    .eq('id', id);
+  if (error) throw new Error(`Supabase confirmLead failed: ${error.message}`);
 }
