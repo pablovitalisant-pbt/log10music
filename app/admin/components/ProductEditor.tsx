@@ -9,6 +9,7 @@ type ProductEditorProps = {
   imageUrl?: string | null;
   initialPrice?: string;
   initialPublished?: boolean;
+  onImageSaved?: (url: string, source?: string | null) => void;
 };
 
 export default function ProductEditor({
@@ -18,6 +19,7 @@ export default function ProductEditor({
   imageUrl,
   initialPrice = '',
   initialPublished = true,
+  onImageSaved,
 }: ProductEditorProps) {
   const [price, setPrice] = useState(initialPrice);
   const [published, setPublished] = useState(initialPublished);
@@ -72,6 +74,7 @@ export default function ProductEditor({
         setImageMessage(payload?.error || 'No se pudo guardar la imagen.');
         return;
       }
+      onImageSaved?.(url, source);
       setImageMessage('Imagen guardada.');
     } catch (_error) {
       setImageMessage('No se pudo guardar la imagen.');
