@@ -592,3 +592,56 @@
 - `npx tsc --noEmit`
 
 **Agente:** Codex CLI
+
+---
+
+### [2026-02-20 14:30] - Slice S13 cierre (UI catálogo con imágenes)
+
+**Cambios confirmados:**
+- Contrato de catálogo extendido con campos `imageUrl`, `imageSource`, `imageUpdatedAt`
+- Catálogo público muestra imagen en tarjetas
+- Admin productos muestra miniatura en tabla
+- Agregador propaga campos de imagen
+- Feature flag agregado `catalogImagesUiV1: false`
+
+**Paths tocados:**
+- `docs/specs/catalog.aggregate.contract.ts`
+- `docs/specs/catalog.aggregate.contract.js`
+- `src/catalog/aggregate/catalogAggregator.js`
+- `components/CatalogGrid.tsx`
+- `components/ProductCard.tsx`
+- `app/admin/catalog/page.tsx`
+- `app/admin/components/ProductRow.tsx`
+- `tests/contracts/slice-S11-catalog-images.test.ts`
+- `tests/contracts/slice-S12-catalog-images-fallback.test.ts`
+- `tests/contracts/slice-S13-catalog-ui-images.test.ts`
+- `config/feature-flags.json`
+
+**Verificación:**
+- `node scripts/jest-lite.js --testPathPattern=slice-S13-catalog-ui-images`
+- `npm test`
+- `npx tsc --noEmit`
+
+**Agente:** Codex CLI
+
+---
+
+### [2026-02-21 00:10] - Slice S14 cierre (UI fetch imágenes)
+
+**Cambios confirmados:**
+- UI del catálogo completa imágenes faltantes consultando `/api/catalog/images`
+- Lógica aislada en `src/catalog/publicCatalogImages.js` para tests
+- Feature flag agregado `catalogImagesUiFetchV1: false`
+
+**Paths tocados:**
+- `app/catalogo/page.tsx`
+- `src/catalog/publicCatalogImages.js`
+- `tests/contracts/slice-S14-catalog-ui-image-fetch.test.ts`
+- `config/feature-flags.json`
+
+**Verificación:**
+- `node scripts/jest-lite.js --testPathPattern=slice-S14-catalog-ui-image-fetch`
+- `npm test`
+- `npx tsc --noEmit`
+
+**Agente:** Codex CLI
