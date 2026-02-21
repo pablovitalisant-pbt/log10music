@@ -30,6 +30,7 @@ export default function ProductRow({ product }: ProductRowProps) {
   const [openEditor, setOpenEditor] = useState(false);
   const [imageUrl, setImageUrl] = useState(product.imageUrl || null);
   const [imageSource, setImageSource] = useState(product.imageSource || null);
+  const [approvalPending, setApprovalPending] = useState(false);
   const isApprovedImage = imageSource === 'manual';
   const statusLabel = product.available ? 'Publicado' : 'Oculto';
   const vendorName = product.sourcesAvailable[0]?.vendorName || 'Importadora';
@@ -38,16 +39,57 @@ export default function ProductRow({ product }: ProductRowProps) {
       ? 'object-contain bg-white/5 max-h-8 max-w-8'
       : 'object-cover';
 
+  async function toggleApproval() {
+    if (approvalPending) return;
+    setApprovalPending(true);
+    try {
+      const response = await fetch('/api/catalog/images/approval', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          productId: product.id,
+          approved: !isApprovedImage,
+        }),
+      });
+      if (!response.ok) {
+        setApprovalPending(false);
+        return;
+      }
+      if (!isApprovedImage) {
+        setImageSource('manual');
+      } else {
+        setImageSource(null);
+        setImageUrl(null);
+      }
+    } catch (_error) {
+      // ignore
+    } finally {
+      setApprovalPending(false);
+    }
+  }
+
   return (
     <>
       <tr className="border-b border-white/10 text-sm">
         <td className="p-3">
           <div className="flex items-center gap-2">
             <span
-              className={`h-2 w-2 rounded-full ${
+              role="button"
+              tabIndex={0}
+              onClick={toggleApproval}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  toggleApproval();
+                }
+              }}
+              className={`h-2 w-2 rounded-full cursor-pointer ${
                 isApprovedImage ? 'bg-emerald-400' : 'bg-red-400'
-              }`}
-              title={isApprovedImage ? 'Imagen aprobada' : 'Imagen sin aprobar'}
+              } ${approvalPending ? 'opacity-50' : ''}`}
+              title={
+                isApprovedImage
+                  ? 'Imagen aprobada (click para desactivar)'
+                  : 'Imagen sin aprobar (click para aprobar)'
+              }
             />
             <div className="size-10 overflow-hidden rounded bg-white/5 flex items-center justify-center">
             {imageUrl ? (

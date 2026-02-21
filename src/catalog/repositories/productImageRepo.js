@@ -1,6 +1,7 @@
 const {
   getApprovedProductImageOverride,
   upsertProductImageOverride,
+  deleteProductImageOverride,
 } = require('../persistence/catalogDb');
 
 function createProductImageRepo({ store } = {}) {
@@ -10,6 +11,9 @@ function createProductImageRepo({ store } = {}) {
     },
     async upsertOverride(payload) {
       return store ? store.upsertOverride(payload) : upsertProductImageOverride(payload);
+    },
+    async deleteOverride(productId) {
+      return store ? store.deleteOverride(productId) : deleteProductImageOverride(productId);
     },
   };
 }

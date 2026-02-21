@@ -597,6 +597,16 @@ async function upsertProductImageOverride({
   };
 }
 
+async function deleteProductImageOverride(productId) {
+  const supabase = getSupabaseClient();
+  const { error } = await supabase
+    .from('catalog_product_images')
+    .delete()
+    .eq('product_id', productId);
+  if (error) throw new Error(`Supabase deleteProductImageOverride failed: ${error.message}`);
+  return true;
+}
+
 module.exports = {
   upsertVendor,
   listVendors,
@@ -620,6 +630,7 @@ module.exports = {
   upsertIntegration,
   getApprovedProductImageOverride,
   upsertProductImageOverride,
+  deleteProductImageOverride,
   deleteSourcesByFile,
   deleteRowsByFile,
   deleteOrphanProducts,
