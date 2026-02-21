@@ -31,13 +31,15 @@ export default function ProductRow({ product }: ProductRowProps) {
   const statusLabel = product.available ? 'Publicado' : 'Oculto';
   const vendorName = product.sourcesAvailable[0]?.vendorName || 'Importadora';
   const imageMode =
-    product.imageSource === 'logokit' ? 'object-contain bg-white/5' : 'object-cover';
+    product.imageSource === 'logokit'
+      ? 'object-contain bg-white/5 max-h-8 max-w-8'
+      : 'object-cover';
 
   return (
     <>
       <tr className="border-b border-white/10 text-sm">
         <td className="p-3">
-          <div className="size-10 overflow-hidden rounded bg-white/5">
+          <div className="size-10 overflow-hidden rounded bg-white/5 flex items-center justify-center">
             {product.imageUrl ? (
               <img
                 src={product.imageUrl}

@@ -13,10 +13,12 @@ type ProductCardProps = {
 
 export default function ProductCard({ item }: ProductCardProps) {
   const imageMode =
-    item.imageSource === 'logokit' ? 'object-contain bg-white/5' : 'object-cover';
+    item.imageSource === 'logokit'
+      ? 'object-contain bg-white/5 max-h-20 max-w-20'
+      : 'object-cover';
   return (
     <article className="rounded border border-white/10 bg-industrial p-5 text-white">
-      <div className="aspect-[4/3] overflow-hidden rounded bg-white/5">
+      <div className="aspect-[4/3] overflow-hidden rounded bg-white/5 flex items-center justify-center">
         {item.imageUrl ? (
           <img
             src={item.imageUrl}

@@ -50,9 +50,13 @@ async function searchCatalogImages({ query, limit, catalogProductRepo } = {}) {
   }
 
   const siteId = (process.env.ML_SITE_ID || 'MLC').toString().trim();
+  const searchQuery =
+    matchedProduct?.brand && matchedProduct?.model
+      ? `${matchedProduct.brand} ${matchedProduct.model}`
+      : trimmed;
   const url = `https://api.mercadolibre.com/sites/${encodeURIComponent(
     siteId
-  )}/search?q=${encodeURIComponent(trimmed)}&limit=${resolvedLimit}`;
+  )}/search?q=${encodeURIComponent(searchQuery.slice(0, 80))}&limit=${resolvedLimit}`;
   try {
     const response = await fetch(url, { method: 'GET' });
     if (response.ok) {
