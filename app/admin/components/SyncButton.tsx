@@ -7,6 +7,7 @@ export default function SyncButton() {
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [runId, setRunId] = useState<string | null>(null);
+  const [userInitiated, setUserInitiated] = useState(false);
   const [stage, setStage] = useState<string | null>(null);
   const [stats, setStats] = useState<{
     filesScanned?: number;
@@ -18,6 +19,7 @@ export default function SyncButton() {
 
   useEffect(() => {
     const stuckThresholdMs = 6 * 60 * 1000;
+    const recentRunThresholdMs = 2 * 60 * 1000;
     const interval = setInterval(async () => {
       try {
         const response = await fetch('/api/catalog/sync-runs', { cache: 'no-store' });
@@ -29,6 +31,9 @@ export default function SyncButton() {
         if (current) {
           setRunId(current.runId);
           setStats(current.stats || null);
+          const startedAtMs = current.startedAt ? Date.parse(current.startedAt) : NaN;
+          const isRecentRun =
+            Number.isFinite(startedAtMs) && Date.now() - startedAtMs < recentRunThresholdMs;
           if (current.error) {
             setStage('Error');
             setError(current.error);
@@ -36,7 +41,6 @@ export default function SyncButton() {
             return;
           }
           if (current.startedAt && !current.finishedAt) {
-            const startedAtMs = Date.parse(current.startedAt);
             if (Number.isFinite(startedAtMs) && Date.now() - startedAtMs > stuckThresholdMs) {
               setStage('Atascada');
               setError('Sincronizacion atascada. Reintenta.');
@@ -48,6 +52,12 @@ export default function SyncButton() {
             setStage('Finalizado');
             setIsRunning(false);
             setMessage('Sincronizacion finalizada.');
+            return;
+          }
+          if (!userInitiated && !isRecentRun) {
+            setStage('Sincronizacion previa detectada');
+            setMessage('Hay una sincronizacion anterior sin cerrar. Puedes reiniciar.');
+            setIsRunning(false);
             return;
           }
           if ((current.stats?.filesProcessed || 0) === 0) {
@@ -71,6 +81,7 @@ export default function SyncButton() {
   async function handleSync() {
     if (isRunning) return;
     setIsRunning(true);
+    setUserInitiated(true);
     setError(null);
     setMessage(null);
     setStage('Iniciando');
