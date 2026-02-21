@@ -77,7 +77,7 @@ function buildCompactMlQuery(model, brand) {
   return compact;
 }
 
-async function searchCatalogImages({ query, limit, catalogProductRepo } = {}) {
+async function searchCatalogImages({ query, limit, catalogProductRepo, accessToken } = {}) {
   const trimmed = (query || '').trim();
   if (!trimmed) return [];
   const resolvedLimit = Number.isFinite(limit) ? Math.max(1, Math.min(5, limit)) : 1;
@@ -95,6 +95,7 @@ async function searchCatalogImages({ query, limit, catalogProductRepo } = {}) {
   }
 
   const siteId = (process.env.ML_SITE_ID || 'MLC').toString().trim();
+  const mlAccessToken = (accessToken || process.env.ML_ACCESS_TOKEN || '').trim();
   const queryCandidates = [
     matchedProduct?.brand && matchedProduct?.model
       ? `${matchedProduct.brand} ${matchedProduct.model}`
@@ -109,6 +110,9 @@ async function searchCatalogImages({ query, limit, catalogProductRepo } = {}) {
     'User-Agent': 'log10music/1.0 (+https://log10music.vercel.app)',
     Accept: 'application/json',
   };
+  if (mlAccessToken) {
+    mlHeaders.Authorization = `Bearer ${mlAccessToken}`;
+  }
 
   function resolveMlImageFromResult(result) {
     const thumbnailId = result?.thumbnail_id;

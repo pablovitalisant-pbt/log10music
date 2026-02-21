@@ -499,6 +499,44 @@ async function getLatestSyncRun() {
   };
 }
 
+async function getIntegration(key) {
+  const supabase = getSupabaseClient();
+  const { data, error } = await supabase
+    .from('catalog_integrations')
+    .select('id, data, updated_at')
+    .eq('id', key)
+    .maybeSingle();
+  if (error) throw new Error(`Supabase getIntegration failed: ${error.message}`);
+  if (!data) return null;
+  return {
+    id: data.id,
+    data: data.data || {},
+    updatedAt: data.updated_at || null,
+  };
+}
+
+async function upsertIntegration(key, payload) {
+  const supabase = getSupabaseClient();
+  const { data, error } = await supabase
+    .from('catalog_integrations')
+    .upsert(
+      {
+        id: key,
+        data: payload || {},
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'id' }
+    )
+    .select('id, data, updated_at')
+    .single();
+  if (error) throw new Error(`Supabase upsertIntegration failed: ${error.message}`);
+  return {
+    id: data.id,
+    data: data.data || {},
+    updatedAt: data.updated_at || null,
+  };
+}
+
 module.exports = {
   upsertVendor,
   listVendors,
@@ -518,6 +556,8 @@ module.exports = {
   updateSyncRun,
   listSyncRuns,
   getLatestSyncRun,
+  getIntegration,
+  upsertIntegration,
   deleteSourcesByFile,
   deleteRowsByFile,
   deleteOrphanProducts,
