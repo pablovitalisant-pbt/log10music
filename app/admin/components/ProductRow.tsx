@@ -31,7 +31,7 @@ export default function ProductRow({ product }: ProductRowProps) {
   const [imageUrl, setImageUrl] = useState(product.imageUrl || null);
   const [imageSource, setImageSource] = useState(product.imageSource || null);
   const [approvalPending, setApprovalPending] = useState(false);
-  const isApprovedImage = imageSource === 'manual';
+  const isApprovedImage = imageSource === 'manual' || imageSource === 'ml';
   const statusLabel = product.available ? 'Publicado' : 'Oculto';
   const vendorName = product.sourcesAvailable[0]?.vendorName || 'Importadora';
   const imageMode =
@@ -56,7 +56,7 @@ export default function ProductRow({ product }: ProductRowProps) {
         return;
       }
       if (!isApprovedImage) {
-        setImageSource('manual');
+        setImageSource(imageSource || 'manual');
       } else {
         setImageSource(null);
         setImageUrl(null);

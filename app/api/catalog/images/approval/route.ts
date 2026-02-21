@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     const override = await productImageRepo.upsertOverride({
       productId,
       imageUrl: product.imageUrl,
-      source: 'manual',
+      source: product.imageSource || 'manual',
       status: 'approved',
       query: '',
       notes: 'approved',
