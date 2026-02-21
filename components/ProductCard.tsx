@@ -85,9 +85,14 @@ export default function ProductCard({ item }: ProductCardProps) {
           <span className="rounded bg-primary/20 px-2 py-1 font-black text-primary">
             Disponible
           </span>
-          <button className="rounded border border-white/20 px-3 py-1 font-black">
+          <a
+            href="https://wa.me/56935722143?text=Hola%20Log10Music%2C%20quiero%20cotizar%20este%20producto."
+            target="_blank"
+            rel="noreferrer"
+            className="rounded border border-white/20 px-3 py-1 font-black"
+          >
             Cotizar
-          </button>
+          </a>
         </div>
       </div>
     </article>
