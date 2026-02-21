@@ -16,7 +16,7 @@ export default function SyncButton() {
   } | null>(null);
 
   useEffect(() => {
-    if (!isRunning) return;
+    const stuckThresholdMs = 6 * 60 * 1000;
     const interval = setInterval(async () => {
       try {
         const response = await fetch('/api/catalog/sync-runs', { cache: 'no-store' });
@@ -28,6 +28,15 @@ export default function SyncButton() {
         if (current) {
           setRunId(current.runId);
           setStats(current.stats || null);
+          if (current.startedAt && !current.finishedAt) {
+            const startedAtMs = Date.parse(current.startedAt);
+            if (Number.isFinite(startedAtMs) && Date.now() - startedAtMs > stuckThresholdMs) {
+              setStage('Atascada');
+              setError('Sincronizacion atascada. Reintenta.');
+              setIsRunning(false);
+              return;
+            }
+          }
           if (current.finishedAt) {
             setStage('Finalizado');
             setIsRunning(false);
@@ -43,13 +52,14 @@ export default function SyncButton() {
           } else {
             setStage('Actualizando catalogo');
           }
+          setIsRunning(true);
         }
       } catch (pollError) {
         // ignore polling errors
       }
     }, 2000);
     return () => clearInterval(interval);
-  }, [isRunning, runId]);
+  }, [runId]);
 
   async function handleSync() {
     if (isRunning) return;
