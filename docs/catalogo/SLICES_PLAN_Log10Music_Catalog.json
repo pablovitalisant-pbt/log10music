@@ -1,0 +1,109 @@
+{
+  "project": "Log10Music Catalog System",
+  "goal": "Sistema completo de catálogo operable desde UI",
+  "rules": {
+    "single_source_of_truth": true,
+    "no_new_contracts": true,
+    "ui_first": true,
+    "no_backend_without_ui": true
+  },
+  "slices": [
+    {
+      "id": "SLICE_A",
+      "name": "Admin - Vista de Productos",
+      "objective": "Visualizar y gestionar productos desde el panel admin",
+      "files_to_touch": [
+        "app/admin/catalog/page.tsx",
+        "app/admin/components/ProductTable.tsx",
+        "app/admin/components/ProductRow.tsx"
+      ],
+      "uses_apis": [
+        "/api/catalog/products"
+      ],
+      "done_when": [
+        "Tabla muestra productos reales",
+        "Acciones básicas visibles en UI"
+      ]
+    },
+    {
+      "id": "SLICE_B",
+      "name": "Admin - Incidencias",
+      "objective": "Resolver incidencias desde UI",
+      "files_to_touch": [
+        "app/admin/incidencias/page.tsx",
+        "app/admin/components/IncidenceTable.tsx"
+      ],
+      "uses_apis": [
+        "/api/catalog/issues",
+        "/api/catalog/mapping"
+      ],
+      "done_when": [
+        "Incidencias visibles",
+        "Resolución desde UI funcional"
+      ]
+    },
+    {
+      "id": "SLICE_C",
+      "name": "Admin - Precios y Publicación",
+      "objective": "Control comercial de productos",
+      "files_to_touch": [
+        "app/admin/components/ProductEditor.tsx"
+      ],
+      "uses_apis": [
+        "/api/catalog/products"
+      ],
+      "done_when": [
+        "Precio editable",
+        "Publicar/Ocultar funcional"
+      ]
+    },
+    {
+      "id": "SLICE_D",
+      "name": "Admin - Dashboard Real",
+      "objective": "Vista ejecutiva del sistema",
+      "files_to_touch": [
+        "app/admin/page.tsx"
+      ],
+      "uses_apis": [
+        "/api/catalog/health",
+        "/api/catalog/metrics"
+      ],
+      "done_when": [
+        "KPIs reales visibles",
+        "Estado del sistema claro"
+      ]
+    },
+    {
+      "id": "SLICE_E",
+      "name": "Catálogo Público Comercial",
+      "objective": "Página pública usable para clientes",
+      "files_to_touch": [
+        "app/catalogo/page.tsx",
+        "components/CatalogGrid.tsx",
+        "components/ProductCard.tsx"
+      ],
+      "uses_apis": [
+        "/api/catalog/public"
+      ],
+      "done_when": [
+        "Productos reales visibles",
+        "Diseño comercial",
+        "Sin placeholders"
+      ]
+    },
+    {
+      "id": "SLICE_F",
+      "name": "Pulido Final",
+      "objective": "Listo para producción comercial",
+      "tasks": [
+        "SEO básico",
+        "Estados vacíos",
+        "Loading states",
+        "Copys finales"
+      ],
+      "done_when": [
+        "Sistema usable por negocio real"
+      ]
+    }
+  ]
+}
