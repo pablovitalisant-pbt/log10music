@@ -103,6 +103,9 @@ async function runCatalogSync({
   const startedAt = new Date().toISOString();
   const runId = `run-${Date.now()}`;
   const deadline = Date.now() + (Number.isFinite(deadlineMs) ? deadlineMs : 20000);
+  const stepTimeoutMs = process.env.SYNC_STEP_TIMEOUT_MS
+    ? Number(process.env.SYNC_STEP_TIMEOUT_MS)
+    : 120000;
   const existingProducts = await catalogProductRepo.listCatalogProducts();
   const brandOverrides = new Map(
     existingProducts
@@ -117,6 +120,20 @@ async function runCatalogSync({
   let vendors = [];
   let vendorsDetected = 0;
   let discoveryError = null;
+  const withTimeout = async (promise, label) => {
+    if (!Number.isFinite(stepTimeoutMs) || stepTimeoutMs <= 0) {
+      return promise;
+    }
+    let timeoutId;
+    const timeoutPromise = new Promise((_, reject) => {
+      timeoutId = setTimeout(() => {
+        reject(new Error(`${label} timed out after ${stepTimeoutMs}ms`));
+      }, stepTimeoutMs);
+    });
+    return Promise.race([promise, timeoutPromise]).finally(() => {
+      if (timeoutId) clearTimeout(timeoutId);
+    });
+  };
   const safeIssueCount = async () => {
     if (!issueRepo) return 0;
     try {
@@ -127,7 +144,10 @@ async function runCatalogSync({
     }
   };
   try {
-    vendors = await discoverVendors({ driveClient, vendorRepo });
+    vendors = await withTimeout(
+      discoverVendors({ driveClient, vendorRepo }),
+      'discoverVendors'
+    );
     vendorsDetected = vendors.length;
   } catch (error) {
     discoveryError = error;
@@ -156,7 +176,10 @@ async function runCatalogSync({
     }
     for (const vendor of vendors) {
       if (Date.now() > deadline) break;
-      let files = await discoverFiles({ driveClient, sourceFileRepo, vendorId: vendor.vendorId });
+      let files = await withTimeout(
+        discoverFiles({ driveClient, sourceFileRepo, vendorId: vendor.vendorId }),
+        `discoverFiles(${vendor.vendorId})`
+      );
       if (Number.isFinite(maxFilesPerVendor)) {
         files = files.slice(0, Math.max(0, maxFilesPerVendor));
       }
@@ -175,10 +198,13 @@ async function runCatalogSync({
       }
       for (const file of files) {
         if (Date.now() > deadline) break;
-        const buffer = await driveClient.downloadFile({
-          fileId: file.fileId,
-          mimeType: file.mimeType,
-        });
+        const buffer = await withTimeout(
+          driveClient.downloadFile({
+            fileId: file.fileId,
+            mimeType: file.mimeType,
+          }),
+          `downloadFile(${file.fileId})`
+        );
         if (!buffer) {
           continue;
         }
