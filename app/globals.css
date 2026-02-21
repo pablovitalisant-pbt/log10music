@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --cta-calypso: #99ff00;
+  }
+
   body {
     @apply bg-charcoal text-white overflow-x-hidden;
   }
@@ -115,10 +119,6 @@
 
 .landing-root .hero-mobile-break {
   display: inline;
-}
-
-.landing-root {
-  --cta-calypso: #99ff00;
 }
 
 .landing-root button.bg-primary,
