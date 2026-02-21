@@ -174,6 +174,66 @@ async function searchCatalogImages({ query, limit, catalogProductRepo } = {}) {
     // ignore and fall back
   }
 
+  try {
+    for (const candidate of queryCandidates) {
+      if (!candidate) continue;
+      const url = `https://api.mercadolibre.com/products/search?site_id=${encodeURIComponent(
+        siteId
+      )}&q=${encodeURIComponent(candidate.slice(0, 80))}&limit=${resolvedLimit}`;
+      const response = await fetch(url, { method: 'GET', headers: mlHeaders });
+      if (!response.ok) continue;
+      const payload = await response.json();
+      const rawResults = Array.isArray(payload?.results) ? payload.results : [];
+      if (!rawResults.length) continue;
+      const productIds = rawResults
+        .map((entry) => {
+          if (typeof entry === 'string') return entry;
+          if (entry && typeof entry.id === 'string') return entry.id;
+          if (entry && typeof entry.product_id === 'string') return entry.product_id;
+          return null;
+        })
+        .filter(Boolean);
+      if (!productIds.length) continue;
+      const items = [];
+      for (const productId of productIds) {
+        if (items.length >= resolvedLimit) break;
+        try {
+          const detailResponse = await fetch(
+            `https://api.mercadolibre.com/products/${productId}`,
+            {
+              method: 'GET',
+              headers: mlHeaders,
+            }
+          );
+          if (!detailResponse.ok) continue;
+          const detail = await detailResponse.json();
+          const pictures = Array.isArray(detail?.pictures) ? detail.pictures : [];
+          const pictureUrl = pictures[0]?.url || detail?.thumbnail;
+          if (typeof pictureUrl === 'string' && pictureUrl.startsWith('http')) {
+            items.push({ url: pictureUrl, source: 'ml', updatedAt: now });
+          }
+        } catch (_error) {
+          // ignore and keep trying next product
+        }
+      }
+      if (items.length > 0 && matchedProduct && catalogProductRepo) {
+        await catalogProductRepo.upsertCatalogProduct({
+          id: matchedProduct.id,
+          model: matchedProduct.model,
+          brand: matchedProduct.brand || null,
+          available: matchedProduct.available,
+          updatedAt: matchedProduct.updatedAt || now,
+          imageUrl: items[0].url,
+          imageSource: 'ml',
+          imageUpdatedAt: now,
+        });
+      }
+      if (items.length > 0) return items;
+    }
+  } catch (_error) {
+    // ignore and fall back
+  }
+
   const logoToken = (process.env.LOGOKIT_PUBLISHABLE_TOKEN || '').trim();
   const fallback = (process.env.LOGOKIT_FALLBACK || 'monogram').trim();
   const size = process.env.LOGOKIT_SIZE ? Number(process.env.LOGOKIT_SIZE) : undefined;
