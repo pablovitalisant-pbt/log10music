@@ -102,9 +102,17 @@ export default async function AdminPage() {
       <div className="mx-auto max-w-6xl space-y-8">
         <div className="flex items-center justify-between">
           <h1 className="text-4xl font-black">Panel Admin</h1>
-          <form action="/api/admin/logout" method="post">
-            <button className="border border-white/30 px-4 py-2 font-black">Salir</button>
-          </form>
+          <div className="flex items-center gap-3">
+            <a
+              href="/admin/catalog"
+              className="rounded border border-white/30 px-4 py-2 text-xs font-black"
+            >
+              Catalogo
+            </a>
+            <form action="/api/admin/logout" method="post">
+              <button className="border border-white/30 px-4 py-2 font-black">Salir</button>
+            </form>
+          </div>
         </div>
 
         <section className="border border-white/20 bg-industrial p-6">
