@@ -1,6 +1,6 @@
 import { headers } from 'next/headers';
 import CatalogGrid from '../../components/CatalogGrid';
-import { hydrateCatalogImages } from '../../src/catalog/publicCatalogImages';
+import { fetchPublicCatalog } from '../../src/catalog/publicCatalogClient';
 
 export const metadata = {
   title: 'Catálogo Log10Music',
@@ -16,7 +16,7 @@ async function resolveBaseUrl() {
 
 export default async function CatalogoPage() {
   const baseUrl = await resolveBaseUrl();
-  const data = await hydrateCatalogImages({ baseUrl });
+  const data = await fetchPublicCatalog({ baseUrl });
 
   return (
     <main className="min-h-screen bg-charcoal px-6 py-12 text-white">
