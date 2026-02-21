@@ -63,6 +63,17 @@ export default function ProductCard({ item }: ProductCardProps) {
     return () => observer.disconnect();
   }, [hasFetched, imageUrl, imageSource, item.brand, item.model]);
 
+  const productLabel = `${item.brand ? `${item.brand} ` : ''}${item.model}`.trim();
+  const waText = encodeURIComponent(
+    `Hola Log10Music, quiero cotizar este producto:\n` +
+      `• Producto: ${productLabel || item.model}\n` +
+      `• ID: ${item.id}\n\n` +
+      `Mis datos:\n` +
+      `• Nombre:\n` +
+      `• Empresa:\n` +
+      `• Ciudad:\n`
+  );
+
   return (
     <article ref={cardRef} className="rounded border border-white/10 bg-industrial p-5 text-white">
       <div className="aspect-[4/3] overflow-hidden rounded bg-white/5 flex items-center justify-center">
@@ -86,7 +97,7 @@ export default function ProductCard({ item }: ProductCardProps) {
             Disponible
           </span>
           <a
-            href="https://wa.me/56935722143?text=Hola%20Log10Music%2C%20quiero%20cotizar%20este%20producto."
+            href={`https://wa.me/56935722143?text=${waText}`}
             target="_blank"
             rel="noreferrer"
             className="rounded border border-white/20 px-3 py-1 font-black"
