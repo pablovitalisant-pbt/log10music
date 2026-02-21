@@ -74,6 +74,7 @@ export default function SyncButton() {
           serverError = '';
         }
         setError(serverError || 'No se pudo iniciar la sincronizacion');
+        setIsRunning(false);
         return;
       }
       const payload = await response.json();
