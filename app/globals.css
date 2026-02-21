@@ -122,7 +122,8 @@
 }
 
 .landing-root button.bg-primary,
-.landing-root a.bg-primary {
+.landing-root a.bg-primary,
+[data-lead-modal] button.bg-primary {
   background-color: var(--cta-calypso) !important;
   box-shadow: 0 0 50px rgba(153, 255, 0, 0.35);
   transition: transform 180ms ease, box-shadow 180ms ease;
@@ -144,7 +145,8 @@
 }
 
 .landing-root button.bg-primary:hover,
-.landing-root a.bg-primary:hover {
+.landing-root a.bg-primary:hover,
+[data-lead-modal] button.bg-primary:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 0 70px rgba(153, 255, 0, 0.5);
 }
